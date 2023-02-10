@@ -16,12 +16,16 @@ CREATE TABLE products(
   PRIMARY KEY(product_id)
 ) COMMENT 'Information about the products.';
 
-CREATE TABLE `order`(user_id INT NOT NULL, order_id INT NOT NULL) COMMENT
-  'Gets order id and connects it to a user.';
+CREATE TABLE `order`(
+  order_id INT NOT NULL,
+  user_id INT NOT NULL,
+  form_id INT NOT NULL,
+  PRIMARY KEY(order_id)
+) COMMENT 'Gets order id and connects it to a user.';
 
 CREATE TABLE form_order
-  (order_id INT NOT NULL, product_id INT NOT NULL, PRIMARY KEY(order_id))
-  COMMENT 'Collects products in one order.';
+  (form_id INT NOT NULL, product_id INT NOT NULL, PRIMARY KEY(form_id)) COMMENT
+  'Collects products in one order.';
 
 ALTER TABLE `order`
   ADD CONSTRAINT user_info_order
@@ -32,5 +36,5 @@ ALTER TABLE form_order
     FOREIGN KEY (product_id) REFERENCES products (product_id);
 
 ALTER TABLE `order`
-  ADD CONSTRAINT menu_order
-    FOREIGN KEY (order_id) REFERENCES form_order (order_id);
+  ADD CONSTRAINT menu_order FOREIGN KEY (form_id) REFERENCES form_order (form_id)
+  ;
