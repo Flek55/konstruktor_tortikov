@@ -1,4 +1,4 @@
-USE bodrero;
+USE boderero;
 
 CREATE TABLE user_info(
   user_id INT NOT NULL,
@@ -17,15 +17,16 @@ CREATE TABLE products(
 ) COMMENT 'Information about the products.';
 
 CREATE TABLE `order`(
-  order_id INT NOT NULL,
   user_id INT NOT NULL,
-  form_id INT NOT NULL,
-  PRIMARY KEY(order_id)
+  order_id INT NOT NULL,
+  product_id INT NOT NULL,
+  PRIMARY KEY(user_id, order_id, product_id)
 ) COMMENT 'Gets order id and connects it to a user.';
 
-CREATE TABLE form_order
-  (form_id INT NOT NULL, product_id INT NOT NULL, PRIMARY KEY(form_id)) COMMENT
-  'Collects products in one order.';
+CREATE TABLE form_order(
+order_id INT NOT NULL, product_id INT NOT NULL,
+  PRIMARY KEY(order_id, product_id)
+) COMMENT 'Collects products in one order.';
 
 ALTER TABLE `order`
   ADD CONSTRAINT user_info_order
@@ -36,5 +37,6 @@ ALTER TABLE form_order
     FOREIGN KEY (product_id) REFERENCES products (product_id);
 
 ALTER TABLE `order`
-  ADD CONSTRAINT menu_order FOREIGN KEY (form_id) REFERENCES form_order (form_id)
+  ADD CONSTRAINT form_order_order
+    FOREIGN KEY (order_id, product_id) REFERENCES form_order (order_id, product_id)
   ;
