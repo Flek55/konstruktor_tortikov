@@ -9,13 +9,16 @@ class MyApp extends StatelessWidget{
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    //final ColorScheme colors = Theme.of(context).colorScheme;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.white10,
-        body: Container(
-          margin: const EdgeInsets.only(top: 300),
-          child: Column(
+        body: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Align(
                 alignment: Alignment.bottomCenter,
@@ -28,17 +31,16 @@ class MyApp extends StatelessWidget{
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 50.0),
-                  child: TextButton(onPressed: () {},
-                    style: TextButton.styleFrom(
-                      foregroundColor: const Color(0xFF4A235A)),
-                  child: const Text('→',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 60, color: Color(0xFFD1BC8A)),
+                  child: IconButton(
+                    icon: const Icon(Icons.filter_drama),
+                    iconSize: 65,
+                    onPressed: () {},
+                    style: IconButton.styleFrom(
+                    ),
                   )
-              )
-            ),]
+              ),]
         )
-    )
+    ])
       )
     );
   }
