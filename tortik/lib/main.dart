@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-void main(){
-  runApp(const MyApp());
-}
+void main() => runApp(const MaterialApp(
+  debugShowCheckedModeBanner: false,
+  home: EntryPage(),
+));
 
 
-class MyApp extends StatelessWidget{
-  const MyApp({super.key});
+class EntryPage extends StatelessWidget{
+  const EntryPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     //final ColorScheme colors = Theme.of(context).colorScheme;
@@ -17,29 +19,54 @@ class MyApp extends StatelessWidget{
         body: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Expanded(child:
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Align(
-                alignment: Alignment.bottomCenter,
-                child: Text('Bodrero',
+              const Padding(padding: EdgeInsets.only(top: 300)),
+              //const Image(image: AssetImage('assets/logo.jpg')),
+              const Text('Bodrero',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontFamily: 'MarckScript',
-                  fontSize: 70,
+                  fontSize: 90,
                   color: Color(0xFFD1BC8A)),
-                ),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 50.0),
-                  child: IconButton(
-                    icon: const Icon(Icons.filter_drama),
+              const Divider(
+                color: Color(0xFFA569BD),
+                thickness: 4,
+                indent: 100,
+                endIndent: 100,
+              ),
+              const Text('depuis 1986',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontFamily: 'MarckScript',
+                    fontSize: 25,
+                    color: Color(0xFFD1BC8A)),
+              ),
+              const Padding(padding: EdgeInsets.only(top: 40)),
+              const Text('Вкус французской\nклассики',
+              textAlign: TextAlign.center,
+                style: TextStyle(fontFamily: 'Roboto',
+                fontSize: 25,
+                color: Color(0xFFD1BC8A)),
+              ),
+              const Padding(padding: EdgeInsets.only(top: 10)),
+              const Text('Сеть кондитерских Франсуа Бодреро в самом\n'
+                  'центре Москвы',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontFamily: 'Roboto',
+                    fontSize: 12,
+                    color: Color(0xFF707B7C)),
+              ),
+              const Padding(padding: EdgeInsets.only(top: 30)),
+              IconButton(
+                    icon: const Icon(Icons.east),
                     iconSize: 65,
+                    color: const Color(0xFFD1BC8A),
                     onPressed: () {},
-                    style: IconButton.styleFrom(
-                    ),
                   )
-              ),]
-        )
+              ,]
+        ))
     ])
       )
     );
