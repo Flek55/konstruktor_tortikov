@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:tortik/pages/Home.dart';
+import 'package:tortik/pages/start.dart';
+import 'package:tortik/pages/home.dart';
 
-void main() => runApp(const MaterialApp(
+void main() => runApp(MaterialApp(
   debugShowCheckedModeBanner: false,
-  home: Home(),
+  initialRoute: '/',
+  routes: {
+    '/': (context) => const Start(),
+    '/home': (context) => const Home(),
+  },
 ));
