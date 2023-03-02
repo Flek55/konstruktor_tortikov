@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "795089995929",
+    "project_id": "gproject-d8582",
+    "storage_bucket": "gproject-d8582.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:795089995929:android:75bd8bd98ae51d56439008",
+        "android_client_info": {
+          "package_name": "com.example.tortik"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "795089995929-ldvi91pui0u2fj8vk1k2ah4bu52usf1j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyaZ64oZ0PF7hgpIDqrjgAFPdaRquBTBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "795089995929-ldvi91pui0u2fj8vk1k2ah4bu52usf1j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
