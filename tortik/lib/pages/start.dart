@@ -1,5 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:tortik/pages/home.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -17,9 +17,14 @@ class MyApp extends StatelessWidget {
 class Start extends StatelessWidget{
   const Start({super.key});
 
+  void initFireBase() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+  }
+
   @override
   Widget build(BuildContext context) {
-    //final ColorScheme colors = Theme.of(context).colorScheme;
+    initFireBase();//initializing the Database
         return Scaffold(
             backgroundColor: const Color(0xFF000000),
             body: Row(
@@ -30,15 +35,7 @@ class Start extends StatelessWidget{
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const Padding(padding: EdgeInsets.only(top: 120)),
-                        //const Image(image: AssetImage('assets/logo.jpg')),
-                        //const Text('Bodrero',
-                          //textAlign: TextAlign.center,
-                          //style: TextStyle(fontFamily: 'MarckScript',
-                              //fontSize: 90,
-                              //color: Color(0xFFD1BC8A)),
-                        //),
                         const Image(image: AssetImage('assets/logo.jpg')),
-                        //const Padding(padding: EdgeInsets.only(top: 10)),
                         const Text('Вкус французской\nклассики',
                           textAlign: TextAlign.center,
                           style: TextStyle(fontFamily: 'Roboto',
