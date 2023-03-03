@@ -56,7 +56,7 @@ class Start extends StatelessWidget{
                           iconSize: 65,
                           color: const Color(0xFFF4D5BC),
                           onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/home');
+                            Navigator.pushReplacementNamed(context, '/loginPage');
                           },
                         ),]
                   ))
