@@ -29,6 +29,13 @@
             {
               "client_id": "795089995929-ldvi91pui0u2fj8vk1k2ah4bu52usf1j.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "795089995929-rbgq1a022ilokvc5tumcpf41rh88pfh6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tortik"
+              }
             }
           ]
         }

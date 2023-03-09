@@ -1,5 +1,6 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -56,7 +57,7 @@ class Start extends StatelessWidget{
                           iconSize: 65,
                           color: const Color(0xFFF4D5BC),
                           onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/loginPage');
+                            Navigator.pushReplacementNamed(context, '/logger');
                           },
                         ),]
                   ))
