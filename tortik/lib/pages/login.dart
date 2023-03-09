@@ -1,14 +1,13 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class LogReg extends StatefulWidget {
+  const LogReg({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LogReg> createState() => _LogRegState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LogRegState extends State<LogReg> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +19,6 @@ class _LoginPageState extends State<LoginPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children:const [
-              //Padding(padding: EdgeInsets.only(left: 80)),
               Icon(Icons.login,
                 size: 150 ,
                 color: Color(0xFFF4D5BC),
@@ -41,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
             height: 40,
             width: 150,
           child: TextButton(onPressed: () {
-            Navigator.pushNamed(context,'/register');
+            Navigator.pushReplacementNamed(context,'/register');
           },
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(const Color(0xFF5B2C6F))
@@ -61,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
             height: 40,
             width: 150,
             child: TextButton(onPressed: () {
-              Navigator.pushNamed(context, '/home');
+              Navigator.pushReplacementNamed(context, '/login');
             },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(const Color(0xFF5B2C6F))
@@ -80,36 +78,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
-class Register extends StatefulWidget {
-  const Register({Key? key}) : super(key: key);
-
-  @override
-  State<Register> createState() => _RegisterState();
-}
-
-class _RegisterState extends State<Register> {
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-
-    );
-  }
-}
-
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
-
-  @override
-  State<Login> createState() => _LoginState();
-}
-
-class _LoginState extends State<Login> {
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-
-    );
-  }
-}
-
