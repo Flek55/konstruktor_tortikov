@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tortik/pages/register.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -30,7 +29,7 @@ class _LoginPageState extends State {
                 children: <Widget>[
                   _getHeader(),
                   _getInputs(),
-                  _getSignIn(context),
+                  _getLogIn(context),
                   _getBottomRow(context),
                 ],
               ),
@@ -78,7 +77,7 @@ _getInputs() {
   );
 }
 
-_getSignIn(context) {
+_getLogIn(context) {
   return Expanded(
     flex: 1,
     child: Row(
@@ -91,8 +90,8 @@ _getSignIn(context) {
         Container(
           color: Colors.black12,
             child: IconButton(onPressed: (){
-          Navigator.pushReplacementNamed(context, '/home');
-        },
+              Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
+            },
             iconSize: 40,
             icon: const Icon(Icons.arrow_forward_ios))
         ),
@@ -109,8 +108,8 @@ _getBottomRow(context) {
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => SignUpPage()));
+            Navigator.pushNamed(
+                context, '/register');
           },
           child: const Text(
             'Регистрация',
