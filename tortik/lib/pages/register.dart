@@ -1,18 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:tortik/Services/AppUser.dart';
+import 'package:tortik/Services/Auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignUpPageState extends State {
+class _SignUpPageState extends State<SignUpPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  String _email = '';
+  String _password = '';
+  bool showLogin = true;
+
+  final AuthService _authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body:
-        CustomPaint(
+      CustomPaint(
         painter: BackgroundSignUp(),
         child: Stack(
           children: <Widget>[
@@ -21,7 +33,7 @@ class _SignUpPageState extends State {
               child: Column(
                 children: <Widget>[
                   _getHeader(),
-                  _getInputs(),
+                  _getInputs(_emailController, _passwordController),
                   _getSignUp(context),
                   _getBottomRow(context),
                 ],
@@ -32,116 +44,132 @@ class _SignUpPageState extends State {
       ),
     );
   }
-  //Future signIn() async {
-  //  await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //      email: emailController.text.trim(),
-  //      password: passwordController.text.trim(),
-  //  );
-  //}
-}
 
-_getHeader() {
-  return Expanded(
-    flex: 3,
-    child: Container(
-      alignment: Alignment.bottomLeft,
-      child:const Text(
-        'Регистрация аккаунта',
-        style: TextStyle(color: Colors.white, fontSize: 37),
+  void _registerButtonAction() async {
+    _email = _emailController.text;
+    _password = _passwordController.text;
+
+    if (_email.isEmpty || _password.isEmpty) return;
+
+    AppUser? user = await _authService.registerWithEmailAndPassword(
+        _email.trim(), _password.trim());
+    if (user == null) {
+      Fluttertoast.showToast(
+          msg: "Введены неверные значения!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    } else {
+      _emailController.clear();
+      _passwordController.clear();
+    }
+  }
+
+
+  _getHeader() {
+    return Expanded(
+      flex: 3,
+      child: Container(
+        alignment: Alignment.bottomLeft,
+        child: const Text(
+          'Регистрация аккаунта',
+          style: TextStyle(color: Colors.white, fontSize: 37),
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-_getInputs() {
-  return Expanded(
-    flex: 4,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: const <Widget>[
-        TextField(
-          decoration: InputDecoration(
-            enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.white)),
-            labelText: 'Имя',
-            labelStyle: TextStyle(color: Colors.white),
+  _getInputs(emailController, passwordController) {
+    return Expanded(
+      flex: 4,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          const SizedBox(
+            height: 15,
           ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        TextField(
-          decoration: InputDecoration(
+          TextField(
+            controller: emailController,
+            decoration: const InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                labelText: 'E-mail',
+                labelStyle: TextStyle(color: Colors.white)),
+            style: (const TextStyle(color:Colors.white)),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          TextField(
+            controller: passwordController,
+            decoration: const InputDecoration(
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.white),
               ),
-              labelText: 'E-mail',
-              labelStyle: TextStyle(color: Colors.white)),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        TextField(
-          decoration: InputDecoration(
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
+              labelText: 'Пароль',
+              labelStyle: TextStyle(color: Colors.white),
             ),
-            labelText: 'Пароль',
-            labelStyle: TextStyle(color: Colors.white),
+            style: (const TextStyle(color:Colors.white)),
           ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-      ],
-    ),
-  );
-}
+          const SizedBox(
+            height: 15,
+          ),
+        ],
+      ),
+    );
+  }
 
-_getSignUp(context) {
-  return Expanded(
-    flex: 2,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children:<Widget>[
-        const Text(
-          'Регистрация',
-          style: TextStyle(
-              fontSize: 25, fontWeight: FontWeight.w500, color: Colors.white),
-        ),
-        Container(
-            color: Colors.black12,
-            child: IconButton(onPressed: (){
-              Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
+  _getSignUp(context) {
+    return Expanded(
+      flex: 2,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          const Text(
+            'Регистрация',
+            style: TextStyle(
+                fontSize: 25, fontWeight: FontWeight.w500, color: Colors.white),
+          ),
+          Container(
+              color: Colors.grey,
+              child: IconButton(onPressed: () {
+                _registerButtonAction();
+                Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
+              },
+                  iconSize: 40,
+                  icon: const Icon(Icons.arrow_forward_ios))
+          ),
+        ],
+      ),
+    );
+  }
+
+  _getBottomRow(context) {
+    return Expanded(
+      flex: 1,
+      child: Row(
+        children: <Widget>[
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/login');
             },
-                iconSize: 40,
-                icon: const Icon(Icons.arrow_forward_ios))
-        ),
-    ],
-        ),
-  );
-}
-
-_getBottomRow(context) {
-  return Expanded(
-    flex: 1,
-    child: Row(
-      children: <Widget>[
-        GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(context,'/login');
-          },
-          child:  const Text("Вход",
+            child: const Text("Вход",
               style: TextStyle(
-                color: Colors.black,
+                  color: Colors.white,
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
                   decoration: TextDecoration.underline),
-              ),
             ),
-      ],
-    ),
-  );
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class BackgroundSignUp extends CustomPainter {
@@ -153,17 +181,17 @@ class BackgroundSignUp extends CustomPainter {
 
     Path mainBackground = Path();
     mainBackground.addRect(Rect.fromLTRB(0, 0, sw, sh));
-    paint.color = Colors.grey.shade100;
+    paint.color = Colors.black;
     canvas.drawPath(mainBackground, paint);
 
-    // Blue
+    // purple
     Path blueWave = Path();
     blueWave.lineTo(sw, 0);
     blueWave.lineTo(sw, sh * 0.65);
     blueWave.cubicTo(sw * 0.8, sh * 0.8, sw * 0.5, sh * 0.8, sw * 0.45, sh);
     blueWave.lineTo(0, sh);
     blueWave.close();
-    paint.color = Colors.lightBlue.shade300;
+    paint.color = Colors.black;
     canvas.drawPath(blueWave, paint);
 
     // Grey
@@ -172,7 +200,7 @@ class BackgroundSignUp extends CustomPainter {
     greyPath.lineTo(sw, sh * 0.3);
     greyPath.cubicTo(sw * 0.65, sh * 0.45, sw * 0.25, sh * 0.35, 0, sh * 0.5);
     greyPath.close();
-    paint.color = Colors.grey.shade800;
+    paint.color = const Color(0xFF5B2C6F);
     canvas.drawPath(greyPath, paint);
   }
 
