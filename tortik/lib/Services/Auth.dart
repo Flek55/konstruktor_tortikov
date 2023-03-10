@@ -10,16 +10,18 @@ class AuthService{
       User? user = result.user;
       return AppUser(user);
     }catch(e){
+      print(e);
       return null;
     }
   }
 
   Future<AppUser?> registerWithEmailAndPassword(String email, String password) async{
     try{
-      UserCredential result = await _fAuth.signInWithEmailAndPassword(email: email, password: password);
+      UserCredential result = await _fAuth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
       return AppUser(user);
     }catch(e){
+      print(e);
       return null;
     }
   }
