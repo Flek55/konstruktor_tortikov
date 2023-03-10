@@ -11,22 +11,18 @@ class _SignUpPageState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomPaint(
+      body:
+        CustomPaint(
         painter: BackgroundSignUp(),
         child: Stack(
           children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 35),
               child: Column(
                 children: <Widget>[
                   _getHeader(),
                   _getInputs(),
-                  _getSignUp(),
+                  _getSignUp(context),
                   _getBottomRow(context),
                 ],
               ),
@@ -36,6 +32,12 @@ class _SignUpPageState extends State {
       ),
     );
   }
+  //Future signIn() async {
+  //  await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //      email: emailController.text.trim(),
+  //      password: passwordController.text.trim(),
+  //  );
+  //}
 }
 
 _getHeader() {
@@ -96,16 +98,24 @@ _getInputs() {
   );
 }
 
-_getSignUp() {
+_getSignUp(context) {
   return Expanded(
     flex: 2,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children:const <Widget>[
-        Text(
+      children:<Widget>[
+        const Text(
           'Регистрация',
           style: TextStyle(
               fontSize: 25, fontWeight: FontWeight.w500, color: Colors.white),
+        ),
+        Container(
+            color: Colors.black12,
+            child: IconButton(onPressed: (){
+              Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
+            },
+                iconSize: 40,
+                icon: const Icon(Icons.arrow_forward_ios))
         ),
     ],
         ),
@@ -119,19 +129,16 @@ _getBottomRow(context) {
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            Navigator.pop(context,'/login');
+            Navigator.pushNamed(context,'/login');
           },
-          child:  TextButton(
-            child: const Text("Вход",
-              style: TextStyle(),
+          child:  const Text("Вход",
+              style: TextStyle(
+                color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  decoration: TextDecoration.underline),
+              ),
             ),
-            //iconSize: 75,
-            //color: Colors.white,
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/login');
-            },
-          ),
-        ),
       ],
     ),
   );

@@ -39,7 +39,7 @@ class _LogRegState extends State<LogReg> {
             height: 40,
             width: 150,
           child: TextButton(onPressed: () {
-            Navigator.pushReplacementNamed(context,'/register');
+            Navigator.pushNamed(context,'/register');
           },
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(const Color(0xFF5B2C6F))
@@ -59,7 +59,7 @@ class _LogRegState extends State<LogReg> {
             height: 40,
             width: 150,
             child: TextButton(onPressed: () {
-              Navigator.pushReplacementNamed(context, '/login');
+              Navigator.pushNamed(context, '/login');
             },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(const Color(0xFF5B2C6F))
