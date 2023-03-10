@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 children: <Widget>[
                   _getHeader(),
-                  _getInputs(),
+                  _getInputs(_emailController, _passwordController),
                   _getLogIn(context),
                   _getBottomRow(context),
                 ],
@@ -44,11 +44,11 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _loginButtonAction() async {
+  Future<bool> _loginButtonAction() async {
     _email = _emailController.text;
     _password = _passwordController.text;
 
-    if (_email.isEmpty || _password.isEmpty) return;
+    if (_email.isEmpty || _password.isEmpty) return false;
 
     AppUser? user = await _authService.signInWithEmailAndPassword(
         _email.trim(), _password.trim());
@@ -60,15 +60,14 @@ class _LoginPageState extends State<LoginPage> {
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
           textColor: Colors.white,
-          fontSize: 16.0
-      );
+          fontSize: 16.0);
+          return false;
     } else {
       _emailController.clear();
       _passwordController.clear();
-      print('OK');
+      return true;
     }
   }
-
 
   _getHeader() {
     return Expanded(
@@ -83,29 +82,31 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  _getInputs() {
+  _getInputs(emailController, passwordController) {
     return Expanded(
         flex: 4,
         child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
-            children: const <Widget>[
+            children: <Widget>[
               TextField(
-                decoration: InputDecoration(labelText: 'Логин',
+                controller: emailController,
+                decoration: const InputDecoration(labelText: 'E-Mail',
                     labelStyle: TextStyle(color: Colors.white),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),)),
-                style: (TextStyle(color:Colors.white)),
+                style: (const TextStyle(color:Colors.white)),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               TextField(
-                decoration: InputDecoration(labelText: 'Пароль',
+                controller: passwordController,
+                decoration: const InputDecoration(labelText: 'Пароль',
                     labelStyle: TextStyle(color: Colors.white),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),)
                 ),
-                style: (TextStyle(color:Colors.white)),
+                style: (const TextStyle(color:Colors.white)),
               ),
             ]
         ));
@@ -124,8 +125,20 @@ class _LoginPageState extends State<LoginPage> {
           ),
           Container(
               color: Colors.grey,
-              child: IconButton(onPressed: () {
-                _loginButtonAction();
+              child: IconButton(onPressed: () async {
+                bool ans  = await _loginButtonAction();
+                if (ans){
+                  Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
+                }else{
+                  Fluttertoast.showToast(
+                      msg: "Введены неверные значения!",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0);
+                }
               },
                   iconSize: 40,
                   icon: const Icon(Icons.arrow_forward_ios))
