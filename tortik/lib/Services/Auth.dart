@@ -10,7 +10,6 @@ class AuthService{
       User? user = result.user;
       return AppUser(user);
     }catch(e){
-      print(e);
       return null;
     }
   }
@@ -21,7 +20,6 @@ class AuthService{
       User? user = result.user;
       return AppUser(user);
     }catch(e){
-      print(e);
       return null;
     }
   }
