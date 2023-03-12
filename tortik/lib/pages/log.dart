@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tortik/Services/AppUser.dart';
-import 'package:tortik/Services/Auth.dart';
+import 'package:tortik/Services/app_user.dart';
+import 'package:tortik/Services/auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginPage extends StatefulWidget {

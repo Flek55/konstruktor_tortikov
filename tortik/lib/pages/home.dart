@@ -73,7 +73,7 @@ class _HomeState extends State<Home> {
           children: [
             const Padding(padding: EdgeInsets.only(top: 50)),
             Row(
-              children: [],
+              children: const [],
             ),
             Row(children: const [
               Padding(padding: EdgeInsets.only(top: 50, left: 40)),

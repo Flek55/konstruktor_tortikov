@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:tortik/Services/AppUser.dart';
+import 'package:tortik/Services/app_user.dart';
 
 class AuthService{
   final FirebaseAuth _fAuth = FirebaseAuth.instance;
