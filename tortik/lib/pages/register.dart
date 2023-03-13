@@ -45,11 +45,11 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  void _registerButtonAction() async {
+  Future<bool> _registerButtonAction() async {
     _email = _emailController.text;
     _password = _passwordController.text;
 
-    if (_email.isEmpty || _password.isEmpty) return;
+    if (_email.isEmpty || _password.isEmpty) return false;
 
     AppUser? user = await _authService.registerWithEmailAndPassword(
         _email.trim(), _password.trim());
@@ -61,11 +61,12 @@ class _SignUpPageState extends State<SignUpPage> {
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
           textColor: Colors.white,
-          fontSize: 16.0
-      );
+          fontSize: 16.0);
+      return false;
     } else {
       _emailController.clear();
       _passwordController.clear();
+      return true;
     }
   }
 
@@ -137,9 +138,20 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           Container(
               color: Colors.grey,
-              child: IconButton(onPressed: () {
-                _registerButtonAction();
-                Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
+              child: IconButton(onPressed: () async {
+                bool ans = await _registerButtonAction();
+                if (ans){
+                  Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
+                }else{
+                  Fluttertoast.showToast(
+                      msg: "Неверный формат ввода!",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0);
+                }
               },
                   iconSize: 40,
                   icon: const Icon(Icons.arrow_forward_ios))

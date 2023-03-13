@@ -131,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
                 }else{
                   Fluttertoast.showToast(
-                      msg: "Введены неверные значения!",
+                      msg: "Неверный формат ввода!",
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.CENTER,
                       timeInSecForIosWeb: 1,
