@@ -134,6 +134,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 bool ans = await _registerButtonAction();
                 if (ans){
                   Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
+                  _emailController.clear();
+                  _passwordController.clear();
                 }else{
                   Fluttertoast.showToast(
                       msg: "Неверный формат ввода!",

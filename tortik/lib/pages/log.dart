@@ -148,8 +148,9 @@ class _LoginPageState extends State<LoginPage> {
         children: <Widget>[
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(
-                  context, '/register');
+              Navigator.pushNamed(context, '/register');
+              _emailController.clear();
+              _passwordController.clear();
             },
             child: const Text(
               'Регистрация',
@@ -163,6 +164,8 @@ class _LoginPageState extends State<LoginPage> {
           GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, '/forpass');
+              _emailController.clear();
+              _passwordController.clear();
             },
             child: const Text(
                 'Забыли пароль',
