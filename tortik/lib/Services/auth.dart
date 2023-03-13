@@ -24,7 +24,7 @@ class AuthService{
     }
   }
 
-  Future logOut() async{
+  Future signOut() async{
     await _fAuth.signOut();
   }
 
