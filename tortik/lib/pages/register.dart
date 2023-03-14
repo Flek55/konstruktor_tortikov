@@ -108,6 +108,8 @@ class _SignUpPageState extends State<SignUpPage> {
               labelStyle: TextStyle(color: Colors.white),
             ),
             style: (const TextStyle(color:Colors.white)),
+            obscureText: true,
+            obscuringCharacter: '*',
           ),
           const SizedBox(
             height: 15,
@@ -138,7 +140,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   _passwordController.clear();
                 }else{
                   Fluttertoast.showToast(
-                      msg: "Неверный формат ввода!",
+                      msg: "Неверный логин или пароль!",
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.CENTER,
                       timeInSecForIosWeb: 1,

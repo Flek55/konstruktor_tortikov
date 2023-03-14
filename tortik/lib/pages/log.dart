@@ -99,6 +99,8 @@ class _LoginPageState extends State<LoginPage> {
                       borderSide: BorderSide(color: Colors.white),)
                 ),
                 style: (const TextStyle(color:Colors.white)),
+                obscureText: true,
+                obscuringCharacter: '*',
               ),
             ]
         ));
@@ -123,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
                 }else{
                   Fluttertoast.showToast(
-                      msg: "Неверный формат ввода!",
+                      msg: "Неверный логин или пароль!",
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.CENTER,
                       timeInSecForIosWeb: 1,
