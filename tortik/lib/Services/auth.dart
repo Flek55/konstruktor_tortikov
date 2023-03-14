@@ -32,4 +32,12 @@ class AuthService{
     return _fAuth.authStateChanges().map((User? user) => 
     user != null ? AppUser(user) : null);
   }
+
+  void resetPassword(email) async{
+    try{
+      _fAuth.sendPasswordResetEmail(email: email);
+    }catch(e){
+      return null;
+    }
+  }
 }
