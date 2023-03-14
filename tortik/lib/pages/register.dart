@@ -139,14 +139,19 @@ class _SignUpPageState extends State<SignUpPage> {
                   _emailController.clear();
                   _passwordController.clear();
                 }else{
+                  String e = "Неверный логин или пароль!";
+                  if(_passwordController.text.length < 6){
+                    e = "Пароль должень быть больше 5 символов";
+                  }
                   Fluttertoast.showToast(
-                      msg: "Неверный логин или пароль!",
+                      msg: e,
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.CENTER,
                       timeInSecForIosWeb: 1,
                       backgroundColor: Colors.deepOrange,
                       textColor: Colors.white,
                       fontSize: 16.0);
+                  _passwordController.clear();
                 }
               },
                   iconSize: 40,
