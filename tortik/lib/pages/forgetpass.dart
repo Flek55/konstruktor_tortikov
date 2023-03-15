@@ -44,7 +44,6 @@ class _ForgetPassState extends State<ForgetPass> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-
           TextField(
             controller: _emailController,
             decoration: const InputDecoration(
