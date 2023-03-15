@@ -69,7 +69,7 @@ class _ForgetPassState extends State<ForgetPass> {
       child: Container(
         alignment: Alignment.centerLeft,
         child: const Text(
-          'Забыли пароль',
+          'Сбросить пароль',
           style: TextStyle(color: Colors.white, fontSize: 37),
         ),
       ),
