@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:tortik/Services/cache.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tortik/Services/auth.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
@@ -51,16 +59,28 @@ class Start extends StatelessWidget{
                               color: Color(0xFF707B7C)),
                         ),
                         const Padding(padding: EdgeInsets.only(top: 90)),
-                        IconButton(
-                          icon: const Icon(Icons.east),
-                          iconSize: 65,
-                          color: const Color(0xFFF4D5BC),
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/logger');
-                          },
-                        ),]
+                        _getIconButton(context),]
                   ))
                 ])
         );
+  }
+
+  _getIconButton(context){
+    return IconButton(
+      icon: const Icon(Icons.east),
+      iconSize: 65,
+      color: const Color(0xFFF4D5BC),
+      onPressed: () async{
+        SharedPreferences _sp = await SharedPreferences.getInstance();
+        LocalDataAnalyse _LDA = LocalDataAnalyse(sp: _sp);
+        String status = await _LDA.getLoginStatus();
+        String user_login = await _LDA.getUserLogin();
+        if (status == "1"){
+          Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
+        }else{
+          Navigator.pushReplacementNamed(context, '/logger');
+        }
+      },
+    );
   }
 }
