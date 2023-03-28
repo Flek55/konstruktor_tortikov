@@ -59,8 +59,6 @@ class _SignUpPageState extends State<SignUpPage> {
     if (user == null) {
       return false;
     } else {
-      _emailController.clear();
-      _passwordController.clear();
       return true;
     }
   }

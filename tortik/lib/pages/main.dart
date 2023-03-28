@@ -9,9 +9,9 @@ import 'package:tortik/pages/forgetpass.dart';
 import 'package:tortik/pages/log.dart';
 
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initFireBase();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
@@ -27,4 +27,10 @@ void main() async {
       '/login': (context) => const LoginPage(),
     },
   ));
+}
+
+Future<bool> initFireBase() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  return true;
 }

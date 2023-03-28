@@ -26,10 +26,8 @@ class LocalDataAnalyse implements LocalDataSource{
   Future<String> getLoginStatus() async {
       final jsonLoginStatus = sp.getString(CACHED_USER_LOGIN_STATUS);
       if (jsonLoginStatus != null) {
-        print("SUCCESS DECODE!!!!");
         return Future.value(jsonDecode(jsonLoginStatus));
       }else{
-        print("FAIL DECODE");
         return '0';
       }
   }
@@ -38,10 +36,8 @@ class LocalDataAnalyse implements LocalDataSource{
   Future<String> getUserLogin() async{
     final jsonUserLogin = sp.getString(CACHED_USER_LOGIN);
     if (jsonUserLogin != null) {
-      print("SUCCESS DECODE!!!!");
       return Future.value(jsonDecode(jsonUserLogin));
     }else{
-      print("FAIL DECODE");
       return '0';
     }
   }
@@ -50,10 +46,8 @@ class LocalDataAnalyse implements LocalDataSource{
   Future<String> getUserPassword() async{
     final jsonUserPassword = sp.getString(CACHED_USER_PASSWORD);
     if (jsonUserPassword != null) {
-      print("SUCCESS DECODE!!!!");
       return Future.value(jsonDecode(jsonUserPassword));
     }else{
-      print("FAIL DECODE");
       return '0';
     }
   }
@@ -67,7 +61,6 @@ class LocalDataAnalyse implements LocalDataSource{
     sp.setString(CACHED_USER_LOGIN_STATUS, jsonLoginStatus);
     sp.setString(CACHED_USER_LOGIN, jsonUserLogin);
     sp.setString(CACHED_USER_PASSWORD, jsonUserPassword);
-    print("SUCCESS!!");
     return Future.value(jsonLoginStatus);
   }
 }
