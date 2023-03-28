@@ -1,30 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Start(),
-    );
-  }
-}
+import 'package:tortik/Services/cache.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tortik/Services/auth.dart';
+import 'package:tortik/Services/app_user.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
-class Start extends StatelessWidget{
+class Start extends StatefulWidget{
   const Start({super.key});
 
-  void initFireBase() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp();
-  }
+  @override
+  State<Start> createState() => _StartState();
+}
+
+class _StartState extends State<Start> {
 
   @override
   Widget build(BuildContext context) {
-    initFireBase();//initializing the Database
         return Scaffold(
             backgroundColor: const Color(0xFF000000),
             body: Row(
@@ -51,16 +43,44 @@ class Start extends StatelessWidget{
                               color: Color(0xFF707B7C)),
                         ),
                         const Padding(padding: EdgeInsets.only(top: 90)),
-                        IconButton(
-                          icon: const Icon(Icons.east),
-                          iconSize: 65,
-                          color: const Color(0xFFF4D5BC),
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/logger');
-                          },
-                        ),]
+                        _getIconButton(context),]
                   ))
                 ])
         );
+  }
+
+  _getIconButton(context){
+    final AuthService _authService = AuthService();
+    return IconButton(
+      icon: const Icon(Icons.east),
+      iconSize: 65,
+      color: const Color(0xFFF4D5BC),
+      onPressed: () async{
+        SharedPreferences _sp = await SharedPreferences.getInstance();
+        LocalDataAnalyse _LDA = LocalDataAnalyse(sp: _sp);
+        String status = await _LDA.getLoginStatus();
+        if (status == "1"){
+          String user_login = await _LDA.getUserLogin();
+          String user_password = await _LDA.getUserPassword();
+          AppUser? user = await _authService.signInWithEmailAndPassword(
+              user_login.trim(), user_password.trim());
+          if (user != null) {
+            Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
+          } else {
+            Fluttertoast.showToast(
+                msg: "Сохраненные данные неверны!",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.deepOrange,
+                textColor: Colors.white,
+                fontSize: 16.0);
+            Navigator.pushReplacementNamed(context, '/logger');
+          }
+        }else{
+          Navigator.pushReplacementNamed(context, '/logger');
+        }
+      },
+    );
   }
 }

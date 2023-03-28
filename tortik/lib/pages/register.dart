@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:tortik/Services/app_user.dart';
 import 'package:tortik/Services/auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:tortik/Services/cache.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -56,8 +59,6 @@ class _SignUpPageState extends State<SignUpPage> {
     if (user == null) {
       return false;
     } else {
-      _emailController.clear();
-      _passwordController.clear();
       return true;
     }
   }
@@ -134,7 +135,11 @@ class _SignUpPageState extends State<SignUpPage> {
               color: Colors.grey,
               child: IconButton(onPressed: () async {
                 bool ans = await _registerButtonAction();
+                SharedPreferences sp = await SharedPreferences.getInstance();
+                LocalDataAnalyse _LDA = LocalDataAnalyse(sp: sp);
                 if (ans){
+                  _LDA.setLoginStatus("1", _emailController.text.trim(),
+                      _passwordController.text.trim());
                   Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
                   _emailController.clear();
                   _passwordController.clear();

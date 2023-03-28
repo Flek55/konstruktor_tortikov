@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:tortik/Services/app_user.dart';
 import 'package:tortik/Services/auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:tortik/Services/cache.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -55,8 +58,6 @@ class _LoginPageState extends State<LoginPage> {
     if (user == null) {
           return false;
     } else {
-      _emailController.clear();
-      _passwordController.clear();
       return true;
     }
   }
@@ -121,8 +122,14 @@ class _LoginPageState extends State<LoginPage> {
               color: Colors.grey,
               child: IconButton(onPressed: () async {
                 bool ans  = await _loginButtonAction();
+                SharedPreferences _sp = await SharedPreferences.getInstance();
+                LocalDataAnalyse _LDA = LocalDataAnalyse(sp: _sp);
                 if (ans){
+                  _LDA.setLoginStatus("1", _emailController.text.trim(),
+                      _passwordController.text.trim());
                   Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
+                  _emailController.clear();
+                  _passwordController.clear();
                 }else{
                   Fluttertoast.showToast(
                       msg: "Неверный логин или пароль!",
@@ -132,6 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                       backgroundColor: Colors.deepOrange,
                       textColor: Colors.white,
                       fontSize: 16.0);
+                  _passwordController.clear();
                 }
               },
                   iconSize: 40,
