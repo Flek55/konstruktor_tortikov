@@ -20,6 +20,7 @@ class _HomeInteractionState extends State<HomeInteraction> {
       _selectedTab = index;
     });
   }
+
   static const List<Widget> _widgets = <Widget>[
     HomeMenu(),
     HomeLiked(),
