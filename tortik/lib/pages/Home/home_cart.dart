@@ -10,9 +10,24 @@ class HomeCart extends StatefulWidget {
 class _HomeCartState extends State<HomeCart> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Корзина"),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          const Padding(padding: EdgeInsets.only(top: 50)),
+          Row(
+            children: const [],
+          ),
+          Row(children: const [
+            Padding(padding: EdgeInsets.only(top: 50, left: 40)),
+            Text('Ваш заказ \nвсегда под рукой!',
+              textAlign: TextAlign.left,
+              style: TextStyle(fontFamily: 'Roboto',
+                fontSize: 25,
+                color: Colors.black,
+              ),)]
+          ),
+        ],
       ),
     );
   }

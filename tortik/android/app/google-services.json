@@ -7,7 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:795089995929:android:3015d704456db43f439008",
+        "mobilesdk_app_id": "1:795089995929:android:8171417a45496f7c439008",
         "android_client_info": {
           "package_name": "com.example.tortik"
         }
@@ -31,10 +31,10 @@
               "client_type": 3
             },
             {
-              "client_id": "795089995929-rbgq1a022ilokvc5tumcpf41rh88pfh6.apps.googleusercontent.com",
+              "client_id": "795089995929-injs62mr288qncno88b0npljicdg7h3c.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.tortik"
+                "bundle_id": "com.bodrero.app"
               }
             }
           ]
