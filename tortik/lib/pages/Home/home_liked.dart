@@ -10,10 +10,25 @@ class HomeLiked extends StatefulWidget {
 class _HomeLikedState extends State<HomeLiked> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body:Center(
-        child: Text("Избранное"),
-      )
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          const Padding(padding: EdgeInsets.only(top: 50)),
+          Row(
+            children: const [],
+          ),
+          Row(children: const [
+            Padding(padding: EdgeInsets.only(top: 50, left: 40)),
+            Text('Ваши любимые десерты \nвсегда с вами!',
+              textAlign: TextAlign.left,
+              style: TextStyle(fontFamily: 'Roboto',
+                fontSize: 25,
+                color: Colors.black,
+              ),)]
+          ),
+        ],
+      ),
     );
   }
 }
