@@ -14,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>tortik</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>Доступ к геолокации пользователя необходим для отображения текущей геопозиции</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

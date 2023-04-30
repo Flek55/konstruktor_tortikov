@@ -1,6 +1,6 @@
-import 'dart:html';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:tortik/pages/map.dart';
+
 
 class HomeMenu extends StatefulWidget {
   const HomeMenu({Key? key}) : super(key: key);
@@ -9,7 +9,7 @@ class HomeMenu extends StatefulWidget {
   State<HomeMenu> createState() => _HomeMenuState();
 }
 List _names = [Row(children:[
-  SizedBox(width: 20),
+  const SizedBox(width: 20),
   ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Stack(
@@ -19,7 +19,9 @@ List _names = [Row(children:[
                     decoration: const BoxDecoration(
                         color:Color(0xFF5B2C6F)
                     ))),
-            TextButton(onPressed:(null), child: const Text("Торты",style:TextStyle(color: Colors.white)),style:TextButton.styleFrom(foregroundColor: Colors.white30,padding: const EdgeInsets.all(16),textStyle: const TextStyle(fontSize: 18)))
+            TextButton(onPressed:(null),style:TextButton.styleFrom(foregroundColor: Colors.white30,
+                padding: const EdgeInsets.all(16),textStyle: const TextStyle(fontSize: 18)),
+                child: const Text("Торты",style:TextStyle(color: Colors.white)))
           ])),
   const SizedBox(width: 60),
   ClipRRect(
@@ -32,12 +34,14 @@ List _names = [Row(children:[
                     color: Color(0xFF5B2C6F)
                 ),
               ),
-            ), TextButton(onPressed:(null), child: const Text("Десерты",style:TextStyle(color: Colors.white)),style:TextButton.styleFrom(foregroundColor: Colors.white30,padding: const EdgeInsets.all(16),textStyle: const TextStyle(fontSize: 18)))
+            ), TextButton(onPressed:(null),style:TextButton.styleFrom(foregroundColor: Colors.white30,
+                padding: const EdgeInsets.all(16),
+                textStyle: const TextStyle(fontSize: 18)), child: const Text("Десерты",style:TextStyle(color: Colors.white)))
           ])),
   const SizedBox(width: 60),
   ClipRRect(borderRadius: BorderRadius.circular(20),child: Stack(children: <Widget>[Positioned.fill(child: Container(decoration: const BoxDecoration(color:Color(0xFF5B2C6F)
   ))),
-    TextButton(onPressed:(null), child: const Text("Кофе",style:TextStyle(color: Colors.white)),style:TextButton.styleFrom(foregroundColor: Colors.white30,padding: const EdgeInsets.all(16),textStyle: const TextStyle(fontSize: 18)))
+    TextButton(onPressed:(null),style:TextButton.styleFrom(foregroundColor: Colors.white30,padding: const EdgeInsets.all(16),textStyle: const TextStyle(fontSize: 18)), child: const Text("Кофе",style:TextStyle(color: Colors.white)))
   ])),
   const SizedBox(width: 60),ClipRRect(
       borderRadius: BorderRadius.circular(20),
@@ -50,7 +54,7 @@ List _names = [Row(children:[
                 ),
               ),
             ),
-            TextButton(onPressed:(null), child:Text("Выпечка",style:TextStyle(color: Colors.white)),style:TextButton.styleFrom(foregroundColor: Colors.white30,padding: const EdgeInsets.all(16),textStyle: const TextStyle(fontSize: 18)))
+            TextButton(onPressed:(null),style:TextButton.styleFrom(foregroundColor: Colors.white30,padding: const EdgeInsets.all(16),textStyle: const TextStyle(fontSize: 18)), child:Text("Выпечка",style:TextStyle(color: Colors.white)))
           ]))]
 )];
 
@@ -63,13 +67,15 @@ class _HomeMenuState extends State<HomeMenu> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          const Padding(padding: EdgeInsets.only(top: 20)),
-          Row( children:const [
-            Padding(padding: EdgeInsets.only(left: 10)),
-            IconButton(onPressed: null, icon: Icon(Icons.account_circle,size: 30,)),
-            Padding(padding: EdgeInsets.only(left: 20)),
-            Icon(Icons.place),
-            TextButton(onPressed: null, child: Text("Как нас найти?"))
+          const Padding(padding: EdgeInsets.only(top: 50)),
+          Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+            const Icon(Icons.place),
+            TextButton(onPressed: (){
+              Navigator.pushNamed(context, '/map');
+            }, child: const Text("Как нас найти?",style:
+            TextStyle(color: Colors.black, fontSize: 17)),)
           ]
           ),
           const Padding(padding: EdgeInsets.only(top: 30)),
