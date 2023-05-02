@@ -4,6 +4,7 @@ import 'package:tortik/Services/auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tortik/Services/cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tortik/main.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -127,6 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                 if (ans){
                   _LDA.setLoginStatus("1", _emailController.text.trim(),
                       _passwordController.text.trim());
+                  CurrentUserInfo.email = _emailController.text.trim();
                   Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
                   _emailController.clear();
                   _passwordController.clear();

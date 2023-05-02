@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:tortik/pages/map.dart';
 import 'package:tortik/pages/register.dart';
 import 'package:tortik/pages/start.dart';
 import 'package:tortik/pages/home_interaction.dart';
@@ -25,6 +26,7 @@ void main() async {
       '/register': (context) => const SignUpPage(),
       '/forpass': (context) => const ForgetPass(),
       '/login': (context) => const LoginPage(),
+      '/map': (context) => const CafeMap(),
     },
   ));
 }
@@ -33,4 +35,12 @@ Future<bool> initFireBase() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   return true;
+}
+
+class CurrentUserInfo{
+  static String email = "";
+  static String id = "";
+  CurrentUserInfo(email){
+    email = email;
+  }
 }
