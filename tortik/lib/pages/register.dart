@@ -4,6 +4,7 @@ import 'package:tortik/Services/auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tortik/Services/cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tortik/main.dart';
 
 
 class SignUpPage extends StatefulWidget {
@@ -56,9 +57,12 @@ class _SignUpPageState extends State<SignUpPage> {
 
     AppUser? user = await _authService.registerWithEmailAndPassword(
         _email.trim(), _password.trim());
-    if (user == null) {
+    CurrentUserInfo.email = _email.trim();
+    if (user == null ) {
       return false;
-    } else {
+    } else if (CurrentUserInfo.email == ""){
+      return false;
+    }else{
       return true;
     }
   }

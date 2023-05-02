@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tortik/Services/auth.dart';
 import 'package:tortik/Services/app_user.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:tortik/main.dart';
 
 
 class Start extends StatefulWidget{
@@ -61,6 +62,7 @@ class _StartState extends State<Start> {
         String status = await _LDA.getLoginStatus();
         if (status == "1"){
           String user_login = await _LDA.getUserLogin();
+          CurrentUserInfo.email = user_login;
           String user_password = await _LDA.getUserPassword();
           AppUser? user = await _authService.signInWithEmailAndPassword(
               user_login.trim(), user_password.trim());

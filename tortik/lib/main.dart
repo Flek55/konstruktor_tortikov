@@ -36,3 +36,11 @@ Future<bool> initFireBase() async {
   await Firebase.initializeApp();
   return true;
 }
+
+class CurrentUserInfo{
+  static String email = "";
+  static String id = "";
+  CurrentUserInfo(email){
+    email = email;
+  }
+}
