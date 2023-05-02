@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tortik/pages/map.dart';
 
 
 class HomeMenu extends StatefulWidget {
@@ -19,11 +18,11 @@ List _names = [Row(children:[
                     decoration: const BoxDecoration(
                         color:Color(0xFF5B2C6F)
                     ))),
-            TextButton(onPressed:(null),style:TextButton.styleFrom(foregroundColor: Colors.white30,
+            TextButton(onPressed:(){},style:TextButton.styleFrom(foregroundColor: Colors.white30,
                 padding: const EdgeInsets.all(16),textStyle: const TextStyle(fontSize: 18)),
-                child: const Text("Торты",style:TextStyle(color: Colors.white)))
+                child: const Text("Выпечка",style:TextStyle(color: Colors.white)))
           ])),
-  const SizedBox(width: 60),
+  const SizedBox(width: 30),
   ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Stack(
@@ -34,16 +33,26 @@ List _names = [Row(children:[
                     color: Color(0xFF5B2C6F)
                 ),
               ),
-            ), TextButton(onPressed:(null),style:TextButton.styleFrom(foregroundColor: Colors.white30,
+            ), TextButton(onPressed:(){},
+                style:TextButton.styleFrom(foregroundColor: Colors.white30,
                 padding: const EdgeInsets.all(16),
-                textStyle: const TextStyle(fontSize: 18)), child: const Text("Десерты",style:TextStyle(color: Colors.white)))
+                textStyle: const TextStyle(fontSize: 18)),
+                child: const Text("Десерты",style:TextStyle(color: Colors.white)))
           ])),
-  const SizedBox(width: 60),
+  const SizedBox(width: 30),
   ClipRRect(borderRadius: BorderRadius.circular(20),child: Stack(children: <Widget>[Positioned.fill(child: Container(decoration: const BoxDecoration(color:Color(0xFF5B2C6F)
-  ))),
-    TextButton(onPressed:(null),style:TextButton.styleFrom(foregroundColor: Colors.white30,padding: const EdgeInsets.all(16),textStyle: const TextStyle(fontSize: 18)), child: const Text("Кофе",style:TextStyle(color: Colors.white)))
-  ])),
-  const SizedBox(width: 60),ClipRRect(
+  )
+  )
+  ),
+    TextButton(onPressed:(){},
+        style:TextButton.styleFrom(foregroundColor: Colors.white30,
+            padding: const EdgeInsets.all(16),
+            textStyle: const TextStyle(fontSize: 18)),
+        child: const Text("Кофе",style:TextStyle(color: Colors.white)))
+  ]
+  )
+  ),
+  const SizedBox(width: 30),ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Stack(
           children: <Widget>[
@@ -54,9 +63,17 @@ List _names = [Row(children:[
                 ),
               ),
             ),
-            TextButton(onPressed:(null),style:TextButton.styleFrom(foregroundColor: Colors.white30,padding: const EdgeInsets.all(16),textStyle: const TextStyle(fontSize: 18)), child:Text("Выпечка",style:TextStyle(color: Colors.white)))
-          ]))]
-)];
+            TextButton(onPressed:(){},
+                style:TextButton.styleFrom(foregroundColor: Colors.white30,
+                    padding: const EdgeInsets.all(16),
+                    textStyle: const TextStyle(fontSize: 18)),
+                child:const Text("Торты",style:TextStyle(color: Colors.white)))
+          ]
+      )
+  )
+]
+)
+];
 
 
 
@@ -102,7 +119,7 @@ class _HomeMenuState extends State<HomeMenu> {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                borderSide: BorderSide(color: Colors.blue),
+                borderSide: BorderSide(color: Color(0xFF5B2C6F)),
               ),
             ),
           ), ),

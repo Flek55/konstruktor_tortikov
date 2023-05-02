@@ -24,6 +24,13 @@ class _CafeMapState extends State<CafeMap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await _initPermission();
+        },
+        backgroundColor: const Color(0xFF5B2C6F),
+        child: const Icon(Icons.my_location),
+      ),
       appBar: AppBar(
         backgroundColor: const Color(0xFF5B2C6F),
         centerTitle: true,
@@ -143,7 +150,7 @@ class _CafeMapState extends State<CafeMap> {
             latitude: appLatLong.lat,
             longitude: appLatLong.long,
           ),
-          zoom: 11,
+          zoom: 13,
         ),
       ),
     );
