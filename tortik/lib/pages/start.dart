@@ -5,6 +5,7 @@ import 'package:tortik/Services/auth.dart';
 import 'package:tortik/Services/app_user.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tortik/main.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 
 class Start extends StatefulWidget{
@@ -15,6 +16,7 @@ class Start extends StatefulWidget{
 }
 
 class _StartState extends State<Start> {
+  bool showLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,9 @@ class _StartState extends State<Start> {
                               color: Color(0xFF707B7C)),
                         ),
                         const Padding(padding: EdgeInsets.only(top: 90)),
-                        _getIconButton(context),]
+                        _getIconButton(context),
+                        showLoading ?(_getLoading(context)):Container(),
+                      ]
                   ))
                 ])
         );
@@ -57,6 +61,9 @@ class _StartState extends State<Start> {
       iconSize: 65,
       color: const Color(0xFFF4D5BC),
       onPressed: () async{
+        setState(() {
+          showLoading = true;
+        });
         SharedPreferences _sp = await SharedPreferences.getInstance();
         LocalDataAnalyse _LDA = LocalDataAnalyse(sp: _sp);
         String status = await _LDA.getLoginStatus();
@@ -84,5 +91,9 @@ class _StartState extends State<Start> {
         }
       },
     );
+  }
+
+  _getLoading(context){
+    return LoadingAnimationWidget.waveDots(color: const Color(0xFFF4D5BC), size: 60);
   }
 }
