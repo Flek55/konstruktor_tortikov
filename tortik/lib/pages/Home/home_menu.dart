@@ -107,17 +107,17 @@ class _HomeMenuState extends State<HomeMenu> {
           ]
           ),
           const SizedBox(height: 30,),
-          const SizedBox(height: 40,width: 360,child:TextField(
+          SizedBox(height: 40,width: 360,child:TextField(
             decoration: InputDecoration(
-              icon: Icon(Icons.search),
-              suffixIcon: IconButton(onPressed:null , icon: Icon(Icons.arrow_forward)) ,
-              enabledBorder: OutlineInputBorder(
+              icon: const Icon(Icons.search),
+              suffixIcon: IconButton(onPressed:(){} , icon: const Icon(Icons.arrow_forward)) ,
+              enabledBorder: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
                 borderSide: BorderSide(
                   color: Colors.grey,
                 ),
               ),
-              focusedBorder: OutlineInputBorder(
+              focusedBorder: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 borderSide: BorderSide(color: Color(0xFF5B2C6F)),
               ),
