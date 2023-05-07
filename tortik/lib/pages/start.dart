@@ -69,8 +69,10 @@ class _StartState extends State<Start> {
         String status = await _LDA.getLoginStatus();
         if (status == "1"){
           String user_login = await _LDA.getUserLogin();
-          CurrentUserInfo.email = user_login;
+          CurrentUserData.email = user_login;
           String user_password = await _LDA.getUserPassword();
+          CurrentUserData.pass = user_password;
+          CurrentUserData.name = await _authService.getUserDisplayName();
           AppUser? user = await _authService.signInWithEmailAndPassword(
               user_login.trim(), user_password.trim());
           if (user != null) {
