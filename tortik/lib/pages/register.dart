@@ -57,10 +57,10 @@ class _SignUpPageState extends State<SignUpPage> {
 
     AppUser? user = await _authService.registerWithEmailAndPassword(
         _email.trim(), _password.trim());
-    CurrentUserInfo.email = _email.trim();
+    CurrentUserData.email = _email.trim();
     if (user == null ) {
       return false;
-    } else if (CurrentUserInfo.email == ""){
+    } else if (CurrentUserData.email == ""){
       return false;
     }else{
       return true;
@@ -144,6 +144,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 if (ans){
                   _LDA.setLoginStatus("1", _emailController.text.trim(),
                       _passwordController.text.trim());
+                  CurrentUserData.email = _emailController.text.trim();
+                  CurrentUserData.pass = _passwordController.text.trim();
                   Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
                   _emailController.clear();
                   _passwordController.clear();

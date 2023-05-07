@@ -128,7 +128,9 @@ class _LoginPageState extends State<LoginPage> {
                 if (ans){
                   _LDA.setLoginStatus("1", _emailController.text.trim(),
                       _passwordController.text.trim());
-                  CurrentUserInfo.email = _emailController.text.trim();
+                  CurrentUserData.email = _emailController.text.trim();
+                  CurrentUserData.pass = _passwordController.text.trim();
+                  CurrentUserData.name = await _authService.getUserDisplayName();
                   Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
                   _emailController.clear();
                   _passwordController.clear();
