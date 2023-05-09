@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 
 
+
 class HomeProfile extends StatefulWidget {
   const HomeProfile({Key? key}) : super(key: key);
 
@@ -202,6 +203,14 @@ class _HomeProfileState extends State<HomeProfile> {
         suffixIcon: IconButton(onPressed:() async {
           if (_emailController.text.trim() != "" && _emailController.text.length >= 4) {
             String res = await _authService.updateEmail(_emailController.text.trim());
+            Fluttertoast.showToast(
+                msg: res,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.deepOrange,
+                textColor: Colors.white,
+                fontSize: 16.0);
             if (res == "Ваша почта изменена!") {
               setState(() {
                 CurrentUserData.email = _emailController.text.trim();
@@ -212,15 +221,6 @@ class _HomeProfileState extends State<HomeProfile> {
               _LDA.setLoginStatus("1", _emailController.text.trim(),CurrentUserData.pass);
             }
             _emailController.clear();
-            Fluttertoast.showToast(
-                msg: res,
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.deepOrange,
-                textColor: Colors.white,
-                fontSize: 16.0);
-
           }
         } , icon: const Icon(Icons.arrow_forward),style: IconButton.styleFrom(
           hoverColor: const Color(0xFF5B2C6F),
