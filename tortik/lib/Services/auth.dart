@@ -1,3 +1,4 @@
+///Connection with FireBaseAuth and all the auth methods
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tortik/Services/app_user.dart';
 
