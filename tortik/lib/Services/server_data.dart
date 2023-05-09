@@ -1,3 +1,4 @@
+///Parser for a Firestore stream to a Dart list
 import 'dart:convert';
 
 Product productsFromJson(String str) => Product.fromJson(json.decode(str));
@@ -7,7 +8,7 @@ String productsToJson(Product data) => json.encode(data.toJson());
 class Product {
   String id;
   String name;
-  String price;
+  int price;
   String description;
 
   Product({

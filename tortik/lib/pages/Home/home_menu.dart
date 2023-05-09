@@ -83,6 +83,7 @@ List _names = [Row(children:[
 
 
 class _HomeMenuState extends State<HomeMenu> {
+
   @override void initState() {
     _getData();
     super.initState();
@@ -101,7 +102,7 @@ class _HomeMenuState extends State<HomeMenu> {
             (item) => Product(
                 id: item.id,
                 name: item["name"],
-                price: item["price "],
+                price: item["price"],
                 description: item["description"])
     ).toList();
 
@@ -169,6 +170,17 @@ class _HomeMenuState extends State<HomeMenu> {
               },
             ),
           ),
+          const Padding(padding: EdgeInsets.only(top: 30)),
+          SizedBox(
+            height: 300,
+            child: ListView.builder(
+                itemBuilder:(context, index){
+                  return ListTile(
+                    title: Text(basket[index].name),
+                    subtitle: Text(basket[index].price.toString()),
+                  );
+                },
+          ),)
         ],
       ),
     );
