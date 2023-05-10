@@ -20,6 +20,7 @@ class AuthService{
     try{
       UserCredential result = await _fAuth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
+      assignName("Имя не задано");
       return AppUser(user);
     }catch(e){
       return null;

@@ -25,6 +25,7 @@ class _HomeProfileState extends State<HomeProfile> {
 
   @override
   Widget build(BuildContext context) {
+    _getDisplayName(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -54,8 +55,9 @@ class _HomeProfileState extends State<HomeProfile> {
           Row(
             children: [
               const Padding(padding: EdgeInsets.only(left: 40)),
-              Text(CurrentUserData.name,
-                style: const TextStyle(fontSize: 18,),),
+              Text(CurrentUserData.name,style: const TextStyle(
+                fontSize: 25,
+              ),),
               IconButton(onPressed: (){
                 setState(() {
                   showNameField = !showNameField;
@@ -129,6 +131,10 @@ class _HomeProfileState extends State<HomeProfile> {
         ],
       ),
     );
+  }
+
+  void _getDisplayName(context) async{
+     CurrentUserData.name = await _authService.getUserDisplayName();
   }
 
   _getDisplayNameField(context, displayNameController){
