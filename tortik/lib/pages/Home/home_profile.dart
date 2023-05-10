@@ -25,7 +25,6 @@ class _HomeProfileState extends State<HomeProfile> {
 
   @override
   Widget build(BuildContext context) {
-    _getDisplayName(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -131,10 +130,6 @@ class _HomeProfileState extends State<HomeProfile> {
         ],
       ),
     );
-  }
-
-  void _getDisplayName(context) async{
-     CurrentUserData.name = await _authService.getUserDisplayName();
   }
 
   _getDisplayNameField(context, displayNameController){

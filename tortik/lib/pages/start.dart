@@ -3,7 +3,6 @@ import 'package:tortik/Services/cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tortik/Services/auth.dart';
 import 'package:tortik/Services/app_user.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tortik/main.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -78,14 +77,6 @@ class _StartState extends State<Start> {
           if (user != null) {
             Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
           } else {
-            Fluttertoast.showToast(
-                msg: "Сохраненные данные неверны!",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.deepOrange,
-                textColor: Colors.white,
-                fontSize: 16.0);
             Navigator.pushReplacementNamed(context, '/logger');
           }
         }else{

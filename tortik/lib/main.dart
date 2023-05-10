@@ -39,6 +39,6 @@ Future<bool> initFireBase() async {
 
 class CurrentUserData{
   static String email = "";
-  static String name = "Имя не задано";
+  static String name = "";
   static String pass = "";
 }

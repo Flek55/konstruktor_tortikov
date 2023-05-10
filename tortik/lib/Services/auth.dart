@@ -1,6 +1,7 @@
 ///Connection with FireBaseAuth and all the auth methods
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tortik/Services/app_user.dart';
+import 'package:tortik/main.dart';
 
 
 class AuthService{
@@ -10,6 +11,7 @@ class AuthService{
     try{
       UserCredential result = await _fAuth.signInWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
+      CurrentUserData.name = await getUserDisplayName();
       return AppUser(user);
     }catch(e){
       return null;
@@ -21,6 +23,7 @@ class AuthService{
       UserCredential result = await _fAuth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
       assignName("Имя не задано");
+      CurrentUserData.name = await getUserDisplayName();
       return AppUser(user);
     }catch(e){
       return null;
