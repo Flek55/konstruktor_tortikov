@@ -130,7 +130,6 @@ class _LoginPageState extends State<LoginPage> {
                       _passwordController.text.trim());
                   CurrentUserData.email = _emailController.text.trim();
                   CurrentUserData.pass = _passwordController.text.trim();
-                  CurrentUserData.name = await _authService.getUserDisplayName();
                   Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
                   _emailController.clear();
                   _passwordController.clear();

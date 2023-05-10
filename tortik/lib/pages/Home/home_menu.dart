@@ -171,16 +171,6 @@ class _HomeMenuState extends State<HomeMenu> {
             ),
           ),
           const Padding(padding: EdgeInsets.only(top: 30)),
-          SizedBox(
-            height: 300,
-            child: ListView.builder(
-                itemBuilder:(context, index){
-                  return ListTile(
-                    title: Text(basket[index].name),
-                    subtitle: Text(basket[index].price.toString()),
-                  );
-                },
-          ),)
         ],
       ),
     );
