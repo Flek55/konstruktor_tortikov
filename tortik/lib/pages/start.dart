@@ -19,6 +19,8 @@ class _StartState extends State<Start> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
         return Scaffold(
             backgroundColor: const Color(0xFF000000),
             body: Row(
@@ -28,7 +30,7 @@ class _StartState extends State<Start> {
                   Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Padding(padding: EdgeInsets.only(top: 120)),
+                        Padding(padding: EdgeInsets.only(top: height/6.5)),
                         const Image(image: AssetImage('assets/logo.jpg')),
                         const Text('Вкус французской\nклассики',
                           textAlign: TextAlign.center,
@@ -46,7 +48,7 @@ class _StartState extends State<Start> {
                         ),
                         const Padding(padding: EdgeInsets.only(top: 90)),
                         _getIconButton(context),
-                        showLoading ?(_getLoading(context)):Container(),
+                        _getLoading(context),
                       ]
                   ))
                 ])
@@ -87,6 +89,10 @@ class _StartState extends State<Start> {
   }
 
   _getLoading(context){
-    return LoadingAnimationWidget.waveDots(color: const Color(0xFFF4D5BC), size: 60);
+    return Visibility(
+      visible: showLoading,
+        child:
+      LoadingAnimationWidget.waveDots(color: const Color(0xFFF4D5BC), size: 60)
+    );
   }
 }
