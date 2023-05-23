@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:tortik/Services/server_data.dart';
 
 
 class HomeMenu extends StatefulWidget {
@@ -81,36 +79,7 @@ List _names = [Row(children:[
 ];
 
 
-
 class _HomeMenuState extends State<HomeMenu> {
-
-  @override void initState() {
-    _getData();
-    super.initState();
-  }
-
-  List<Product> basket = [];
-
-  void _getData() async{
-    var records = await FirebaseFirestore.instance.collection("bakery").get();
-    //_referenceCakes.snapshots();
-    _mapRecords(records);
-  }
-
-  _mapRecords(QuerySnapshot<Map<String, dynamic>> records){
-    var _list = records.docs.map(
-            (item) => Product(
-                id: item.id,
-                name: item["name"],
-                price: item["price"],
-                description: item["description"])
-    ).toList();
-
-    setState(() {
-      basket = _list;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

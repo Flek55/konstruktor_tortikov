@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tortik/pages/map.dart';
 import 'package:tortik/pages/register.dart';
 import 'package:tortik/pages/start.dart';
-import 'package:tortik/pages/home_interaction.dart';
+import 'package:tortik/pages/Home/home_interaction.dart';
 import 'package:tortik/pages/logreg.dart';
 import 'package:tortik/pages/forgetpass.dart';
 import 'package:tortik/pages/log.dart';
@@ -28,6 +29,7 @@ void main() async {
       '/login': (context) => const LoginPage(),
       '/map': (context) => const CafeMap(),
     },
+    builder: EasyLoading.init(),
   ));
 }
 
