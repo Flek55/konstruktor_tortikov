@@ -4,7 +4,9 @@ import 'package:tortik/Services/auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tortik/Services/cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tortik/Services/db_data.dart';
 import 'package:tortik/main.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 
 class SignUpPage extends StatefulWidget {
@@ -138,15 +140,20 @@ class _SignUpPageState extends State<SignUpPage> {
           Container(
               color: Colors.grey,
               child: IconButton(onPressed: () async {
+                ProductsData pd = ProductsData();
                 bool ans = await _registerButtonAction();
                 SharedPreferences sp = await SharedPreferences.getInstance();
                 LocalDataAnalyse _LDA = LocalDataAnalyse(sp: sp);
                 if (ans){
+                  EasyLoading.show();
+                  await pd.parseData();
                   _LDA.setLoginStatus("1", _emailController.text.trim(),
                       _passwordController.text.trim());
                   CurrentUserData.email = _emailController.text.trim();
                   CurrentUserData.pass = _passwordController.text.trim();
                   Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
+                  EasyLoading.dismiss();
+                  EasyLoading.removeAllCallbacks();
                   _emailController.clear();
                   _passwordController.clear();
                 }else{
@@ -195,6 +202,7 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 }
+
 
 class BackgroundSignUp extends CustomPainter {
   @override

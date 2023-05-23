@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tortik/Services/app_user.dart';
 import 'package:tortik/Services/auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tortik/Services/cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tortik/Services/db_data.dart';
 import 'package:tortik/main.dart';
 
 
@@ -122,15 +124,20 @@ class _LoginPageState extends State<LoginPage> {
           Container(
               color: Colors.grey,
               child: IconButton(onPressed: () async {
+                ProductsData pd = ProductsData();
                 bool ans  = await _loginButtonAction();
                 SharedPreferences _sp = await SharedPreferences.getInstance();
                 LocalDataAnalyse _LDA = LocalDataAnalyse(sp: _sp);
                 if (ans){
+                  EasyLoading.show();
+                  await pd.parseData();
                   _LDA.setLoginStatus("1", _emailController.text.trim(),
                       _passwordController.text.trim());
                   CurrentUserData.email = _emailController.text.trim();
                   CurrentUserData.pass = _passwordController.text.trim();
                   Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
+                  EasyLoading.dismiss();
+                  EasyLoading.removeAllCallbacks();
                   _emailController.clear();
                   _passwordController.clear();
                 }else{

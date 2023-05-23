@@ -3,6 +3,7 @@ import 'package:tortik/Services/cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tortik/Services/auth.dart';
 import 'package:tortik/Services/app_user.dart';
+import 'package:tortik/Services/db_data.dart';
 import 'package:tortik/main.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -57,6 +58,7 @@ class _StartState extends State<Start> {
 
   _getIconButton(context){
     final AuthService _authService = AuthService();
+    final ProductsData pd = ProductsData();
     return IconButton(
       icon: const Icon(Icons.east),
       iconSize: 65,
@@ -65,6 +67,7 @@ class _StartState extends State<Start> {
         setState(() {
           showLoading = true;
         });
+        await pd.parseData();
         SharedPreferences _sp = await SharedPreferences.getInstance();
         LocalDataAnalyse _LDA = LocalDataAnalyse(sp: _sp);
         String status = await _LDA.getLoginStatus();
