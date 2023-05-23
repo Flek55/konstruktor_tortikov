@@ -20,6 +20,11 @@ class _HomeMenuState extends State<HomeMenu> {
     currentData = ProductsData.bakeryData;
     super.initState();
   }
+
+  refresh() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(child:
@@ -75,11 +80,7 @@ class _HomeMenuState extends State<HomeMenu> {
               scrollDirection: Axis.horizontal,
               shrinkWrap: true,
               itemBuilder: (context, index){
-                return CategoryBox(category: CategoryModel.categories[index],updateData: (){
-                  setState(() {
-                    currentData = CategoryBox.tempData;
-                  });
-                },);
+                return CategoryBox(category: CategoryModel.categories[index],notifyParent: refresh);
               },
             ),
           ),
@@ -89,76 +90,6 @@ class _HomeMenuState extends State<HomeMenu> {
     )));
   }
 }
-List _names = [Row(children:[
-  const SizedBox(width: 20),
-  ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Stack(
-          children: <Widget>[
-            Positioned.fill(
-                child: Container(
-                    decoration: const BoxDecoration(
-                        color:Color(0xFF5B2C6F)
-                    ))),
-            TextButton(onPressed:(){},style:TextButton.styleFrom(foregroundColor: Colors.white30,
-                padding: const EdgeInsets.all(16),textStyle: const TextStyle(fontSize: 18)),
-                child: const Text("Выпечка",style:TextStyle(color: Colors.white)))
-          ])),
-  const SizedBox(width: 30),
-  ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Stack(
-          children: <Widget>[
-            Positioned.fill(
-              child: Container(
-                decoration: const BoxDecoration(
-                    color: Color(0xFF5B2C6F)
-                ),
-              ),
-            ), TextButton(onPressed:(){},
-                style:TextButton.styleFrom(foregroundColor: Colors.white30,
-                padding: const EdgeInsets.all(16),
-                textStyle: const TextStyle(fontSize: 18)),
-                child: const Text("Десерты",style:TextStyle(color: Colors.white)))
-          ])),
-  const SizedBox(width: 30),
-  ClipRRect(borderRadius: BorderRadius.circular(20),
-      child: Stack(children: <Widget>[
-        Positioned.fill(child:
-        Container(decoration: const BoxDecoration(color:Color(0xFF5B2C6F)
-  )
-  )
-  ),
-    TextButton(onPressed:(){},
-        style:TextButton.styleFrom(foregroundColor: Colors.white30,
-            padding: const EdgeInsets.all(16),
-            textStyle: const TextStyle(fontSize: 18)),
-        child: const Text("Кофе",style:TextStyle(color: Colors.white)))
-  ]
-  )
-  ),
-  const SizedBox(width: 30),ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Stack(
-          children: <Widget>[
-            Positioned.fill(
-              child: Container(
-                decoration: const BoxDecoration(
-                    color:Color(0xFF5B2C6F)
-                ),
-              ),
-            ),
-            TextButton(onPressed:(){},
-                style:TextButton.styleFrom(foregroundColor: Colors.white30,
-                    padding: const EdgeInsets.all(16),
-                    textStyle: const TextStyle(fontSize: 18)),
-                child:const Text("Торты",style:TextStyle(color: Colors.white)))
-          ]
-      )
-  )
-]
-)
-];
 
 _getListView(){
   return SizedBox(
@@ -176,10 +107,9 @@ _getListView(){
 
 class CategoryBox extends StatefulWidget {
   final CategoryModel category;
-  final Function updateData;
-  static List<Product> tempData = [];
+  final Function() notifyParent;
 
-  const CategoryBox({Key? key, required this.category, required this.updateData}) : super(key: key);
+  const CategoryBox({Key? key, required this.category, required this.notifyParent}) : super(key: key);
 
   @override
   State<CategoryBox> createState() => _CategoryBoxState();
@@ -188,7 +118,25 @@ class CategoryBox extends StatefulWidget {
 class _CategoryBoxState extends State<CategoryBox> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return InkWell(
+        splashColor: Colors.white38,
+        onTap: (){
+          if (widget.category.id == 1){
+            _HomeMenuState.currentData = ProductsData.bakeryData;
+            widget.notifyParent();
+          }else if(widget.category.id == 2){
+            _HomeMenuState.currentData = ProductsData.dessertsData;
+            widget.notifyParent();
+          }else if(widget.category.id == 3){
+            _HomeMenuState.currentData = ProductsData.coffeeData;
+            widget.notifyParent();
+          }else if(widget.category.id == 4){
+            _HomeMenuState.currentData = ProductsData.cakesData;
+            widget.notifyParent();
+          }
+        },
+    child:
+      Container(
       width: 100,
       margin: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
@@ -198,24 +146,12 @@ class _CategoryBoxState extends State<CategoryBox> {
       child:
           Align(
             alignment: Alignment.center,
-            child: InkWell(
-              splashColor: Colors.white38,
-              onTap: (){
-                if (widget.category.id == 1){
-                    CategoryBox.tempData = ProductsData.bakeryData;
-                }else if(widget.category.id == 2){
-                  CategoryBox.tempData = ProductsData.dessertsData;
-                }else if(widget.category.id == 3){
-                  CategoryBox.tempData = ProductsData.coffeeData;
-                }else if(widget.category.id == 4){
-                  CategoryBox.tempData = ProductsData.cakesData;
-                }
-              },
               child: Stack(children: [
                 Text(widget.category.name,
                   style: const TextStyle(fontSize: 18, fontFamily: 'Roboto',color: Colors.white),)
             ],
-            ),)
+            ),
+          )
           )
     );
   }
