@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tortik/Services/category_model.dart';
+import 'package:tortik/Services/db_data.dart';
+
+import '../../Services/server_data.dart';
 
 
 class HomeMenu extends StatefulWidget {
@@ -7,86 +11,29 @@ class HomeMenu extends StatefulWidget {
   @override
   State<HomeMenu> createState() => _HomeMenuState();
 }
-List _names = [Row(children:[
-  const SizedBox(width: 20),
-  ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Stack(
-          children: <Widget>[
-            Positioned.fill(
-                child: Container(
-                    decoration: const BoxDecoration(
-                        color:Color(0xFF5B2C6F)
-                    ))),
-            TextButton(onPressed:(){},style:TextButton.styleFrom(foregroundColor: Colors.white30,
-                padding: const EdgeInsets.all(16),textStyle: const TextStyle(fontSize: 18)),
-                child: const Text("Выпечка",style:TextStyle(color: Colors.white)))
-          ])),
-  const SizedBox(width: 30),
-  ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Stack(
-          children: <Widget>[
-            Positioned.fill(
-              child: Container(
-                decoration: const BoxDecoration(
-                    color: Color(0xFF5B2C6F)
-                ),
-              ),
-            ), TextButton(onPressed:(){},
-                style:TextButton.styleFrom(foregroundColor: Colors.white30,
-                padding: const EdgeInsets.all(16),
-                textStyle: const TextStyle(fontSize: 18)),
-                child: const Text("Десерты",style:TextStyle(color: Colors.white)))
-          ])),
-  const SizedBox(width: 30),
-  ClipRRect(borderRadius: BorderRadius.circular(20),
-      child: Stack(children: <Widget>[
-        Positioned.fill(child:
-        Container(decoration: const BoxDecoration(color:Color(0xFF5B2C6F)
-  )
-  )
-  ),
-    TextButton(onPressed:(){},
-        style:TextButton.styleFrom(foregroundColor: Colors.white30,
-            padding: const EdgeInsets.all(16),
-            textStyle: const TextStyle(fontSize: 18)),
-        child: const Text("Кофе",style:TextStyle(color: Colors.white)))
-  ]
-  )
-  ),
-  const SizedBox(width: 30),ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Stack(
-          children: <Widget>[
-            Positioned.fill(
-              child: Container(
-                decoration: const BoxDecoration(
-                    color:Color(0xFF5B2C6F)
-                ),
-              ),
-            ),
-            TextButton(onPressed:(){},
-                style:TextButton.styleFrom(foregroundColor: Colors.white30,
-                    padding: const EdgeInsets.all(16),
-                    textStyle: const TextStyle(fontSize: 18)),
-                child:const Text("Торты",style:TextStyle(color: Colors.white)))
-          ]
-      )
-  )
-]
-)
-];
-
 
 class _HomeMenuState extends State<HomeMenu> {
+  static List<Product> currentData = [];
+
+  @override
+  void initState() {
+    currentData = ProductsData.bakeryData;
+    super.initState();
+  }
+
+  refresh() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(child:
+      Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
+      body: SingleChildScrollView(child:
+        Column(
         children: [
-          const Padding(padding: EdgeInsets.only(top: 50)),
+          const Padding(padding: EdgeInsets.only(top: 30)),
           Row(
           mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -125,23 +72,87 @@ class _HomeMenuState extends State<HomeMenu> {
               ),
             ),
           ), ),
+          const Padding(padding: EdgeInsets.only(top: 30)),
           SizedBox(
-            height: 100,
-            child: ListView.separated(
+            height: 60,
+            child: ListView.builder(
+              itemCount: 4,
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.all(4),
-              itemCount: 1,
-              itemBuilder: (context,index){
-                return _names[index];
-              },
-              separatorBuilder: (context,index){
-                return const SizedBox(width: 150);
+              shrinkWrap: true,
+              itemBuilder: (context, index){
+                return CategoryBox(category: CategoryModel.categories[index],notifyParent: refresh);
               },
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: 30)),
+          _getListView(),
         ],
       ),
+    )));
+  }
+}
+
+_getListView(){
+  return SizedBox(
+      height: 300,
+      child:
+      ListView.builder(
+        itemCount: _HomeMenuState.currentData.length,
+        itemBuilder: (context,index){
+          return ListTile(
+            title: Text(_HomeMenuState.currentData[index].name),
+          );
+        },
+      ));
+}
+
+class CategoryBox extends StatefulWidget {
+  final CategoryModel category;
+  final Function() notifyParent;
+
+  const CategoryBox({Key? key, required this.category, required this.notifyParent}) : super(key: key);
+
+  @override
+  State<CategoryBox> createState() => _CategoryBoxState();
+}
+
+class _CategoryBoxState extends State<CategoryBox> {
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+        splashColor: Colors.white38,
+        onTap: (){
+          if (widget.category.id == 1){
+            _HomeMenuState.currentData = ProductsData.bakeryData;
+            widget.notifyParent();
+          }else if(widget.category.id == 2){
+            _HomeMenuState.currentData = ProductsData.dessertsData;
+            widget.notifyParent();
+          }else if(widget.category.id == 3){
+            _HomeMenuState.currentData = ProductsData.coffeeData;
+            widget.notifyParent();
+          }else if(widget.category.id == 4){
+            _HomeMenuState.currentData = ProductsData.cakesData;
+            widget.notifyParent();
+          }
+        },
+    child:
+      Container(
+      width: 100,
+      margin: const EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        color: const Color(0xFF5B2C6F),
+        borderRadius: BorderRadius.circular(30.0),
+      ),
+      child:
+          Align(
+            alignment: Alignment.center,
+              child: Stack(children: [
+                Text(widget.category.name,
+                  style: const TextStyle(fontSize: 18, fontFamily: 'Roboto',color: Colors.white),)
+            ],
+            ),
+          )
+          )
     );
   }
 }
