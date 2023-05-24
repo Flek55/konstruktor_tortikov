@@ -16,6 +16,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool isButtonPressed = false;
+  bool inProgress = false;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -50,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<bool> _loginButtonAction() async {
+    inProgress = true;
     _email = _emailController.text;
     _password = _passwordController.text;
 
@@ -124,14 +127,18 @@ class _LoginPageState extends State<LoginPage> {
           Container(
               color: Colors.grey,
               child: IconButton(
-                  onPressed: () async {
-                    ProductsData pd = ProductsData();
+                  onPressed: isButtonPressed == false ? () async {
+                    setState(() {
+                      isButtonPressed = true;
+                    });
                     bool ans = await _loginButtonAction();
-                    SharedPreferences _sp =
-                        await SharedPreferences.getInstance();
-                    LocalDataAnalyse _LDA = LocalDataAnalyse(sp: _sp);
+                    inProgress = false;
                     if (ans) {
                       EasyLoading.show();
+                      ProductsData pd = ProductsData();
+                      SharedPreferences _sp =
+                      await SharedPreferences.getInstance();
+                      LocalDataAnalyse _LDA = LocalDataAnalyse(sp: _sp);
                       await pd.parseData();
                       _LDA.setLoginStatus("1", _emailController.text.trim(),
                           _passwordController.text.trim());
@@ -143,7 +150,10 @@ class _LoginPageState extends State<LoginPage> {
                       EasyLoading.removeAllCallbacks();
                       _emailController.clear();
                       _passwordController.clear();
-                    } else {
+                    } else if (inProgress == false){
+                      setState(() {
+                        isButtonPressed = false;
+                      });
                       Fluttertoast.showToast(
                           msg: "Неверный логин или пароль!",
                           toastLength: Toast.LENGTH_SHORT,
@@ -154,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
                           fontSize: 16.0);
                       _passwordController.clear();
                     }
-                  },
+                  }: null,
                   iconSize: 40,
                   icon: const Icon(Icons.arrow_forward_ios))),
         ],
