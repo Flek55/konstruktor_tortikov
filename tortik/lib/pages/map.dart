@@ -1,9 +1,9 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tortik/Services/app_location.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-
 
 class CafeMap extends StatefulWidget {
   const CafeMap({Key? key}) : super(key: key);
@@ -34,31 +34,35 @@ class _CafeMapState extends State<CafeMap> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF5B2C6F),
         centerTitle: true,
-        title: const Text('Карта кофеен',
-          style: TextStyle(fontFamily: 'Roboto'),),
+        title: const Text(
+          'Карта кофеен',
+          style: TextStyle(fontFamily: 'Roboto'),
+        ),
       ),
       body: YandexMap(
         mapObjects: [
-          PlacemarkMapObject(mapId: const MapObjectId('Petrovka'),
-        point: const Point(latitude: 55.765307, longitude: 37.615958),
-          opacity: 1,
-            consumeTapEvents: true,
-            onTap: (PlacemarkMapObject, Point){
-              Fluttertoast.showToast(
-                  msg: "улица Петровка, 19с1",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.CENTER,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: const Color(0xFF5B2C6F),
-                  textColor: Colors.white,
-                  fontSize: 16.0);
-            },
-            icon: PlacemarkIcon.single(PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage('assets/dot.png')))
-          ),
-          PlacemarkMapObject(mapId: const MapObjectId('Rozdestvenka'),
-            point: const Point(latitude: 55.761060, longitude: 37.623420),
-            opacity: 1,
-              onTap: (PlacemarkMapObject, Point){
+          PlacemarkMapObject(
+              mapId: const MapObjectId('Petrovka'),
+              point: const Point(latitude: 55.765307, longitude: 37.615958),
+              opacity: 1,
+              consumeTapEvents: true,
+              onTap: (PlacemarkMapObject, Point) {
+                Fluttertoast.showToast(
+                    msg: "улица Петровка, 19с1",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: const Color(0xFF5B2C6F),
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+              },
+              icon: PlacemarkIcon.single(PlacemarkIconStyle(
+                  image: BitmapDescriptor.fromAssetImage('assets/dot.png')))),
+          PlacemarkMapObject(
+              mapId: const MapObjectId('Rozdestvenka'),
+              point: const Point(latitude: 55.761060, longitude: 37.623420),
+              opacity: 1,
+              onTap: (PlacemarkMapObject, Point) {
                 Fluttertoast.showToast(
                     msg: "улица Рождественка, 5/7с2",
                     toastLength: Toast.LENGTH_SHORT,
@@ -68,12 +72,13 @@ class _CafeMapState extends State<CafeMap> {
                     textColor: Colors.white,
                     fontSize: 16.0);
               },
-              icon: PlacemarkIcon.single(PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage('assets/dot.png')))
-          ),
-          PlacemarkMapObject(mapId: const MapObjectId('Sretenka'),
-            point: const Point(latitude: 55.767625, longitude: 37.631488),
-            opacity: 1,
-              onTap: (PlacemarkMapObject, Point){
+              icon: PlacemarkIcon.single(PlacemarkIconStyle(
+                  image: BitmapDescriptor.fromAssetImage('assets/dot.png')))),
+          PlacemarkMapObject(
+              mapId: const MapObjectId('Sretenka'),
+              point: const Point(latitude: 55.767625, longitude: 37.631488),
+              opacity: 1,
+              onTap: (PlacemarkMapObject, Point) {
                 Fluttertoast.showToast(
                     msg: "улица Сретенка, 9",
                     toastLength: Toast.LENGTH_SHORT,
@@ -83,12 +88,13 @@ class _CafeMapState extends State<CafeMap> {
                     textColor: Colors.white,
                     fontSize: 16.0);
               },
-              icon: PlacemarkIcon.single(PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage('assets/dot.png')))
-          ),
-          PlacemarkMapObject(mapId: const MapObjectId('Maroseyka'),
-            point: const Point(latitude: 55.757750, longitude: 37.637119),
-            opacity: 1,
-              onTap: (PlacemarkMapObject, Point){
+              icon: PlacemarkIcon.single(PlacemarkIconStyle(
+                  image: BitmapDescriptor.fromAssetImage('assets/dot.png')))),
+          PlacemarkMapObject(
+              mapId: const MapObjectId('Maroseyka'),
+              point: const Point(latitude: 55.757750, longitude: 37.637119),
+              opacity: 1,
+              onTap: (PlacemarkMapObject, Point) {
                 Fluttertoast.showToast(
                     msg: "улица Маросейка, 10/1с1",
                     toastLength: Toast.LENGTH_SHORT,
@@ -98,21 +104,21 @@ class _CafeMapState extends State<CafeMap> {
                     textColor: Colors.white,
                     fontSize: 16.0);
               },
-              icon: PlacemarkIcon.single(PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage('assets/dot.png')))
-          ),
+              icon: PlacemarkIcon.single(PlacemarkIconStyle(
+                  image: BitmapDescriptor.fromAssetImage('assets/dot.png')))),
         ],
         onMapCreated: (YandexMapController controller) {
           mapControllerCompleter.complete(controller);
-          controller.toggleUserLayer(visible: true,headingEnabled: true);
-          controller.moveCamera(
-              CameraUpdate.newCameraPosition(
+          controller.toggleUserLayer(visible: true, headingEnabled: true);
+          controller.moveCamera(CameraUpdate.newCameraPosition(
             const CameraPosition(
               target: Point(
                 latitude: 55.7522200,
                 longitude: 37.6155600,
               ),
               zoom: 8,
-            ),));
+            ),
+          ));
         },
       ),
     );
@@ -140,8 +146,8 @@ class _CafeMapState extends State<CafeMap> {
 
   /// Метод для показа текущей позиции
   Future<void> _moveToCurrentLocation(
-      AppLatLong appLatLong,
-      ) async {
+    AppLatLong appLatLong,
+  ) async {
     (await mapControllerCompleter.future).moveCamera(
       animation: const MapAnimation(type: MapAnimationType.linear, duration: 1),
       CameraUpdate.newCameraPosition(

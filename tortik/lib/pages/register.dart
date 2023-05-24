@@ -142,48 +142,54 @@ class _SignUpPageState extends State<SignUpPage> {
           Container(
               color: Colors.grey,
               child: IconButton(
-                  onPressed: isButtonPressed == false ? () async {
-                    setState(() {
-                      isButtonPressed = true;
-                    });
-                    bool ans = await _registerButtonAction();
-                    inProgress = false;
-                    if (ans) {
-                      EasyLoading.show();
-                      SharedPreferences sp =
-                      await SharedPreferences.getInstance();
-                      LocalDataAnalyse _LDA = LocalDataAnalyse(sp: sp);
-                      ProductsData pd = ProductsData();
-                      await pd.parseData();
-                      _LDA.setLoginStatus("1", _emailController.text.trim(),
-                          _passwordController.text.trim());
-                      CurrentUserData.email = _emailController.text.trim();
-                      CurrentUserData.pass = _passwordController.text.trim();
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, "/home", (r) => false);
-                      EasyLoading.dismiss();
-                      EasyLoading.removeAllCallbacks();
-                      _emailController.clear();
-                      _passwordController.clear();
-                    } else if (inProgress == false) {
-                      setState(() {
-                        isButtonPressed = false;
-                      });
-                      String e = "Неверный логин или пароль!";
-                      if (_passwordController.text.length < 6) {
-                        e = "Пароль должень быть больше 5 символов";
-                      }
-                      Fluttertoast.showToast(
-                          msg: e,
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.CENTER,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.deepOrange,
-                          textColor: Colors.white,
-                          fontSize: 16.0);
-                      _passwordController.clear();
-                    }
-                  }: null,
+                  onPressed: isButtonPressed == false
+                      ? () async {
+                          setState(() {
+                            isButtonPressed = true;
+                          });
+                          bool ans = await _registerButtonAction();
+                          inProgress = false;
+                          if (ans) {
+                            EasyLoading.show();
+                            SharedPreferences sp =
+                                await SharedPreferences.getInstance();
+                            LocalDataAnalyse _LDA = LocalDataAnalyse(sp: sp);
+                            ProductsData pd = ProductsData();
+                            await pd.parseData();
+                            _LDA.setLoginStatus(
+                                "1",
+                                _emailController.text.trim(),
+                                _passwordController.text.trim());
+                            CurrentUserData.email =
+                                _emailController.text.trim();
+                            CurrentUserData.pass =
+                                _passwordController.text.trim();
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, "/home", (r) => false);
+                            EasyLoading.dismiss();
+                            EasyLoading.removeAllCallbacks();
+                            _emailController.clear();
+                            _passwordController.clear();
+                          } else if (inProgress == false) {
+                            setState(() {
+                              isButtonPressed = false;
+                            });
+                            String e = "Неверный логин или пароль!";
+                            if (_passwordController.text.length < 6) {
+                              e = "Пароль должень быть больше 5 символов";
+                            }
+                            Fluttertoast.showToast(
+                                msg: e,
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.deepOrange,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                            _passwordController.clear();
+                          }
+                        }
+                      : null,
                   iconSize: 40,
                   icon: const Icon(Icons.arrow_forward_ios))),
         ],

@@ -3,77 +3,81 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tortik/Services/app_user.dart';
 import 'package:tortik/main.dart';
 
-
-class AuthService{
+class AuthService {
   final FirebaseAuth _fAuth = FirebaseAuth.instance;
 
-  Future<AppUser?> signInWithEmailAndPassword(String email, String password) async{
-    try{
-      UserCredential result = await _fAuth.signInWithEmailAndPassword(email: email, password: password);
+  Future<AppUser?> signInWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      UserCredential result = await _fAuth.signInWithEmailAndPassword(
+          email: email, password: password);
       User? user = result.user;
       CurrentUserData.name = await getUserDisplayName();
       return AppUser(user);
-    }catch(e){
+    } catch (e) {
       return null;
     }
   }
 
-  Future<AppUser?> registerWithEmailAndPassword(String email, String password) async{
-    try{
-      UserCredential result = await _fAuth.createUserWithEmailAndPassword(email: email, password: password);
+  Future<AppUser?> registerWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      UserCredential result = await _fAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
       User? user = result.user;
       assignName("Имя не задано");
       CurrentUserData.name = await getUserDisplayName();
       return AppUser(user);
-    }catch(e){
+    } catch (e) {
       return null;
     }
   }
 
-  Future<String> getUserDisplayName() async{
+  Future<String> getUserDisplayName() async {
     String? ans = _fAuth.currentUser?.displayName.toString();
-    if (ans == null || ans == "null"){
+    if (ans == null || ans == "null") {
       return "Имя не задано";
-    }else{
+    } else {
       return ans;
     }
   }
 
-  Future signOut() async{
+  Future signOut() async {
     await _fAuth.signOut();
   }
 
-  Stream<AppUser?> get currentUser{
-    return _fAuth.authStateChanges().map((User? user) => 
-    user != null ? AppUser(user) : null);
+  Stream<AppUser?> get currentUser {
+    return _fAuth
+        .authStateChanges()
+        .map((User? user) => user != null ? AppUser(user) : null);
   }
 
-  void resetPassword(email) async{
-    try{
+  void resetPassword(email) async {
+    try {
       _fAuth.sendPasswordResetEmail(email: email);
-    }catch(e){
+    } catch (e) {
       return null;
     }
   }
 
-  void assignName(name) async{
+  void assignName(name) async {
     try {
       User? user = _fAuth.currentUser;
       await user?.updateDisplayName(name);
-    }on FirebaseAuthException catch (error){
-      switch (error.code){
+    } on FirebaseAuthException catch (error) {
+      switch (error.code) {
         default:
           print("чзх");
       }
     }
   }
 
-  Future<String> updateEmail(email) async{
+  Future<String> updateEmail(email) async {
     String errorMessage = "";
     try {
       User? user = _fAuth.currentUser;
       await user?.updateEmail(email);
-    }on FirebaseAuthException catch (error){
+    } on FirebaseAuthException catch (error) {
       switch (error.code) {
         case "ERROR_INVALID_EMAIL":
           errorMessage = "Your email address appears to be malformed.";

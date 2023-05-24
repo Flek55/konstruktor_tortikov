@@ -101,14 +101,14 @@ class _ForgetPassState extends State<ForgetPass> {
                   if(_emailController.text.trim() != "") {
                     _authService.resetPassword(_emailController.text.trim());
                     Fluttertoast.showToast(
-                        msg: "Письмо на эл.почту отправлено!",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.CENTER,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.deepOrange,
-                        textColor: Colors.white,
-                        fontSize: 16.0);
-                    Navigator.pushNamed(context, '/login');
+                            msg: "Письмо на эл.почту отправлено!",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.deepOrange,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        Navigator.pushNamed(context, '/login');
                     _emailController.clear();
                   }else{
                     Fluttertoast.showToast(

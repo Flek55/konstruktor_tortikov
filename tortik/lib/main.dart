@@ -1,15 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tortik/Services/CustomWidgets/scroll_behaviour.dart';
+import 'package:tortik/pages/Home/home_interaction.dart';
+import 'package:tortik/pages/forgetpass.dart';
+import 'package:tortik/pages/log.dart';
+import 'package:tortik/pages/logreg.dart';
 import 'package:tortik/pages/map.dart';
 import 'package:tortik/pages/register.dart';
 import 'package:tortik/pages/start.dart';
-import 'package:tortik/pages/Home/home_interaction.dart';
-import 'package:tortik/pages/logreg.dart';
-import 'package:tortik/pages/forgetpass.dart';
-import 'package:tortik/pages/log.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
