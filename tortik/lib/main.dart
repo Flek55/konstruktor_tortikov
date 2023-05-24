@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:tortik/Services/CustomWidgets/scroll_behaviour.dart';
 import 'package:tortik/pages/map.dart';
 import 'package:tortik/pages/register.dart';
 import 'package:tortik/pages/start.dart';
@@ -18,6 +19,7 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]);
   runApp(MaterialApp(
+    scrollBehavior: MyBehavior(),
     debugShowCheckedModeBanner: false,
     initialRoute: '/',
     routes: {

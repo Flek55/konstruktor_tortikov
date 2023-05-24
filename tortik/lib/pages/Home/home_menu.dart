@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tortik/Services/category_model.dart';
 import 'package:tortik/Services/db_data.dart';
-
 import '../../Services/server_data.dart';
 
 
@@ -27,11 +26,12 @@ class _HomeMenuState extends State<HomeMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child:
-      Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(child:
-        Column(
+      body: SafeArea(
+        child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
         children: [
           const Padding(padding: EdgeInsets.only(top: 30)),
           Row(
@@ -84,6 +84,7 @@ class _HomeMenuState extends State<HomeMenu> {
               },
             ),
           ),
+          const Padding(padding: EdgeInsets.only(top: 10)),
           _getListView(),
         ],
       ),
@@ -92,17 +93,19 @@ class _HomeMenuState extends State<HomeMenu> {
 }
 
 _getListView(){
-  return SizedBox(
-      height: 300,
-      child:
-      ListView.builder(
-        itemCount: _HomeMenuState.currentData.length,
-        itemBuilder: (context,index){
-          return ListTile(
-            title: Text(_HomeMenuState.currentData[index].name),
-          );
-        },
-      ));
+  return ListView.separated(
+    shrinkWrap: true,
+    itemCount: _HomeMenuState.currentData.length,
+    physics: const BouncingScrollPhysics(),
+    itemBuilder: (context,index){
+      return ListTile(
+        title: Text(_HomeMenuState.currentData[index].name),
+        trailing: const Icon(Icons.add),
+      );
+    }, separatorBuilder: (BuildContext context, int index) {
+      return const Padding(padding: EdgeInsets.only(top: 40));
+  },
+  );
 }
 
 class CategoryBox extends StatefulWidget {
