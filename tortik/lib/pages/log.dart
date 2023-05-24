@@ -127,44 +127,50 @@ class _LoginPageState extends State<LoginPage> {
           Container(
               color: Colors.grey,
               child: IconButton(
-                  onPressed: isButtonPressed == false ? () async {
-                    setState(() {
-                      isButtonPressed = true;
-                    });
-                    bool ans = await _loginButtonAction();
-                    inProgress = false;
-                    if (ans) {
-                      EasyLoading.show();
-                      ProductsData pd = ProductsData();
-                      SharedPreferences _sp =
-                      await SharedPreferences.getInstance();
-                      LocalDataAnalyse _LDA = LocalDataAnalyse(sp: _sp);
-                      await pd.parseData();
-                      _LDA.setLoginStatus("1", _emailController.text.trim(),
-                          _passwordController.text.trim());
-                      CurrentUserData.email = _emailController.text.trim();
-                      CurrentUserData.pass = _passwordController.text.trim();
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, "/home", (r) => false);
-                      EasyLoading.dismiss();
-                      EasyLoading.removeAllCallbacks();
-                      _emailController.clear();
-                      _passwordController.clear();
-                    } else if (inProgress == false){
-                      setState(() {
-                        isButtonPressed = false;
-                      });
-                      Fluttertoast.showToast(
-                          msg: "Неверный логин или пароль!",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.CENTER,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.deepOrange,
-                          textColor: Colors.white,
-                          fontSize: 16.0);
-                      _passwordController.clear();
-                    }
-                  }: null,
+                  onPressed: isButtonPressed == false
+                      ? () async {
+                          setState(() {
+                            isButtonPressed = true;
+                          });
+                          bool ans = await _loginButtonAction();
+                          inProgress = false;
+                          if (ans) {
+                            EasyLoading.show();
+                            ProductsData pd = ProductsData();
+                            SharedPreferences _sp =
+                                await SharedPreferences.getInstance();
+                            LocalDataAnalyse _LDA = LocalDataAnalyse(sp: _sp);
+                            await pd.parseData();
+                            _LDA.setLoginStatus(
+                                "1",
+                                _emailController.text.trim(),
+                                _passwordController.text.trim());
+                            CurrentUserData.email =
+                                _emailController.text.trim();
+                            CurrentUserData.pass =
+                                _passwordController.text.trim();
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, "/home", (r) => false);
+                            EasyLoading.dismiss();
+                            EasyLoading.removeAllCallbacks();
+                            _emailController.clear();
+                            _passwordController.clear();
+                          } else if (inProgress == false) {
+                            setState(() {
+                              isButtonPressed = false;
+                            });
+                            Fluttertoast.showToast(
+                                msg: "Неверный логин или пароль!",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.deepOrange,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                            _passwordController.clear();
+                          }
+                        }
+                      : null,
                   iconSize: 40,
                   icon: const Icon(Icons.arrow_forward_ios))),
         ],
