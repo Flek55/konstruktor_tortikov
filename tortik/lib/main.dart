@@ -11,7 +11,6 @@ import 'package:tortik/pages/logreg.dart';
 import 'package:tortik/pages/forgetpass.dart';
 import 'package:tortik/pages/log.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initFireBase();
@@ -41,7 +40,7 @@ Future<bool> initFireBase() async {
   return true;
 }
 
-class CurrentUserData{
+class CurrentUserData {
   static String email = "";
   static String name = "";
   static String pass = "";

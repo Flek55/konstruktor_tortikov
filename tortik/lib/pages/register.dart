@@ -8,7 +8,6 @@ import 'package:tortik/Services/db_data.dart';
 import 'package:tortik/main.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
@@ -29,8 +28,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-      CustomPaint(
+      body: CustomPaint(
         painter: BackgroundSignUp(),
         child: Stack(
           children: <Widget>[
@@ -60,15 +58,14 @@ class _SignUpPageState extends State<SignUpPage> {
     AppUser? user = await _authService.registerWithEmailAndPassword(
         _email.trim(), _password.trim());
     CurrentUserData.email = _email.trim();
-    if (user == null ) {
+    if (user == null) {
       return false;
-    } else if (CurrentUserData.email == ""){
+    } else if (CurrentUserData.email == "") {
       return false;
-    }else{
+    } else {
       return true;
     }
   }
-
 
   _getHeader() {
     return Expanded(
@@ -100,7 +97,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 labelText: 'E-mail',
                 labelStyle: TextStyle(color: Colors.white)),
-            style: (const TextStyle(color:Colors.white)),
+            style: (const TextStyle(color: Colors.white)),
           ),
           const SizedBox(
             height: 15,
@@ -114,7 +111,7 @@ class _SignUpPageState extends State<SignUpPage> {
               labelText: 'Пароль',
               labelStyle: TextStyle(color: Colors.white),
             ),
-            style: (const TextStyle(color:Colors.white)),
+            style: (const TextStyle(color: Colors.white)),
             obscureText: true,
             obscuringCharacter: '*',
           ),
@@ -139,42 +136,44 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           Container(
               color: Colors.grey,
-              child: IconButton(onPressed: () async {
-                ProductsData pd = ProductsData();
-                bool ans = await _registerButtonAction();
-                SharedPreferences sp = await SharedPreferences.getInstance();
-                LocalDataAnalyse _LDA = LocalDataAnalyse(sp: sp);
-                if (ans){
-                  EasyLoading.show();
-                  await pd.parseData();
-                  _LDA.setLoginStatus("1", _emailController.text.trim(),
-                      _passwordController.text.trim());
-                  CurrentUserData.email = _emailController.text.trim();
-                  CurrentUserData.pass = _passwordController.text.trim();
-                  Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
-                  EasyLoading.dismiss();
-                  EasyLoading.removeAllCallbacks();
-                  _emailController.clear();
-                  _passwordController.clear();
-                }else{
-                  String e = "Неверный логин или пароль!";
-                  if(_passwordController.text.length < 6){
-                    e = "Пароль должень быть больше 5 символов";
-                  }
-                  Fluttertoast.showToast(
-                      msg: e,
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.CENTER,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.deepOrange,
-                      textColor: Colors.white,
-                      fontSize: 16.0);
-                  _passwordController.clear();
-                }
-              },
+              child: IconButton(
+                  onPressed: () async {
+                    ProductsData pd = ProductsData();
+                    bool ans = await _registerButtonAction();
+                    SharedPreferences sp =
+                        await SharedPreferences.getInstance();
+                    LocalDataAnalyse _LDA = LocalDataAnalyse(sp: sp);
+                    if (ans) {
+                      EasyLoading.show();
+                      await pd.parseData();
+                      _LDA.setLoginStatus("1", _emailController.text.trim(),
+                          _passwordController.text.trim());
+                      CurrentUserData.email = _emailController.text.trim();
+                      CurrentUserData.pass = _passwordController.text.trim();
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, "/home", (r) => false);
+                      EasyLoading.dismiss();
+                      EasyLoading.removeAllCallbacks();
+                      _emailController.clear();
+                      _passwordController.clear();
+                    } else {
+                      String e = "Неверный логин или пароль!";
+                      if (_passwordController.text.length < 6) {
+                        e = "Пароль должень быть больше 5 символов";
+                      }
+                      Fluttertoast.showToast(
+                          msg: e,
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.deepOrange,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                      _passwordController.clear();
+                    }
+                  },
                   iconSize: 40,
-                  icon: const Icon(Icons.arrow_forward_ios))
-          ),
+                  icon: const Icon(Icons.arrow_forward_ios))),
         ],
       ),
     );
@@ -189,7 +188,8 @@ class _SignUpPageState extends State<SignUpPage> {
             onTap: () {
               Navigator.pushNamed(context, '/login');
             },
-            child: const Text("Вход",
+            child: const Text(
+              "Вход",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 15,
@@ -202,7 +202,6 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 }
-
 
 class BackgroundSignUp extends CustomPainter {
   @override

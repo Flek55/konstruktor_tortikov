@@ -8,7 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tortik/Services/db_data.dart';
 import 'package:tortik/main.dart';
 
-
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -59,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
     AppUser? user = await _authService.signInWithEmailAndPassword(
         _email.trim(), _password.trim());
     if (user == null) {
-          return false;
+      return false;
     } else {
       return true;
     }
@@ -81,33 +80,34 @@ class _LoginPageState extends State<LoginPage> {
   _getInputs(emailController, passwordController) {
     return Expanded(
         flex: 4,
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              TextField(
-                controller: emailController,
-                decoration: const InputDecoration(labelText: 'E-Mail',
-                    labelStyle: TextStyle(color: Colors.white),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),)),
-                style: (const TextStyle(color:Colors.white)),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              TextField(
-                controller: passwordController,
-                decoration: const InputDecoration(labelText: 'Пароль',
-                    labelStyle: TextStyle(color: Colors.white),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),)
-                ),
-                style: (const TextStyle(color:Colors.white)),
-                obscureText: true,
-                obscuringCharacter: '*',
-              ),
-            ]
-        ));
+        child:
+            Column(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
+          TextField(
+            controller: emailController,
+            decoration: const InputDecoration(
+                labelText: 'E-Mail',
+                labelStyle: TextStyle(color: Colors.white),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                )),
+            style: (const TextStyle(color: Colors.white)),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          TextField(
+            controller: passwordController,
+            decoration: const InputDecoration(
+                labelText: 'Пароль',
+                labelStyle: TextStyle(color: Colors.white),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                )),
+            style: (const TextStyle(color: Colors.white)),
+            obscureText: true,
+            obscuringCharacter: '*',
+          ),
+        ]));
   }
 
   _getLogIn(context) {
@@ -123,38 +123,40 @@ class _LoginPageState extends State<LoginPage> {
           ),
           Container(
               color: Colors.grey,
-              child: IconButton(onPressed: () async {
-                ProductsData pd = ProductsData();
-                bool ans  = await _loginButtonAction();
-                SharedPreferences _sp = await SharedPreferences.getInstance();
-                LocalDataAnalyse _LDA = LocalDataAnalyse(sp: _sp);
-                if (ans){
-                  EasyLoading.show();
-                  await pd.parseData();
-                  _LDA.setLoginStatus("1", _emailController.text.trim(),
-                      _passwordController.text.trim());
-                  CurrentUserData.email = _emailController.text.trim();
-                  CurrentUserData.pass = _passwordController.text.trim();
-                  Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
-                  EasyLoading.dismiss();
-                  EasyLoading.removeAllCallbacks();
-                  _emailController.clear();
-                  _passwordController.clear();
-                }else{
-                  Fluttertoast.showToast(
-                      msg: "Неверный логин или пароль!",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.CENTER,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.deepOrange,
-                      textColor: Colors.white,
-                      fontSize: 16.0);
-                  _passwordController.clear();
-                }
-              },
+              child: IconButton(
+                  onPressed: () async {
+                    ProductsData pd = ProductsData();
+                    bool ans = await _loginButtonAction();
+                    SharedPreferences _sp =
+                        await SharedPreferences.getInstance();
+                    LocalDataAnalyse _LDA = LocalDataAnalyse(sp: _sp);
+                    if (ans) {
+                      EasyLoading.show();
+                      await pd.parseData();
+                      _LDA.setLoginStatus("1", _emailController.text.trim(),
+                          _passwordController.text.trim());
+                      CurrentUserData.email = _emailController.text.trim();
+                      CurrentUserData.pass = _passwordController.text.trim();
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, "/home", (r) => false);
+                      EasyLoading.dismiss();
+                      EasyLoading.removeAllCallbacks();
+                      _emailController.clear();
+                      _passwordController.clear();
+                    } else {
+                      Fluttertoast.showToast(
+                          msg: "Неверный логин или пароль!",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.deepOrange,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                      _passwordController.clear();
+                    }
+                  },
                   iconSize: 40,
-                  icon: const Icon(Icons.arrow_forward_ios))
-          ),
+                  icon: const Icon(Icons.arrow_forward_ios))),
         ],
       ),
     );
@@ -182,20 +184,19 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, '/forpass');
-              _emailController.clear();
-              _passwordController.clear();
-            },
-            child: const Text(
+              onTap: () {
+                Navigator.pushNamed(context, '/forpass');
+                _emailController.clear();
+                _passwordController.clear();
+              },
+              child: const Text(
                 'Забыли пароль',
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
                     decoration: TextDecoration.underline),
-          )
-          )
+              ))
         ],
       ),
     );
