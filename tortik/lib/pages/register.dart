@@ -16,6 +16,8 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  bool isButtonPressed = false;
+  bool inProgress = false;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -50,6 +52,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Future<bool> _registerButtonAction() async {
+    inProgress = true;
     _email = _emailController.text;
     _password = _passwordController.text;
 
@@ -61,8 +64,10 @@ class _SignUpPageState extends State<SignUpPage> {
     if (user == null) {
       return false;
     } else if (CurrentUserData.email == "") {
+      inProgress = true;
       return false;
     } else {
+      inProgress = true;
       return true;
     }
   }
@@ -137,14 +142,18 @@ class _SignUpPageState extends State<SignUpPage> {
           Container(
               color: Colors.grey,
               child: IconButton(
-                  onPressed: () async {
-                    ProductsData pd = ProductsData();
+                  onPressed: isButtonPressed == false ? () async {
+                    setState(() {
+                      isButtonPressed = true;
+                    });
                     bool ans = await _registerButtonAction();
-                    SharedPreferences sp =
-                        await SharedPreferences.getInstance();
-                    LocalDataAnalyse _LDA = LocalDataAnalyse(sp: sp);
+                    inProgress = false;
                     if (ans) {
                       EasyLoading.show();
+                      SharedPreferences sp =
+                      await SharedPreferences.getInstance();
+                      LocalDataAnalyse _LDA = LocalDataAnalyse(sp: sp);
+                      ProductsData pd = ProductsData();
                       await pd.parseData();
                       _LDA.setLoginStatus("1", _emailController.text.trim(),
                           _passwordController.text.trim());
@@ -156,7 +165,10 @@ class _SignUpPageState extends State<SignUpPage> {
                       EasyLoading.removeAllCallbacks();
                       _emailController.clear();
                       _passwordController.clear();
-                    } else {
+                    } else if (inProgress == false) {
+                      setState(() {
+                        isButtonPressed = false;
+                      });
                       String e = "Неверный логин или пароль!";
                       if (_passwordController.text.length < 6) {
                         e = "Пароль должень быть больше 5 символов";
@@ -171,7 +183,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           fontSize: 16.0);
                       _passwordController.clear();
                     }
-                  },
+                  }: null,
                   iconSize: 40,
                   icon: const Icon(Icons.arrow_forward_ios))),
         ],
