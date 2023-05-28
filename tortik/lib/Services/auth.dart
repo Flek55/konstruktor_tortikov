@@ -1,10 +1,12 @@
 ///Connection with FireBaseAuth and all the auth methods
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tortik/Services/app_user.dart';
 import 'package:tortik/main.dart';
 
 class AuthService {
   final FirebaseAuth _fAuth = FirebaseAuth.instance;
+  final FirebaseFirestore _fData = FirebaseFirestore.instance;
 
   Future<AppUser?> signInWithEmailAndPassword(
       String email, String password) async {
@@ -13,24 +15,44 @@ class AuthService {
           email: email, password: password);
       User? user = result.user;
       CurrentUserData.name = await getUserDisplayName();
+      final data = {"username":"${email}"};
+      _fData.collection("users").doc("${result.user?.uid}").update(data).then(
+              (value) => null, onError: (e) => _fData.collection("users").doc("${result.user?.uid}").set(data));
       return AppUser(user);
     } catch (e) {
       return null;
     }
   }
 
-  Future<AppUser?> registerWithEmailAndPassword(
+  Future<String> registerWithEmailAndPassword(
       String email, String password) async {
+    String errorMessage = "";
     try {
       UserCredential result = await _fAuth.createUserWithEmailAndPassword(
           email: email, password: password);
-      User? user = result.user;
       assignName("Имя не задано");
       CurrentUserData.name = await getUserDisplayName();
-      return AppUser(user);
-    } catch (e) {
-      return null;
+      final data = {"username":"${email}"};
+      _fData.collection("users").doc("${result.user?.uid}").set(data);
+    } on FirebaseAuthException catch (error) {
+      switch (error.code) {
+        case "ERROR_INVALID_EMAIL":
+          errorMessage = "Your email address appears to be malformed.";
+          break;
+        case "email-already-in-use":
+          errorMessage = "Эл.почта занята!";
+          break;
+        case "ERROR_TOO_MANY_REQUESTS":
+          errorMessage = "Too many requests. Try again later.";
+          break;
+        default:
+          errorMessage = "An undefined Error happened.";
+      }
     }
+    if (errorMessage != "") {
+      return errorMessage;
+    }
+    return "Success";
   }
 
   Future<String> getUserDisplayName() async {

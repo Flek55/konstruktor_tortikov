@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tortik/Services/app_user.dart';
 import 'package:tortik/Services/auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tortik/Services/cache.dart';
@@ -51,24 +50,25 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Future<bool> _registerButtonAction() async {
+  Future<List> _registerButtonAction() async {
     inProgress = true;
     _email = _emailController.text;
     _password = _passwordController.text;
 
-    if (_email.isEmpty || _password.isEmpty) return false;
+    if (_email.isEmpty || _password.isEmpty) return [false,"Введите email и пароль"];
 
-    AppUser? user = await _authService.registerWithEmailAndPassword(
+    String result = await _authService.registerWithEmailAndPassword(
         _email.trim(), _password.trim());
     CurrentUserData.email = _email.trim();
-    if (user == null) {
-      return false;
-    } else if (CurrentUserData.email == "") {
+    if (CurrentUserData.email == "") {
       inProgress = true;
-      return false;
-    } else {
+      return [false, result];
+    } else if(result == "Success") {
       inProgress = true;
-      return true;
+      return [true, result];
+    }else{
+      inProgress = true;
+      return [false, result];
     }
   }
 
@@ -147,9 +147,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           setState(() {
                             isButtonPressed = true;
                           });
-                          bool ans = await _registerButtonAction();
+                          List ans = await _registerButtonAction();
                           inProgress = false;
-                          if (ans) {
+                          if (ans[0]) {
                             EasyLoading.show();
                             SharedPreferences sp =
                                 await SharedPreferences.getInstance();
@@ -174,7 +174,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             setState(() {
                               isButtonPressed = false;
                             });
-                            String e = "Неверный логин или пароль!";
+                            String e = ans[1];
                             if (_passwordController.text.length < 6) {
                               e = "Пароль должень быть больше 5 символов";
                             }

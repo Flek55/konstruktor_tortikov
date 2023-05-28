@@ -19,6 +19,7 @@ const CACHED_USER_LOGIN_STATUS = "CACHED_USER_LOGIN_STATUS";
 const CACHED_USER_LOGIN = "CACHED_USER_LOGIN";
 const CACHED_USER_PASSWORD = "CACHED_USER_PASSWORD";
 
+
 class LocalDataAnalyse implements LocalDataSource {
   final SharedPreferences sp;
 

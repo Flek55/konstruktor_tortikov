@@ -16,6 +16,7 @@ class Start extends StatefulWidget {
 
 class _StartState extends State<Start> {
   bool showLoading = false;
+  bool inProgress = false;
 
   @override
   Widget build(BuildContext context) {
@@ -53,36 +54,47 @@ class _StartState extends State<Start> {
   _getIconButton(context) {
     final AuthService _authService = AuthService();
     final ProductsData pd = ProductsData();
-    return IconButton(
-      icon: const Icon(Icons.east),
-      iconSize: 65,
-      color: const Color(0xFFF4D5BC),
-      onPressed: () async {
-        setState(() {
-          showLoading = true;
-        });
-        await pd.parseData();
-        SharedPreferences _sp = await SharedPreferences.getInstance();
-        LocalDataAnalyse _LDA = LocalDataAnalyse(sp: _sp);
-        String status = await _LDA.getLoginStatus();
-        if (status == "1") {
-          String user_login = await _LDA.getUserLogin();
-          CurrentUserData.email = user_login;
-          String user_password = await _LDA.getUserPassword();
-          CurrentUserData.pass = user_password;
-          CurrentUserData.name = await _authService.getUserDisplayName();
-          AppUser? user = await _authService.signInWithEmailAndPassword(
-              user_login.trim(), user_password.trim());
-          if (user != null) {
-            Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
-          } else {
-            Navigator.pushReplacementNamed(context, '/logger');
-          }
-        } else {
-          Navigator.pushReplacementNamed(context, '/logger');
-        }
-      },
-    );
+    return Visibility(
+        visible: !inProgress,
+        child: IconButton(
+          icon: const Icon(Icons.east),
+          iconSize: 65,
+          color: const Color(0xFFF4D5BC),
+          onPressed: inProgress == false
+              ? () async {
+                  setState(() {
+                    showLoading = true;
+                    inProgress = true;
+                  });
+                  await pd.parseData();
+                  SharedPreferences _sp = await SharedPreferences.getInstance();
+                  LocalDataAnalyse _LDA = LocalDataAnalyse(sp: _sp);
+                  String status = await _LDA.getLoginStatus();
+                  if (status == "1") {
+                    String user_login = await _LDA.getUserLogin();
+                    CurrentUserData.email = user_login;
+                    String user_password = await _LDA.getUserPassword();
+                    CurrentUserData.pass = user_password;
+                    CurrentUserData.name =
+                        await _authService.getUserDisplayName();
+                    AppUser? user =
+                        await _authService.signInWithEmailAndPassword(
+                            user_login.trim(), user_password.trim());
+                    if (user != null) {
+                      inProgress = false;
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, "/home", (r) => false);
+                    } else {
+                      inProgress = false;
+                      Navigator.pushReplacementNamed(context, '/logger');
+                    }
+                  } else {
+                    inProgress = false;
+                    Navigator.pushReplacementNamed(context, '/logger');
+                  }
+                }
+              : null,
+        ));
   }
 
   _getLoading(context) {
