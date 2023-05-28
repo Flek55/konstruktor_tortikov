@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:tortik/Services/category_model.dart';
 import 'package:tortik/Services/db_data.dart';
+
 import '../../Services/server_data.dart';
 
 class HomeMenu extends StatefulWidget {
   const HomeMenu({Key? key}) : super(key: key);
 
   @override
-  State<HomeMenu> createState() => _HomeMenuState();
+  State<HomeMenu> createState() => HomeMenuState();
 }
 
-class _HomeMenuState extends State<HomeMenu> {
+class HomeMenuState extends State<HomeMenu> {
   static List<Product> currentData = [];
+  static int selectedIndex = 0;
 
   @override
   void initState() {
@@ -103,16 +105,38 @@ class _HomeMenuState extends State<HomeMenu> {
 _getListView() {
   return ListView.separated(
     shrinkWrap: true,
-    itemCount: _HomeMenuState.currentData.length,
+    itemCount: HomeMenuState.currentData.length,
     physics: const BouncingScrollPhysics(),
     itemBuilder: (context, index) {
-      return ListTile(
-        title: Text(_HomeMenuState.currentData[index].name),
-        trailing: const Icon(Icons.add),
-      );
+      return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+          child: ListTile(
+            onTap: (){
+              HomeMenuState.selectedIndex = index;
+              Navigator.pushNamed(context, '/product_info');
+            },
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(width: 2, color: Colors.black12),
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            title: Text(HomeMenuState.currentData[index].name),
+            subtitle: Text(
+                "${HomeMenuState.currentData[index].description} ₽${HomeMenuState.currentData[index].price}"),
+            trailing: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                    onTap: () {
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      child: const Icon(Icons.add),
+                    ))),
+          ));
     },
     separatorBuilder: (BuildContext context, int index) {
-      return const Padding(padding: EdgeInsets.only(top: 40));
+      return const Padding(padding: EdgeInsets.only(top: 10));
     },
   );
 }
@@ -145,16 +169,16 @@ class _CategoryBoxState extends State<CategoryBox> {
               splashColor: Colors.white38,
               onTap: () {
                 if (widget.category.id == 1) {
-                  _HomeMenuState.currentData = ProductsData.bakeryData;
+                  HomeMenuState.currentData = ProductsData.bakeryData;
                   widget.notifyParent();
                 } else if (widget.category.id == 2) {
-                  _HomeMenuState.currentData = ProductsData.dessertsData;
+                  HomeMenuState.currentData = ProductsData.dessertsData;
                   widget.notifyParent();
                 } else if (widget.category.id == 3) {
-                  _HomeMenuState.currentData = ProductsData.coffeeData;
+                  HomeMenuState.currentData = ProductsData.coffeeData;
                   widget.notifyParent();
                 } else if (widget.category.id == 4) {
-                  _HomeMenuState.currentData = ProductsData.cakesData;
+                  HomeMenuState.currentData = ProductsData.cakesData;
                   widget.notifyParent();
                 }
               },

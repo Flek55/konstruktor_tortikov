@@ -26,23 +26,23 @@ class DataGetter{
   List<Product> coffeeData = [];
 
   Future<List<Product>> _getDataBakery() async{
-    var records = await FirebaseFirestore.instance.collection("bakery").get();
+    var records = await FirebaseFirestore.instance.collection("products").doc("bakery").collection("menu").get();
     //_referenceCakes.snapshots();
     return bakeryData = _mapRecords(records);
   }
 
   Future<List<Product>> _getDataDesserts() async{
-    var records = await FirebaseFirestore.instance.collection("desserts").get();
+    var records = await FirebaseFirestore.instance.collection("products").doc("desserts").collection("menu").get();
     return dessertsData = _mapRecords(records);
   }
 
   Future<List<Product>> _getDataCakes() async{
-    var records = await FirebaseFirestore.instance.collection("cakes").get();
+    var records = await FirebaseFirestore.instance.collection("products").doc("cakes").collection("menu").get();
     return cakesData = _mapRecords(records);
   }
 
   Future<List<Product>> _getDataCoffee() async{
-    var records = await FirebaseFirestore.instance.collection("coffee").get();
+    var records = await FirebaseFirestore.instance.collection("products").doc("coffee").collection("menu").get();
     return coffeeData = _mapRecords(records);
   }
 
