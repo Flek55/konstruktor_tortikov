@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tortik/Services/db_data.dart';
+import 'package:tortik/pages/Home/home_interaction.dart';
 
 import '../../Services/server_data.dart';
 
@@ -78,7 +79,8 @@ class _HomeLikedState extends State<HomeLiked> {
               child: ListTile(
                 onTap: () {
                   ProductsData.selectedProductId = likedData[index].id;
-                  Navigator.pushNamed(context, '/product_info');
+                  HomeInteractionState.selectedTab = 1;
+                  Navigator.pushReplacementNamed(context, '/product_info');
                 },
                 shape: RoundedRectangleBorder(
                   side: const BorderSide(width: 2, color: Colors.black12),
