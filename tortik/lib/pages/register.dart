@@ -7,6 +7,8 @@ import 'package:tortik/Services/db_data.dart';
 import 'package:tortik/main.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import 'Home/home_interaction.dart';
+
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
@@ -151,6 +153,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           inProgress = false;
                           if (ans[0]) {
                             EasyLoading.show();
+                            HomeInteractionState.selectedTab = 0;
                             SharedPreferences sp =
                                 await SharedPreferences.getInstance();
                             LocalDataAnalyse _LDA = LocalDataAnalyse(sp: sp);
