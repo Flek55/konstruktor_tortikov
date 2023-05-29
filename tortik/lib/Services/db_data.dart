@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tortik/Services/server_data.dart';
 
 
@@ -32,6 +33,37 @@ class DataGetter{
   List<Product> cakesData = [];
   List<Product> coffeeData = [];
   List<Product> favoriteData = [];
+  final FirebaseAuth _fAuth = FirebaseAuth.instance;
+
+  Future<int> addLikedProduct(product_id) async{
+    if (favoriteData.length == 1) {
+      await FirebaseFirestore.instance.collection("users").
+      doc(_fAuth.currentUser?.uid).collection("favorites").
+      doc(product_id).update({"product_id": product_id}).
+      then((value) => null, onError: (e) =>
+          FirebaseFirestore.instance.collection("favorites").
+          doc(product_id).set({"product_id": product_id}));
+      await FirebaseFirestore.instance.collection("users").
+      doc(_fAuth.currentUser?.uid).collection("favorites").
+      doc("delete").delete().onError((error, stackTrace) => null);
+      return 0;
+    }else{
+      await FirebaseFirestore.instance.collection("users").
+      doc(_fAuth.currentUser?.uid).collection("favorites").
+      doc(product_id).update({"product_id": product_id}).
+      then((value) => null, onError: (e) =>
+          FirebaseFirestore.instance.collection("favorites").
+          doc(product_id).set({"product_id": product_id}));
+      return 0;
+    }
+  }
+
+  Future<int> removeLikedProduct(product_id) async{
+    await FirebaseFirestore.instance.collection("users").
+    doc(_fAuth.currentUser?.uid).collection("favorites").
+    doc(product_id).delete();
+    return 0;
+  }
 
   Future<List<Product>> _getDataBakery() async{
     var records = await FirebaseFirestore.instance.collection("products").doc("bakery").collection("menu").get();

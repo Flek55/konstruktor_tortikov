@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tortik/Services/db_data.dart';
 import 'package:tortik/pages/Home/home_menu.dart';
 
 import '../../Services/server_data.dart';
@@ -23,7 +24,8 @@ class _ProductPageState extends State<ProductPage> {
         backgroundColor: const Color(0xFF5B2C6F),
         actions: [
           IconButton(onPressed: () {
-
+            DataGetter dg = DataGetter();
+            dg.addLikedProduct(pageData.id);
           },
           icon: const Icon(Icons.favorite),
           ),
