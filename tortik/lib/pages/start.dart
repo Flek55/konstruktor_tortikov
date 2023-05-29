@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -71,8 +70,6 @@ class _StartState extends State<Start> {
                   LocalDataAnalyse _LDA = LocalDataAnalyse(sp: _sp);
                   String status = await _LDA.getLoginStatus();
                   if (status == "1") {
-                    await pd.parseData();
-                    await pd.parseLikedProducts(FirebaseAuth.instance.currentUser?.uid);
                     String user_login = await _LDA.getUserLogin();
                     CurrentUserData.email = user_login;
                     String user_password = await _LDA.getUserPassword();
@@ -83,6 +80,7 @@ class _StartState extends State<Start> {
                         await _authService.signInWithEmailAndPassword(
                             user_login.trim(), user_password.trim());
                     if (user != null) {
+                      await pd.parseData();
                       await pd.parseLikedProducts(user.id);
                       inProgress = false;
                       Navigator.pushNamedAndRemoveUntil(
