@@ -7,6 +7,7 @@ import 'package:tortik/Services/cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tortik/Services/db_data.dart';
 import 'package:tortik/main.dart';
+import 'package:tortik/pages/Home/home_interaction.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -136,6 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                           inProgress = false;
                           if (ans[0]) {
                             EasyLoading.show();
+                            HomeInteractionState.selectedTab = 0;
                             ProductsData pd = ProductsData();
                             SharedPreferences _sp =
                                 await SharedPreferences.getInstance();

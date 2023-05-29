@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tortik/Services/auth.dart';
 import 'package:tortik/Services/cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,8 +31,8 @@ class _HomeProfileState extends State<HomeProfile> {
       body: Column(
         children: [
           const Padding(padding: EdgeInsets.only(top: 50)),
-          Row(
-            children: const [
+          const Row(
+            children: [
               Padding(padding: EdgeInsets.only(left: 40)),
               Text("Профиль",
                 style: TextStyle(
@@ -42,7 +43,7 @@ class _HomeProfileState extends State<HomeProfile> {
             ],
           ),
           const Padding(padding: EdgeInsets.only(top: 60)),
-          Row(children: const [
+          const Row(children: [
             Padding(padding: EdgeInsets.only(left: 40)),
             Text("Имя",
               style: TextStyle(
@@ -77,7 +78,7 @@ class _HomeProfileState extends State<HomeProfile> {
             ],
           ),
           const Padding(padding: EdgeInsets.only(top: 10)),
-          Row(children: const [
+          const Row(children: [
             Padding(padding: EdgeInsets.only(left: 40)),
             Text("Email",
               style: TextStyle(
@@ -203,6 +204,7 @@ class _HomeProfileState extends State<HomeProfile> {
       decoration: InputDecoration(
         suffixIcon: IconButton(onPressed:() async {
           if (_emailController.text.trim() != "" && _emailController.text.length >= 4) {
+            EasyLoading.show();
             String res = await _authService.updateEmail(_emailController.text.trim());
             Fluttertoast.showToast(
                 msg: res,
@@ -222,6 +224,8 @@ class _HomeProfileState extends State<HomeProfile> {
               _LDA.setLoginStatus("1", _emailController.text.trim(),CurrentUserData.pass);
             }
             _emailController.clear();
+            EasyLoading.dismiss();
+            EasyLoading.removeAllCallbacks();
           }
         } , icon: const Icon(Icons.arrow_forward),style: IconButton.styleFrom(
           hoverColor: const Color(0xFF5B2C6F),
