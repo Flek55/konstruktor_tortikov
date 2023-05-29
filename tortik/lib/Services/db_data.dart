@@ -7,6 +7,7 @@ class ProductsData{
   static List<Product> dessertsData = [];
   static List<Product> cakesData = [];
   static List<Product> coffeeData = [];
+  static List<Product> favoriteData = [];
 
   Future<int> parseData() async{
     final DataGetter dg = DataGetter();
@@ -14,6 +15,12 @@ class ProductsData{
     dessertsData = await dg._getDataDesserts();
     cakesData = await dg._getDataCakes();
     coffeeData = await dg._getDataCoffee();
+    return 0;
+  }
+
+  Future<int> parseLikedProducts(user_id) async{
+    final DataGetter dg = DataGetter();
+    favoriteData = await dg._getFavorites(user_id);
     return 0;
   }
 }
@@ -24,6 +31,7 @@ class DataGetter{
   List<Product> dessertsData = [];
   List<Product> cakesData = [];
   List<Product> coffeeData = [];
+  List<Product> favoriteData = [];
 
   Future<List<Product>> _getDataBakery() async{
     var records = await FirebaseFirestore.instance.collection("products").doc("bakery").collection("menu").get();
@@ -44,6 +52,11 @@ class DataGetter{
   Future<List<Product>> _getDataCoffee() async{
     var records = await FirebaseFirestore.instance.collection("products").doc("coffee").collection("menu").get();
     return coffeeData = _mapRecords(records);
+  }
+
+  Future<List<Product>> _getFavorites(user_id) async{
+    var records = await FirebaseFirestore.instance.collection("users").doc(user_id).collection("favorites").get();
+    return favoriteData = _mapRecords(records);
   }
 
   _mapRecords(QuerySnapshot<Map<String, dynamic>> records){

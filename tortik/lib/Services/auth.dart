@@ -34,6 +34,7 @@ class AuthService {
       CurrentUserData.name = await getUserDisplayName();
       final data = {"username":"${email}"};
       _fData.collection("users").doc("${result.user?.uid}").set(data);
+      _fData.collection("users").doc("${result.user?.uid}").collection("favorites").doc("delete").set({"name": "1", "price": 149, "description": ""});
     } on FirebaseAuthException catch (error) {
       switch (error.code) {
         case "ERROR_INVALID_EMAIL":
@@ -99,6 +100,9 @@ class AuthService {
     try {
       User? user = _fAuth.currentUser;
       await user?.updateEmail(email);
+      final data = {"username":"${email}"};
+      _fData.collection("users").doc("${user?.uid}").update(data).then(
+              (value) => null, onError: (e) => _fData.collection("users").doc("${user?.uid}").set(data));
     } on FirebaseAuthException catch (error) {
       switch (error.code) {
         case "ERROR_INVALID_EMAIL":
