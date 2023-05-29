@@ -15,9 +15,11 @@ class AuthService {
           email: email, password: password);
       User? user = result.user;
       CurrentUserData.name = await getUserDisplayName();
-      final data = {"username":"${email}"};
+      final data = {"username": email};
       _fData.collection("users").doc("${result.user?.uid}").update(data).then(
-              (value) => null, onError: (e) => _fData.collection("users").doc("${result.user?.uid}").set(data));
+          (value) => null,
+          onError: (e) =>
+              _fData.collection("users").doc("${result.user?.uid}").set(data));
       return AppUser(user);
     } catch (e) {
       return null;
@@ -32,9 +34,14 @@ class AuthService {
           email: email, password: password);
       assignName("Имя не задано");
       CurrentUserData.name = await getUserDisplayName();
-      final data = {"username":"${email}"};
+      final data = {"username": email};
       _fData.collection("users").doc("${result.user?.uid}").set(data);
-      _fData.collection("users").doc("${result.user?.uid}").collection("favorites").doc("delete").set({"name": "1", "price": 149, "description": ""});
+      _fData
+          .collection("users")
+          .doc("${result.user?.uid}")
+          .collection("favorites")
+          .doc("delete")
+          .set({"product_id": "0"});
     } on FirebaseAuthException catch (error) {
       switch (error.code) {
         case "ERROR_INVALID_EMAIL":
@@ -90,7 +97,6 @@ class AuthService {
     } on FirebaseAuthException catch (error) {
       switch (error.code) {
         default:
-          print("чзх");
       }
     }
   }
@@ -100,9 +106,11 @@ class AuthService {
     try {
       User? user = _fAuth.currentUser;
       await user?.updateEmail(email);
-      final data = {"username":"${email}"};
+      final data = {"username": "$email"};
       _fData.collection("users").doc("${user?.uid}").update(data).then(
-              (value) => null, onError: (e) => _fData.collection("users").doc("${user?.uid}").set(data));
+          (value) => null,
+          onError: (e) =>
+              _fData.collection("users").doc("${user?.uid}").set(data));
     } on FirebaseAuthException catch (error) {
       switch (error.code) {
         case "ERROR_INVALID_EMAIL":

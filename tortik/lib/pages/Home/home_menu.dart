@@ -13,7 +13,6 @@ class HomeMenu extends StatefulWidget {
 
 class HomeMenuState extends State<HomeMenu> {
   static List<Product> currentData = [];
-  static int selectedIndex = 0;
 
   @override
   void initState() {
@@ -46,7 +45,7 @@ class HomeMenuState extends State<HomeMenu> {
                 )
               ]),
               const Padding(padding: EdgeInsets.only(top: 30)),
-              Row(children: const [
+              const Row(children: [
                 Padding(padding: EdgeInsets.only(top: 50, left: 40)),
                 Text(
                   'Отличный кофе\nВсегда и везде!',
@@ -112,7 +111,7 @@ _getListView() {
           padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
           child: ListTile(
             onTap: (){
-              HomeMenuState.selectedIndex = index;
+              ProductsData.selectedProductId = HomeMenuState.currentData[index].id;
               Navigator.pushNamed(context, '/product_info');
             },
             shape: RoundedRectangleBorder(
