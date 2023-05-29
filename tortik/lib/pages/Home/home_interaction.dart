@@ -9,15 +9,15 @@ class HomeInteraction extends StatefulWidget {
   const HomeInteraction({Key? key}) : super(key: key);
 
   @override
-  State<HomeInteraction> createState() => _HomeInteractionState();
+  State<HomeInteraction> createState() => HomeInteractionState();
 }
 
-class _HomeInteractionState extends State<HomeInteraction> {
-  int _selectedTab = 0;
+class HomeInteractionState extends State<HomeInteraction> {
+  static int selectedTab = 0;
 
-  _changeTab(int index){
+  changeTab(int index){
     setState(() {
-      _selectedTab = index;
+      selectedTab = index;
     });
   }
 
@@ -30,12 +30,12 @@ class _HomeInteractionState extends State<HomeInteraction> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: _widgets.elementAt(_selectedTab),
+    return Scaffold(body: _widgets.elementAt(selectedTab),
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: false,
         showSelectedLabels: false,
-        currentIndex: _selectedTab,
-        onTap: (index) => _changeTab(index),
+        currentIndex: selectedTab,
+        onTap: (index) => changeTab(index),
         selectedItemColor: const Color(0xFF5B2C6F),
         unselectedItemColor: Colors.grey,
         items: const [

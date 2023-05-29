@@ -34,6 +34,15 @@ class _ProductPageState extends State<ProductPage> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: Material(
+            color: Colors.transparent,
+          child:InkWell(
+            onTap: (){
+              Navigator.pushReplacementNamed(context, '/home');
+            },
+            child: const Icon(Icons.arrow_back),
+          )
+        ),
         title: Text(pageData.name),
         backgroundColor: const Color(0xFF5B2C6F),
         actions: [
