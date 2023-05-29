@@ -66,11 +66,11 @@ class _StartState extends State<Start> {
                     showLoading = true;
                     inProgress = true;
                   });
-                  await pd.parseData();
                   SharedPreferences _sp = await SharedPreferences.getInstance();
                   LocalDataAnalyse _LDA = LocalDataAnalyse(sp: _sp);
                   String status = await _LDA.getLoginStatus();
                   if (status == "1") {
+                    await pd.parseData();
                     String user_login = await _LDA.getUserLogin();
                     CurrentUserData.email = user_login;
                     String user_password = await _LDA.getUserPassword();
@@ -81,6 +81,7 @@ class _StartState extends State<Start> {
                         await _authService.signInWithEmailAndPassword(
                             user_login.trim(), user_password.trim());
                     if (user != null) {
+                      await pd.parseLikedProducts(user.id);
                       inProgress = false;
                       Navigator.pushNamedAndRemoveUntil(
                           context, "/home", (r) => false);

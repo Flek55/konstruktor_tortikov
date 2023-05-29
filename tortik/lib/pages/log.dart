@@ -51,19 +51,19 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<bool> _loginButtonAction() async {
+  Future<List> _loginButtonAction() async {
     inProgress = true;
     _email = _emailController.text;
     _password = _passwordController.text;
 
-    if (_email.isEmpty || _password.isEmpty) return false;
+    if (_email.isEmpty || _password.isEmpty) return [false,"0"];
 
     AppUser? user = await _authService.signInWithEmailAndPassword(
         _email.trim(), _password.trim());
     if (user == null) {
-      return false;
+      return [false,"0"];
     } else {
-      return true;
+      return [true,user.id];
     }
   }
 
@@ -132,15 +132,16 @@ class _LoginPageState extends State<LoginPage> {
                           setState(() {
                             isButtonPressed = true;
                           });
-                          bool ans = await _loginButtonAction();
+                          List ans = await _loginButtonAction();
                           inProgress = false;
-                          if (ans) {
+                          if (ans[0]) {
                             EasyLoading.show();
                             ProductsData pd = ProductsData();
                             SharedPreferences _sp =
                                 await SharedPreferences.getInstance();
                             LocalDataAnalyse _LDA = LocalDataAnalyse(sp: _sp);
                             await pd.parseData();
+                            await pd.parseLikedProducts(ans[1]);
                             _LDA.setLoginStatus(
                                 "1",
                                 _emailController.text.trim(),

@@ -22,7 +22,9 @@ class _ProductPageState extends State<ProductPage> {
         title: Text(pageData.name),
         backgroundColor: const Color(0xFF5B2C6F),
         actions: [
-          IconButton(onPressed: () {  },
+          IconButton(onPressed: () {
+
+          },
           icon: const Icon(Icons.favorite),
           ),
           const Padding(padding: EdgeInsets.only(right: 15)),
