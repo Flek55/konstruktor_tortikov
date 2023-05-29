@@ -14,11 +14,11 @@ class _HomeCartState extends State<HomeCart> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          const Padding(padding: EdgeInsets.only(top: 50)),
+          Padding(padding: EdgeInsets.only(top: 50)),
           Row(
-            children: const [],
+            children: [],
           ),
-          Row(children: const [
+          Row(children: [
             Padding(padding: EdgeInsets.only(top: 50, left: 40)),
             Text('Ваш заказ \nвсегда под рукой!',
               textAlign: TextAlign.left,

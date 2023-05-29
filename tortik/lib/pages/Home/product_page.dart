@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tortik/Services/db_data.dart';
-import 'package:tortik/pages/Home/home_menu.dart';
 
 import '../../Services/server_data.dart';
 
@@ -13,8 +13,22 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  final int productIndex = HomeMenuState.selectedIndex;
-  final Product pageData = HomeMenuState.currentData[HomeMenuState.selectedIndex];
+  final String productIndex = ProductsData.selectedProductId;
+  late final Product pageData;
+
+  Product? findIndex(index){
+    for (int i = 0; i < ProductsData.dataset.length; i++){
+      if (ProductsData.dataset[i].id.toString() == index){
+        return ProductsData.dataset[i];
+      }
+    }
+    return null;
+  }
+  @override
+  void initState() {
+    pageData = findIndex(productIndex)!;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -23,9 +37,11 @@ class _ProductPageState extends State<ProductPage> {
         title: Text(pageData.name),
         backgroundColor: const Color(0xFF5B2C6F),
         actions: [
-          IconButton(onPressed: () {
+          IconButton(onPressed: () async {
             DataGetter dg = DataGetter();
-            dg.addLikedProduct(pageData.id);
+            await dg.configureLikedProduct(pageData.id);
+            ProductsData pd = ProductsData();
+            await pd.parseLikedProducts(FirebaseAuth.instance.currentUser?.uid);
           },
           icon: const Icon(Icons.favorite),
           ),

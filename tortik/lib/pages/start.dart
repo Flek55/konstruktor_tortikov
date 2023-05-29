@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -71,6 +72,7 @@ class _StartState extends State<Start> {
                   String status = await _LDA.getLoginStatus();
                   if (status == "1") {
                     await pd.parseData();
+                    await pd.parseLikedProducts(FirebaseAuth.instance.currentUser?.uid);
                     String user_login = await _LDA.getUserLogin();
                     CurrentUserData.email = user_login;
                     String user_password = await _LDA.getUserPassword();

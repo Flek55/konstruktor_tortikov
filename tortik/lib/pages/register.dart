@@ -156,6 +156,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             LocalDataAnalyse _LDA = LocalDataAnalyse(sp: sp);
                             ProductsData pd = ProductsData();
                             await pd.parseData();
+                            await pd.parseLikedProducts(ans[1]);
                             _LDA.setLoginStatus(
                                 "1",
                                 _emailController.text.trim(),
