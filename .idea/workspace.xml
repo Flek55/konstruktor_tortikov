@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1f822a7-3460-45dd-b1e7-5e2ae84dffeb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/tilt2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/tilt2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +19,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2PQoUTONG9s8MRbpOLxsd0HKhu0" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -30,7 +31,7 @@
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
-    "last_opened_file_path": "D:/Programming/konstruktor_tortikov/tortik",
+    "last_opened_file_path": "C:/Users/burcev.arsenij/StudioProjects/konstruktor_tortikov/tortik",
     "settings.editor.selected.configurable": "dart.settings",
     "show.migrate.to.gradle.popup": "false"
   }
