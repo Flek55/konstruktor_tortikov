@@ -31,10 +31,11 @@ class _HomeLikedState extends State<HomeLiked> {
     return ans;
   }
 
-  void getElementsAppearInBothList(List<String> l1, List<Product> l2, List<Product> ans) {
-    for (int i = 0; i < l2.length; i++){
-      for (int j = 0; j < l1.length; j++){
-        if (l2[i].id.toString() == l1[j]){
+  void getElementsAppearInBothList(
+      List<String> l1, List<Product> l2, List<Product> ans) {
+    for (int i = 0; i < l2.length; i++) {
+      for (int j = 0; j < l1.length; j++) {
+        if (l2[i].id.toString() == l1[j]) {
           ans.add(l2[i]);
         }
       }
@@ -44,26 +45,28 @@ class _HomeLikedState extends State<HomeLiked> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          const Padding(padding: EdgeInsets.only(top: 50)),
-          const Row(children: [
-            Padding(padding: EdgeInsets.only(top: 50, left: 40)),
-            Text(
-              'Ваши любимые десерты \nвсегда с вами!',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontFamily: 'Roboto',
-                fontSize: 25,
-                color: Colors.black,
-              ),
-            )
-          ]),
-          _getListView(),
-        ],
-      ),
-    );
+        backgroundColor: Colors.white,
+        body: SafeArea(
+            child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const Padding(padding: EdgeInsets.only(top: 50)),
+              const Row(children: [
+                Padding(padding: EdgeInsets.only(top: 50, left: 40)),
+                Text(
+                  'Ваши любимые десерты \nвсегда с вами!',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontSize: 25,
+                    color: Colors.black,
+                  ),
+                )
+              ]),
+              _getListView(),
+            ],
+          ),
+        )));
   }
 
   _getListView() {
@@ -75,7 +78,7 @@ class _HomeLikedState extends State<HomeLiked> {
         itemBuilder: (context, index) {
           return Padding(
               padding:
-              const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+                  const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
               child: ListTile(
                 onTap: () {
                   ProductsData.selectedProductId = likedData[index].id;
@@ -88,14 +91,11 @@ class _HomeLikedState extends State<HomeLiked> {
                 ),
                 title: Text(likedData[index].name),
                 subtitle: Text(
-                    "${likedData[index].description} ₽${likedData[index]
-                        .price}"),
+                    "${likedData[index].description} ₽${likedData[index].price}"),
                 trailing: Material(
                     color: Colors.transparent,
                     child: InkWell(
-                        onTap: () {
-
-                        },
+                        onTap: () {},
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30.0),
@@ -108,7 +108,7 @@ class _HomeLikedState extends State<HomeLiked> {
           return const Padding(padding: EdgeInsets.only(top: 10));
         },
       );
-    }else{
+    } else {
       return Container(
         height: 100,
         width: 300,
