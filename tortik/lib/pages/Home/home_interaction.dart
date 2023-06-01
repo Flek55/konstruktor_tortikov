@@ -36,8 +36,8 @@ class HomeInteractionState extends State<HomeInteraction> {
         showSelectedLabels: false,
         currentIndex: selectedTab,
         onTap: (index) => changeTab(index),
-        selectedItemColor: const Color(0xFF5B2C6F),
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: Theme.of(context).primaryColorDark,
+        unselectedItemColor: Theme.of(context).primaryColorLight,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(

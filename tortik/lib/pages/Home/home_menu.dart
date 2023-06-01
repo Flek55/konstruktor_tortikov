@@ -28,7 +28,7 @@ class HomeMenuState extends State<HomeMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
         body: SafeArea(
             child: SingleChildScrollView(
           child: Column(
@@ -41,18 +41,16 @@ class HomeMenuState extends State<HomeMenu> {
                   onPressed: () {
                     Navigator.pushNamed(context, '/map');
                   },
-                  child: const Text("Как нас найти?",
-                      style: TextStyle(color: Colors.black, fontSize: 17)),
+                  child: Text("Как нас найти?",
+                      style: Theme.of(context).textTheme.displayMedium),
                 )
               ]),
               const Padding(padding: EdgeInsets.only(top: 30)),
-              const Row(children: [
-                Padding(padding: EdgeInsets.only(top: 50, left: 40)),
+              Row(children: [
+                const Padding(padding: EdgeInsets.only(top: 50, left: 40)),
                 Text(
                   'Отличный кофе\nВсегда и везде!',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                      fontFamily: 'Roboto', fontSize: 25, color: Colors.black),
+                  style: Theme.of(context).textTheme.displayLarge,
                 )
               ]),
               const SizedBox(
@@ -67,15 +65,15 @@ class HomeMenuState extends State<HomeMenu> {
                     suffixIcon: IconButton(
                         onPressed: () {},
                         icon: const Icon(Icons.arrow_forward)),
-                    enabledBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                       borderSide: BorderSide(
-                        color: Colors.grey,
+                        color: Theme.of(context).primaryColorLight
                       ),
                     ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      borderSide: BorderSide(color: Color(0xFF5B2C6F)),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                      borderSide: BorderSide(color: Theme.of(context).primaryColorDark),
                     ),
                   ),
                 ),
@@ -167,8 +165,8 @@ class _CategoryBoxState extends State<CategoryBox> {
         width: 100,
         margin: const EdgeInsets.symmetric(horizontal: 15),
         decoration: BoxDecoration(
-          color: const Color(0xFF5B2C6F),
-          borderRadius: BorderRadius.circular(30.0),
+            color: Theme.of(context).primaryColorDark,
+            borderRadius: BorderRadius.circular(30.0),
         ),
         child: Material(
             color: Colors.transparent,
@@ -195,10 +193,7 @@ class _CategoryBoxState extends State<CategoryBox> {
                   children: [
                     Text(
                       widget.category.name,
-                      style: const TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Roboto',
-                          color: Colors.white),
+                      style: Theme.of(context).textTheme.displaySmall
                     )
                   ],
                 ),

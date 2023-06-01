@@ -46,13 +46,13 @@ class _ForgetPassState extends State<ForgetPass> {
         children: <Widget>[
           TextField(
             controller: _emailController,
-            decoration: const InputDecoration(
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
+            decoration: InputDecoration(
+                enabledBorder: const UnderlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.white),
                 ),
                 labelText: 'E-mail',
-                labelStyle: TextStyle(color: Colors.white)),
-            style: (const TextStyle(color: Colors.white)),
+                labelStyle: Theme.of(context).textTheme.displaySmall),
+            style: Theme.of(context).textTheme.displaySmall
           ),
           const SizedBox(
             height: 15,
@@ -67,9 +67,9 @@ class _ForgetPassState extends State<ForgetPass> {
       flex: 3,
       child: Container(
         alignment: Alignment.centerLeft,
-        child: const Text(
+        child: Text(
           'Сбросить пароль',
-          style: TextStyle(color: Colors.white, fontSize: 37),
+          style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 37)
         ),
       ),
     );

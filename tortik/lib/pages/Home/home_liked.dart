@@ -46,23 +46,19 @@ class _HomeLikedState extends State<HomeLiked> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
         body: SafeArea(
             child: SingleChildScrollView(
           child: Column(
             children: [
               const Padding(padding: EdgeInsets.only(top: 50)),
-              const Row(children: [
+              Row(children: [
                 Padding(padding: EdgeInsets.only(top: 50, left: 40)),
                 Text(
                   'Ваши любимые десерты \nвсегда с вами!',
                   textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontSize: 25,
-                    color: Colors.black,
-                  ),
-                )
+                  style: Theme.of(context).textTheme.displayMedium
+                  )
               ]),
               _getListView(),
             ],
@@ -118,7 +114,7 @@ class _HomeLikedState extends State<HomeLiked> {
       return Container(
         height: 100,
         width: 300,
-        child: Text("Нет избранного"),
+        child: const Text("Нет избранного"),
       );
     }
   }

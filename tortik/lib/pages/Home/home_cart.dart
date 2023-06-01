@@ -89,7 +89,7 @@ class _HomeCartState extends State<HomeCart> {
                   ),
                 ],
               )
-            ],
+            ]
           ),
         )));
   }
