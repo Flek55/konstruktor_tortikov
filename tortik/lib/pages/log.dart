@@ -88,11 +88,11 @@ class _LoginPageState extends State<LoginPage> {
             Column(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
           TextField(
             controller: emailController,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
                 labelText: 'E-Mail',
-                labelStyle: TextStyle(color: Colors.white),
+                labelStyle: TextStyle(color: Theme.of(context).backgroundColor),
                 enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
+                  borderSide: BorderSide(color: Theme.of(context).backgroundColor),
                 )),
             style: (const TextStyle(color: Colors.white)),
           ),
