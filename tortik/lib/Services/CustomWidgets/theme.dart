@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 ThemeData theme(){
   return ThemeData(
     primaryColor: Colors.black87,
-    scaffoldBackgroundColor: Colors.black87,
     primaryColorDark: const Color(0xFF5B2C6F),
     primaryColorLight: const Color(0xFFBDBDBD),
     fontFamily: 'Roboto',
