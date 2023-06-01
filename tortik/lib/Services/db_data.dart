@@ -82,6 +82,7 @@ class DataGetter {
     return 0;
   }
 
+
   Future<String> _getCartProduct(product_id) async {
     String errorMessage = "";
     try {

@@ -32,7 +32,7 @@ class _CafeMapState extends State<CafeMap> {
         child: const Icon(Icons.my_location),
       ),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF5B2C6F),
+        backgroundColor:Theme.of(context).primaryColorDark,
         centerTitle: true,
         title: const Text(
           'Карта кофеен',
@@ -52,7 +52,7 @@ class _CafeMapState extends State<CafeMap> {
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.CENTER,
                     timeInSecForIosWeb: 1,
-                    backgroundColor: const Color(0xFF5B2C6F),
+                    backgroundColor: Theme.of(context).primaryColorDark,
                     textColor: Colors.white,
                     fontSize: 16.0);
               },
@@ -68,7 +68,7 @@ class _CafeMapState extends State<CafeMap> {
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.CENTER,
                     timeInSecForIosWeb: 1,
-                    backgroundColor: const Color(0xFF5B2C6F),
+                    backgroundColor:Theme.of(context).primaryColorDark,
                     textColor: Colors.white,
                     fontSize: 16.0);
               },
@@ -84,7 +84,7 @@ class _CafeMapState extends State<CafeMap> {
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.CENTER,
                     timeInSecForIosWeb: 1,
-                    backgroundColor: const Color(0xFF5B2C6F),
+                    backgroundColor: Theme.of(context).primaryColorDark,
                     textColor: Colors.white,
                     fontSize: 16.0);
               },
@@ -100,7 +100,7 @@ class _CafeMapState extends State<CafeMap> {
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.CENTER,
                     timeInSecForIosWeb: 1,
-                    backgroundColor: const Color(0xFF5B2C6F),
+                    backgroundColor: Theme.of(context).primaryColorDark,
                     textColor: Colors.white,
                     fontSize: 16.0);
               },

@@ -16,7 +16,7 @@ class _LogRegState extends State<LogReg> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const Padding(padding: EdgeInsets.only(top: 120)),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
+          const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Icon(
               Icons.login,
               size: 150,
