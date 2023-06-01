@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tortik/Services/category_model.dart';
 import 'package:tortik/Services/db_data.dart';
@@ -78,8 +79,11 @@ class HomeMenuState extends State<HomeMenu> {
                 ),
               ),
               const Padding(padding: EdgeInsets.only(top: 30)),
-              SizedBox(
+              Container(
                 height: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
                 child: ListView.builder(
                   itemCount: 4,
                   scrollDirection: Axis.horizontal,
@@ -122,7 +126,11 @@ _getListView() {
             trailing: Material(
                 color: Colors.transparent,
                 child: InkWell(
-                    onTap: () {
+                    onTap: () async {
+                      DataGetter dg = DataGetter();
+                      await dg.configureCart(HomeMenuState.currentData[index].id,"+");
+                      ProductsData pd = ProductsData();
+                      await pd.parseCartProducts(FirebaseAuth.instance.currentUser?.uid);
                     },
                     child: Container(
                       decoration: BoxDecoration(

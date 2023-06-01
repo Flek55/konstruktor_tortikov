@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tortik/Services/db_data.dart';
 import 'package:tortik/pages/Home/home_interaction.dart';
@@ -91,7 +92,12 @@ class _HomeLikedState extends State<HomeLiked> {
                 trailing: Material(
                     color: Colors.transparent,
                     child: InkWell(
-                        onTap: () {},
+                        onTap: () async {
+                          DataGetter dg = DataGetter();
+                          await dg.configureCart(likedData[index].id,"+");
+                          ProductsData pd = ProductsData();
+                          await pd.parseCartProducts(FirebaseAuth.instance.currentUser?.uid);
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30.0),
