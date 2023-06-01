@@ -5,6 +5,7 @@ import '../../Services/db_data.dart';
 import '../../Services/server_data.dart';
 import 'home_interaction.dart';
 
+
 class HomeCart extends StatefulWidget {
   const HomeCart({Key? key}) : super(key: key);
 
@@ -15,6 +16,7 @@ class HomeCart extends StatefulWidget {
 class _HomeCartState extends State<HomeCart> {
   static List<Product> cartData = [];
   List<Product> ans = [];
+  DataGetter dg = DataGetter();
 
   @override
   void initState() {
@@ -114,7 +116,7 @@ class _HomeCartState extends State<HomeCart> {
                   side: const BorderSide(width: 2, color: Colors.black12),
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                title: Text(cartData[index].name),
+                title: Text("${cartData[index].name}"),
                 subtitle: Text(
                     "${cartData[index].description} ₽${cartData[index].price}"),
                 trailing: Material(
