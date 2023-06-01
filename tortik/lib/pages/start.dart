@@ -82,6 +82,7 @@ class _StartState extends State<Start> {
                     if (user != null) {
                       await pd.parseData();
                       await pd.parseLikedProducts(user.id);
+                      await pd.parseCartProducts(user.id);
                       inProgress = false;
                       Navigator.pushNamedAndRemoveUntil(
                           context, "/home", (r) => false);

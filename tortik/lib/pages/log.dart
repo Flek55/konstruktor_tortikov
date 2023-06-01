@@ -144,6 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                             LocalDataAnalyse _LDA = LocalDataAnalyse(sp: _sp);
                             await pd.parseData();
                             await pd.parseLikedProducts(ans[1]);
+                            await pd.parseCartProducts(ans[1]);
                             _LDA.setLoginStatus(
                                 "1",
                                 _emailController.text.trim(),

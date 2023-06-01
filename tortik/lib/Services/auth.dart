@@ -42,6 +42,20 @@ class AuthService {
           .collection("favorites")
           .doc("delete")
           .set({"product_id": "0"});
+      _fData
+          .collection("users")
+          .doc("${result.user?.uid}")
+          .collection("cart")
+          .doc("delete")
+          .set({"product_id": "0", "amount": 0});
+      _fData
+          .collection("users")
+          .doc("${result.user?.uid}")
+          .collection("orders")
+          .doc()
+          .collection("menu")
+          .doc("delete")
+          .set({"product_id": "0"});
     } on FirebaseAuthException catch (error) {
       switch (error.code) {
         case "ERROR_INVALID_EMAIL":
