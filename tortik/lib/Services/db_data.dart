@@ -93,7 +93,7 @@ class DataGetter {
           .doc(product_id).get();
       currentProduct = getter.data()!;
     } catch (error) {
-      errorMessage = "PIZDA";
+      errorMessage = "ERRORRR";
     }
       if (errorMessage != "") {
         return errorMessage;
@@ -109,11 +109,8 @@ class DataGetter {
         .collection("cart")
         .doc(product_id);
     String res = await _getCartProduct(product_id);
-    print(res);
-    print(currentProduct);
     if (res == "Success"){
       x = currentProduct["amount"]!;
-      print(x);
     }
     docRef.get().then((doc) async =>
     {
