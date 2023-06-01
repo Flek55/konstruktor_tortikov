@@ -45,13 +45,11 @@ class HomeMenuState extends State<HomeMenu> {
                 )
               ]),
               const Padding(padding: EdgeInsets.only(top: 30)),
-              const Row(children: [
-                Padding(padding: EdgeInsets.only(top: 50, left: 40)),
+              Row(children: [
+                const Padding(padding: EdgeInsets.only(top: 50, left: 40)),
                 Text(
                   'Отличный кофе\nВсегда и везде!',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                      fontFamily: 'Roboto', fontSize: 25, color: Colors.black),
+                  style: Theme.of(context).textTheme.displayLarge,
                 )
               ]),
               const SizedBox(
@@ -159,8 +157,8 @@ class _CategoryBoxState extends State<CategoryBox> {
         width: 100,
         margin: const EdgeInsets.symmetric(horizontal: 15),
         decoration: BoxDecoration(
-          color: const Color(0xFF5B2C6F),
-          borderRadius: BorderRadius.circular(30.0),
+            color: Theme.of(context).primaryColorDark,
+            borderRadius: BorderRadius.circular(30.0),
         ),
         child: Material(
             color: Colors.transparent,
@@ -187,10 +185,7 @@ class _CategoryBoxState extends State<CategoryBox> {
                   children: [
                     Text(
                       widget.category.name,
-                      style: const TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Roboto',
-                          color: Colors.white),
+                      style: Theme.of(context).textTheme.displaySmall
                     )
                   ],
                 ),
