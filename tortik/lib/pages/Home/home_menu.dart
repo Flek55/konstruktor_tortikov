@@ -27,7 +27,7 @@ class HomeMenuState extends State<HomeMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
         body: SafeArea(
             child: SingleChildScrollView(
           child: Column(
@@ -40,8 +40,8 @@ class HomeMenuState extends State<HomeMenu> {
                   onPressed: () {
                     Navigator.pushNamed(context, '/map');
                   },
-                  child: const Text("Как нас найти?",
-                      style: TextStyle(color: Colors.black, fontSize: 17)),
+                  child: Text("Как нас найти?",
+                      style: Theme.of(context).textTheme.displayMedium),
                 )
               ]),
               const Padding(padding: EdgeInsets.only(top: 30)),
@@ -64,15 +64,15 @@ class HomeMenuState extends State<HomeMenu> {
                     suffixIcon: IconButton(
                         onPressed: () {},
                         icon: const Icon(Icons.arrow_forward)),
-                    enabledBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                       borderSide: BorderSide(
-                        color: Colors.grey,
+                        color: Theme.of(context).primaryColorLight
                       ),
                     ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      borderSide: BorderSide(color: Color(0xFF5B2C6F)),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                      borderSide: BorderSide(color: Theme.of(context).primaryColorDark),
                     ),
                   ),
                 ),

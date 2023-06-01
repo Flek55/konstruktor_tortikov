@@ -45,7 +45,7 @@ class _HomeLikedState extends State<HomeLiked> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
         body: SafeArea(
             child: SingleChildScrollView(
           child: Column(

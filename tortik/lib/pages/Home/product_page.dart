@@ -44,7 +44,7 @@ class _ProductPageState extends State<ProductPage> {
           )
         ),
         title: Text(pageData.name),
-        backgroundColor: const Color(0xFF5B2C6F),
+        backgroundColor: Theme.of(context).primaryColorDark,
         actions: [
           IconButton(onPressed: () async {
             DataGetter dg = DataGetter();

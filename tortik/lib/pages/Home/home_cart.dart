@@ -11,7 +11,7 @@ class _HomeCartState extends State<HomeCart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Column(
         children: [
           const Padding(padding: EdgeInsets.only(top: 50)),
@@ -22,7 +22,7 @@ class _HomeCartState extends State<HomeCart> {
             const Padding(padding: EdgeInsets.only(top: 50, left: 40)),
             Text('Ваш заказ \nвсегда под рукой!',
               textAlign: TextAlign.left,
-              style: Theme.of(context).textTheme.displaySmall
+              style: Theme.of(context).textTheme.displayMedium
               ),]
           ),
         ],

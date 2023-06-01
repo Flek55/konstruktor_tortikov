@@ -23,7 +23,7 @@ class _HomeProfileState extends State<HomeProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
         body: SafeArea(
             child: SingleChildScrollView(
           child: Column(
@@ -171,21 +171,21 @@ class _HomeProfileState extends State<HomeProfile> {
           },
           icon: const Icon(Icons.arrow_forward),
           style: IconButton.styleFrom(
-            hoverColor: const Color(0xFF5B2C6F),
+            hoverColor: Theme.of(context).primaryColorDark
           ),
           splashRadius: 1,
         ),
         border: const OutlineInputBorder(),
         hintText: "Ваше имя",
-        enabledBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
           borderSide: BorderSide(
-            color: Colors.grey,
+            color: Theme.of(context).primaryColorLight
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          borderSide: BorderSide(color: Color(0xFF5B2C6F)),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+          borderSide: BorderSide(color:Theme.of(context).primaryColorDark),
         ),
       ),
     );
@@ -198,12 +198,12 @@ class _HomeProfileState extends State<HomeProfile> {
         SharedPreferences sp = await SharedPreferences.getInstance();
         LocalDataAnalyse _LDA = LocalDataAnalyse(sp: sp);
         _LDA.setLoginStatus("0", "", "");
-        CurrentUserData.name = "Имя не задано";
+        CurrentUserData.name = "Введите имя";
         Navigator.pushNamedAndRemoveUntil(context, "/logger", (r) => false);
       },
-      child: const Text(
+      child: Text(
         "Выйти из профиля",
-        style: TextStyle(fontSize: 15, fontFamily: 'Roboto', color: Colors.red),
+        style: Theme.of(context).textTheme.displaySmall?.copyWith(color:Colors.red,fontSize: 17)
       ),
     );
   }
@@ -221,10 +221,9 @@ class _HomeProfileState extends State<HomeProfile> {
             textColor: Colors.white,
             fontSize: 16.0);
       },
-      child: const Text(
+      child: Text(
         "Сменить пароль",
-        style: TextStyle(
-            fontSize: 15, fontFamily: 'Roboto', color: Colors.black45),
+        style: Theme.of(context).textTheme.displaySmall?.copyWith(color:Colors.black45,fontSize: 15)
       ),
     );
   }
