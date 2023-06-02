@@ -23,7 +23,7 @@ class _HomeProfileState extends State<HomeProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(
             child: SingleChildScrollView(
           child: Column(
@@ -171,7 +171,7 @@ class _HomeProfileState extends State<HomeProfile> {
           },
           icon: const Icon(Icons.arrow_forward),
           style: IconButton.styleFrom(
-            hoverColor: Theme.of(context).primaryColorDark
+            hoverColor: Theme.of(context).colorScheme.onPrimary
           ),
           splashRadius: 1,
         ),
@@ -180,12 +180,12 @@ class _HomeProfileState extends State<HomeProfile> {
         enabledBorder: OutlineInputBorder(
           borderRadius: const BorderRadius.all(Radius.circular(20.0)),
           borderSide: BorderSide(
-            color: Theme.of(context).primaryColorLight
+            color: Theme.of(context).colorScheme.tertiary
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-          borderSide: BorderSide(color:Theme.of(context).primaryColorDark),
+          borderSide: BorderSide(color:Theme.of(context).colorScheme.onPrimary),
         ),
       ),
     );
@@ -217,7 +217,7 @@ class _HomeProfileState extends State<HomeProfile> {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,
-            backgroundColor: Theme.of(context).primaryColorDark,
+            backgroundColor: Theme.of(context).colorScheme.background,
             textColor: Colors.white,
             fontSize: 16.0);
       },

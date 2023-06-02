@@ -28,7 +28,7 @@ class HomeMenuState extends State<HomeMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(
             child: SingleChildScrollView(
           child: Column(
@@ -66,14 +66,16 @@ class HomeMenuState extends State<HomeMenu> {
                         onPressed: () {},
                         icon: const Icon(Icons.arrow_forward)),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20.0)),
                       borderSide: BorderSide(
-                        color: Theme.of(context).primaryColorLight
-                      ),
+                          color: Theme.of(context).colorScheme.tertiary),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                      borderSide: BorderSide(color: Theme.of(context).primaryColorDark),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10.0)),
+                      borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.onPrimary),
                     ),
                   ),
                 ),
@@ -112,33 +114,42 @@ _getListView() {
       return Padding(
           padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
           child: ListTile(
-            onTap: (){
-              ProductsData.selectedProductId = HomeMenuState.currentData[index].id;
+            onTap: () {
+              ProductsData.selectedProductId =
+                  HomeMenuState.currentData[index].id;
               Navigator.pushNamed(context, '/product_info');
             },
             shape: RoundedRectangleBorder(
               side: const BorderSide(width: 2, color: Colors.black12),
               borderRadius: BorderRadius.circular(20.0),
             ),
-            title: Text(HomeMenuState.currentData[index].name),
+            title: Text(
+              HomeMenuState.currentData[index].name,
+              style: Theme.of(context)
+                  .textTheme
+                  .displayMedium
+                  ?.copyWith(fontSize: 16.5),
+            ),
             subtitle: Text(
-                "${HomeMenuState.currentData[index].description} ₽${HomeMenuState.currentData[index].price}"),
-            trailing: Material(
+                "${HomeMenuState.currentData[index].description}\n ₽${HomeMenuState.currentData[index].price}"),
+            trailing: Wrap(children:[
+            Material(
                 color: Colors.transparent,
                 child: InkWell(
                     onTap: () async {
                       DataGetter dg = DataGetter();
-                      await dg.configureCart(HomeMenuState.currentData[index].id,"+");
+                      await dg.configureCart(
+                          HomeMenuState.currentData[index].id, "+");
                       ProductsData pd = ProductsData();
-                      await pd.parseCartProducts(FirebaseAuth.instance.currentUser?.uid);
+                      await pd.parseCartProducts(
+                          FirebaseAuth.instance.currentUser?.uid);
                     },
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                       child: const Icon(Icons.add),
-                    ))),
-          ));
+                    ))),])));
     },
     separatorBuilder: (BuildContext context, int index) {
       return const Padding(padding: EdgeInsets.only(top: 10));
@@ -165,8 +176,8 @@ class _CategoryBoxState extends State<CategoryBox> {
         width: 100,
         margin: const EdgeInsets.symmetric(horizontal: 15),
         decoration: BoxDecoration(
-            color: Theme.of(context).primaryColorDark,
-            borderRadius: BorderRadius.circular(30.0),
+          color: Theme.of(context).colorScheme.onPrimary,
+          borderRadius: BorderRadius.circular(30.0),
         ),
         child: Material(
             color: Colors.transparent,
@@ -191,10 +202,8 @@ class _CategoryBoxState extends State<CategoryBox> {
                 alignment: Alignment.center,
                 child: Stack(
                   children: [
-                    Text(
-                      widget.category.name,
-                      style: Theme.of(context).textTheme.displaySmall
-                    )
+                    Text(widget.category.name,
+                        style: Theme.of(context).textTheme.displaySmall)
                   ],
                 ),
               ),
