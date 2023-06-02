@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tortik/pages/Home/product_page.dart';
 
 import '../../Services/db_data.dart';
 import '../../Services/server_data.dart';
@@ -9,23 +10,31 @@ class HomeCart extends StatefulWidget {
   const HomeCart({Key? key}) : super(key: key);
 
   @override
-  State<HomeCart> createState() => _HomeCartState();
+  State<HomeCart> createState() => HomeCartState();
 }
 
-class _HomeCartState extends State<HomeCart> {
+class HomeCartState extends State<HomeCart> {
   static List<Product> cartData = [];
-  List<Product> ans = [];
+  static List<Product> ans = [];
   DataGetter dg = DataGetter();
+  static bool inProgress = false;
 
   @override
   void initState() {
     cartData = compressCart();
+    inProgress = false;
     super.initState();
   }
 
-  List<Product> compressCart() {
-    List<String> ids = [];
+  refresh(){
+    setState(() {
 
+    });
+  }
+
+  static List<Product> compressCart() {
+    List<String> ids = [];
+    cartData.clear();
     for (int i = 0; i < ProductsData.cartData.length; i++) {
       ids.add(ProductsData.cartData[i].product_id.toString());
     }
@@ -33,7 +42,7 @@ class _HomeCartState extends State<HomeCart> {
     return ans;
   }
 
-  void getElementsAppearInBothList(
+  static void getElementsAppearInBothList(
       List<String> l1, List<Product> l2, List<Product> ans) {
     for (int i = 0; i < l2.length; i++) {
       for (int j = 0; j < l1.length; j++) {
@@ -111,7 +120,9 @@ class _HomeCartState extends State<HomeCart> {
                 onTap: () {
                   ProductsData.selectedProductId = cartData[index].id;
                   HomeInteractionState.selectedTab = 2;
-                  Navigator.pushReplacementNamed(context, '/product_info');
+                  Navigator.push(context,
+                      MaterialPageRoute<void>(
+                      builder: (BuildContext context) =>  ProductPage(notifyParent: refresh)));
                 },
                 shape: RoundedRectangleBorder(
                   side: const BorderSide(width: 2, color: Colors.black12),
@@ -130,7 +141,7 @@ class _HomeCartState extends State<HomeCart> {
                             ProductsData pd = ProductsData();
                             await pd.parseCartProducts(
                                 FirebaseAuth.instance.currentUser?.uid);
-                            setState(() {});
+                            refresh;
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -142,12 +153,20 @@ class _HomeCartState extends State<HomeCart> {
                       color: Colors.transparent,
                       child: InkWell(
                           onTap: () async {
-                            DataGetter dg = DataGetter();
-                            await dg.configureCart(cartData[index].id, "+");
-                            ProductsData pd = ProductsData();
-                            await pd.parseCartProducts(
-                                FirebaseAuth.instance.currentUser?.uid);
-                            setState(() {});
+                            if(inProgress == false) {
+                              DataGetter dg = DataGetter();
+                              await dg.configureCart(cartData[index].id, "-");
+                              ProductsData pd = ProductsData();
+                              await pd.parseCartProducts(
+                                  FirebaseAuth.instance.currentUser?.uid);
+                              ans.clear();
+                              cartData.clear();
+                              cartData = HomeCartState.compressCart();
+                              setState(() {
+
+                              });
+                              inProgress = false;
+                            }
                           },
                           child: Container(
                             decoration: BoxDecoration(

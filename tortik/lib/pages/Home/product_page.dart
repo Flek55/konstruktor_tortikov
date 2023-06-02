@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:tortik/Services/db_data.dart';
 
 import '../../Services/server_data.dart';
+import 'home_liked.dart';
 
 
 class ProductPage extends StatefulWidget {
-  const ProductPage({Key? key}) : super(key: key);
+  final Function() notifyParent;
+  const ProductPage({Key? key, required this.notifyParent}) : super(key: key);
 
   @override
   State<ProductPage> createState() => _ProductPageState();
@@ -34,23 +36,18 @@ class _ProductPageState extends State<ProductPage> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: Material(
-            color: Colors.transparent,
-          child:InkWell(
-            onTap: (){
-              Navigator.pushReplacementNamed(context, '/home');
-            },
-            child: const Icon(Icons.arrow_back),
-          )
-        ),
         title: Text(pageData.name),
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
         actions: [
           IconButton(onPressed: () async {
+            HomeLikedState.likedData.clear();
+            HomeLikedState.ans.clear();
             DataGetter dg = DataGetter();
             await dg.configureLikedProduct(pageData.id);
             ProductsData pd = ProductsData();
             await pd.parseLikedProducts(FirebaseAuth.instance.currentUser?.uid);
+            HomeLikedState.likedData = HomeLikedState.compressLiked();
+            await widget.notifyParent();
           },
           icon: const Icon(Icons.favorite),
           ),
