@@ -36,6 +36,7 @@ class _ProductPageState extends State<ProductPage> {
 
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(color:Colors.white),
         title: Text(pageData.name),
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
         actions: [
@@ -49,7 +50,7 @@ class _ProductPageState extends State<ProductPage> {
             HomeLikedState.likedData = HomeLikedState.compressLiked();
             await widget.notifyParent();
           },
-          icon: const Icon(Icons.favorite),
+          icon: const Icon(Icons.favorite,color: Colors.white,),
           ),
           const Padding(padding: EdgeInsets.only(right: 15)),
         ],
@@ -59,11 +60,11 @@ class _ProductPageState extends State<ProductPage> {
           const Padding(padding: EdgeInsets.only(top: 50)),
           Row(children:[
             const Padding(padding: EdgeInsets.only(left: 40)),
-            Text(pageData.description)]),
+            Text(pageData.description,style: Theme.of(context).textTheme.displayMedium)]),
           const Padding(padding: EdgeInsets.only(top: 20)),
           Row(children:[
             const Padding(padding: EdgeInsets.only(left: 40)),
-            Text("₽${pageData.price}")]),
+            Text("₽${pageData.price}",style: Theme.of(context).textTheme.displayMedium)]),
         ],
       ),
     );
