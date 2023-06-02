@@ -5,7 +5,6 @@ import '../../Services/db_data.dart';
 import '../../Services/server_data.dart';
 import 'home_interaction.dart';
 
-
 class HomeCart extends StatefulWidget {
   const HomeCart({Key? key}) : super(key: key);
 
@@ -51,48 +50,50 @@ class _HomeCartState extends State<HomeCart> {
         backgroundColor: Colors.white,
         body: SafeArea(
             child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const Padding(padding: EdgeInsets.only(top: 50)),
-              const Row(children: [
-                Padding(padding: EdgeInsets.only(top: 50, left: 40)),
-                Text(
-                  'Ваш заказ \nвсегда под рукой!',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontSize: 25,
-                    color: Colors.black,
-                  ),
-                )
-              ]),
-              const Padding(padding: EdgeInsets.only(top: 20)),
-              _getListView(),
-              const Padding(padding: EdgeInsets.only(top: 30)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                        onTap: () {},
-                        child: Container(
-                          width: 100,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF5B2C6F),
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                          child: const Align(
-                            alignment: Alignment.center,
-                            child: Text("Сделать заказ"),
-                          ),
-                        )),
-                  ),
-                ],
+          child: Column(children: [
+            const Padding(padding: EdgeInsets.only(top: 50)),
+            const Row(children: [
+              Padding(padding: EdgeInsets.only(top: 50, left: 40)),
+              Text(
+                'Ваш заказ \nвсегда под рукой!',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontFamily: 'Roboto',
+                  fontSize: 25,
+                  color: Colors.black,
+                ),
               )
-            ]
-          ),
+            ]),
+            const Padding(padding: EdgeInsets.only(top: 20)),
+            _getListView(),
+            const Padding(padding: EdgeInsets.only(top: 30)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                      onTap: () {},
+                      child: Container(
+                        width: 100,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF5B2C6F),
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("Сделать заказ",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displaySmall
+                                  ?.copyWith(fontSize: 12)),
+                        ),
+                      )),
+                ),
+              ],
+            )
+          ]),
         )));
   }
 
@@ -119,23 +120,42 @@ class _HomeCartState extends State<HomeCart> {
                 title: Text("${cartData[index].name}"),
                 subtitle: Text(
                     "${cartData[index].description} ₽${cartData[index].price}"),
-                trailing: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                        onTap: () async {
-                          DataGetter dg = DataGetter();
-                          await dg.configureCart(cartData[index].id,"+");
-                          ProductsData pd = ProductsData();
-                          await pd.parseCartProducts(FirebaseAuth.instance.currentUser?.uid);
-                          setState(() {
-                          });
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                          child: const Icon(Icons.add),
-                        ))),
+                trailing: Wrap(spacing: 12, children: [
+                  Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                          onTap: () async {
+                            DataGetter dg = DataGetter();
+                            await dg.configureCart(cartData[index].id, "+");
+                            ProductsData pd = ProductsData();
+                            await pd.parseCartProducts(
+                                FirebaseAuth.instance.currentUser?.uid);
+                            setState(() {});
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            child: const Icon(Icons.add),
+                          ))),
+                  Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                          onTap: () async {
+                            DataGetter dg = DataGetter();
+                            await dg.configureCart(cartData[index].id, "+");
+                            ProductsData pd = ProductsData();
+                            await pd.parseCartProducts(
+                                FirebaseAuth.instance.currentUser?.uid);
+                            setState(() {});
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            child: const Icon(Icons.remove),
+                          )))
+                ]),
               ));
         },
         separatorBuilder: (BuildContext context, int index) {

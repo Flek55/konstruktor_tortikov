@@ -32,7 +32,7 @@ class _CafeMapState extends State<CafeMap> {
         child: const Icon(Icons.my_location),
       ),
       appBar: AppBar(
-        backgroundColor:Theme.of(context).primaryColorDark,
+        backgroundColor:Theme.of(context).colorScheme.onPrimary,
         centerTitle: true,
         title: const Text(
           'Карта кофеен',
@@ -52,7 +52,7 @@ class _CafeMapState extends State<CafeMap> {
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.CENTER,
                     timeInSecForIosWeb: 1,
-                    backgroundColor: Theme.of(context).primaryColorDark,
+                    backgroundColor: Theme.of(context).colorScheme.onPrimary,
                     textColor: Colors.white,
                     fontSize: 16.0);
               },
@@ -68,7 +68,7 @@ class _CafeMapState extends State<CafeMap> {
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.CENTER,
                     timeInSecForIosWeb: 1,
-                    backgroundColor:Theme.of(context).primaryColorDark,
+                    backgroundColor:Theme.of(context).colorScheme.onPrimary,
                     textColor: Colors.white,
                     fontSize: 16.0);
               },
@@ -84,7 +84,7 @@ class _CafeMapState extends State<CafeMap> {
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.CENTER,
                     timeInSecForIosWeb: 1,
-                    backgroundColor: Theme.of(context).primaryColorDark,
+                    backgroundColor: Theme.of(context).colorScheme.onPrimary,
                     textColor: Colors.white,
                     fontSize: 16.0);
               },
@@ -100,7 +100,7 @@ class _CafeMapState extends State<CafeMap> {
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.CENTER,
                     timeInSecForIosWeb: 1,
-                    backgroundColor: Theme.of(context).primaryColorDark,
+                    backgroundColor: Theme.of(context).colorScheme.onPrimary,
                     textColor: Colors.white,
                     fontSize: 16.0);
               },
