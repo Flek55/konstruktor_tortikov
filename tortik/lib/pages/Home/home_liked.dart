@@ -96,9 +96,9 @@ class HomeLikedState extends State<HomeLiked> {
                   side: const BorderSide(width: 2, color: Colors.black12),
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                title: Text(likedData[index].name),
+                title: Text(likedData[index].name,style:Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 16.5)),
                 subtitle: Text(
-                    "${likedData[index].description} ₽${likedData[index].price}"),
+                    "${likedData[index].description}\n ₽${likedData[index].price}"),
                 trailing: Material(
                     color: Colors.transparent,
                     child: InkWell(
