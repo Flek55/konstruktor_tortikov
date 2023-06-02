@@ -98,12 +98,15 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           TextField(
             controller: emailController,
-            decoration: const InputDecoration(
-                enabledBorder: UnderlineInputBorder(
+            decoration: InputDecoration(
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Theme.of(context).colorScheme.background),
+                ),
+                enabledBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.white),
                 ),
                 labelText: 'E-mail',
-                labelStyle: TextStyle(color: Colors.white)),
+                labelStyle: const TextStyle(color: Colors.white,fontSize: 16)),
             style: (const TextStyle(color: Colors.white)),
           ),
           const SizedBox(
@@ -111,12 +114,15 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           TextField(
             controller: passwordController,
-            decoration: const InputDecoration(
-              enabledBorder: UnderlineInputBorder(
+            decoration: InputDecoration(
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Theme.of(context).colorScheme.background),
+              ),
+              enabledBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.white),
               ),
               labelText: 'Пароль',
-              labelStyle: TextStyle(color: Colors.white),
+              labelStyle: const TextStyle(color: Colors.white,fontSize: 16),
             ),
             style: (const TextStyle(color: Colors.white)),
             obscureText: true,

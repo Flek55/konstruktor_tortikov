@@ -89,10 +89,13 @@ class _LoginPageState extends State<LoginPage> {
           TextField(
             controller: emailController,
             decoration: InputDecoration(
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Theme.of(context).colorScheme.background),
+                ),
                 labelText: 'E-Mail',
-                labelStyle: TextStyle(color: Theme.of(context).backgroundColor),
+                labelStyle: TextStyle(color: Theme.of(context).colorScheme.background),
                 enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Theme.of(context).backgroundColor),
+                  borderSide: BorderSide(color: Theme.of(context).colorScheme.background),
                 )),
             style: (const TextStyle(color: Colors.white)),
           ),
@@ -101,10 +104,13 @@ class _LoginPageState extends State<LoginPage> {
           ),
           TextField(
             controller: passwordController,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
                 labelText: 'Пароль',
-                labelStyle: TextStyle(color: Colors.white),
-                enabledBorder: UnderlineInputBorder(
+                labelStyle: const TextStyle(color: Colors.white),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Theme.of(context).colorScheme.background),
+                ),
+                enabledBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.white),
                 )),
             style: (const TextStyle(color: Colors.white)),
