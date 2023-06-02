@@ -47,8 +47,11 @@ class _ForgetPassState extends State<ForgetPass> {
           TextField(
             controller: _emailController,
             decoration: InputDecoration(
-                enabledBorder: const UnderlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.white),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Theme.of(context).colorScheme.background),
+              ),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Theme.of(context).colorScheme.background),
                 ),
                 labelText: 'E-mail',
                 labelStyle: Theme.of(context).textTheme.displaySmall),
