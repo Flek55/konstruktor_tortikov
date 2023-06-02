@@ -31,7 +31,6 @@ void main() async {
       '/forpass': (context) => const ForgetPass(),
       '/login': (context) => const LoginPage(),
       '/map': (context) => const CafeMap(),
-      //'/product_info': (context) => ProductPage(notifyParent: (){ setState((){})},),
     },
     builder: EasyLoading.init(),
   ));
