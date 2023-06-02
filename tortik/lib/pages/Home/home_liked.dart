@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tortik/Services/db_data.dart';
 import 'package:tortik/pages/Home/home_interaction.dart';
+import 'package:tortik/pages/Home/product_page.dart';
 
 import '../../Services/server_data.dart';
 
@@ -9,12 +10,12 @@ class HomeLiked extends StatefulWidget {
   const HomeLiked({Key? key}) : super(key: key);
 
   @override
-  State<HomeLiked> createState() => _HomeLikedState();
+  State<HomeLiked> createState() => HomeLikedState();
 }
 
-class _HomeLikedState extends State<HomeLiked> {
+class HomeLikedState extends State<HomeLiked> {
   static List<Product> likedData = [];
-  List<Product> ans = [];
+  static List<Product> ans = [];
 
   @override
   void initState() {
@@ -22,9 +23,15 @@ class _HomeLikedState extends State<HomeLiked> {
     super.initState();
   }
 
-  List<Product> compressLiked() {
-    List<String> ids = [];
+  refresh(){
+    setState(() {
 
+    });
+  }
+
+  static List<Product> compressLiked() {
+    List<String> ids = [];
+    likedData.clear();
     for (int i = 0; i < ProductsData.favoriteDataPD.length; i++) {
       ids.add(ProductsData.favoriteDataPD[i].product_id.toString());
     }
@@ -32,7 +39,7 @@ class _HomeLikedState extends State<HomeLiked> {
     return ans;
   }
 
-  void getElementsAppearInBothList(
+  static void getElementsAppearInBothList(
       List<String> l1, List<Product> l2, List<Product> ans) {
     for (int i = 0; i < l2.length; i++) {
       for (int j = 0; j < l1.length; j++) {
@@ -80,15 +87,18 @@ class _HomeLikedState extends State<HomeLiked> {
                 onTap: () {
                   ProductsData.selectedProductId = likedData[index].id;
                   HomeInteractionState.selectedTab = 1;
-                  Navigator.pushReplacementNamed(context, '/product_info');
+                  Navigator.push(context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) =>  ProductPage(notifyParent: refresh),
+                  ));
                 },
                 shape: RoundedRectangleBorder(
                   side: const BorderSide(width: 2, color: Colors.black12),
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                title: Text(likedData[index].name),
+                title: Text(likedData[index].name,style:Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 16.5)),
                 subtitle: Text(
-                    "${likedData[index].description} ₽${likedData[index].price}"),
+                    "${likedData[index].description}\n ₽${likedData[index].price}"),
                 trailing: Material(
                     color: Colors.transparent,
                     child: InkWell(

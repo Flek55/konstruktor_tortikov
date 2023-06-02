@@ -11,8 +11,6 @@ import 'package:tortik/pages/logreg.dart';
 import 'package:tortik/pages/map.dart';
 import 'package:tortik/pages/register.dart';
 import 'package:tortik/pages/start.dart';
-import 'package:tortik/pages/Home/product_page.dart';
-import 'package:tortik/Services/CustomWidgets/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +31,7 @@ void main() async {
       '/forpass': (context) => const ForgetPass(),
       '/login': (context) => const LoginPage(),
       '/map': (context) => const CafeMap(),
-      '/product_info': (context) => const ProductPage(),
+      //'/product_info': (context) => ProductPage(notifyParent: (){ setState((){})},),
     },
     builder: EasyLoading.init(),
   ));

@@ -32,7 +32,7 @@ class _CafeMapState extends State<CafeMap> {
         child: const Icon(Icons.my_location),
       ),
       appBar: AppBar(
-        backgroundColor:Theme.of(context).colorScheme.onPrimary,
+        backgroundColor:Theme.of(context).colorScheme.background,
         centerTitle: true,
         title: const Text(
           'Карта кофеен',

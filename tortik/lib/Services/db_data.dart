@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tortik/Services/favorite_product.dart';
 import 'package:tortik/Services/server_data.dart';
+import 'package:tortik/pages/Home/home_cart.dart';
 
 import 'cart_data.dart';
 
@@ -103,6 +104,7 @@ class DataGetter {
   }
 
   Future<int> configureCart(product_id, action) async {
+    HomeCartState.inProgress = true;
     int x = -1000;
     var docRef = FirebaseFirestore.instance
         .collection("users")
@@ -130,7 +132,7 @@ class DataGetter {
             .doc(product_id)
             .update({"product_id": product_id, "amount":++x})
       }
-      else if(doc.exists && action == "-" && res == "Success" && x != -1000)
+      else if(doc.exists && action == "-" && res == "Success" && x != -1000 && x != 1)
         {
           await FirebaseFirestore.instance
               .collection("users")
