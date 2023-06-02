@@ -40,7 +40,7 @@ class _ProductPageState extends State<ProductPage> {
             onTap: (){
               Navigator.pushReplacementNamed(context, '/home');
             },
-            child: const Icon(Icons.arrow_back),
+            child: const Icon(Icons.arrow_back,color: Colors.white,),
           )
         ),
         title: Text(pageData.name),
@@ -52,7 +52,7 @@ class _ProductPageState extends State<ProductPage> {
             ProductsData pd = ProductsData();
             await pd.parseLikedProducts(FirebaseAuth.instance.currentUser?.uid);
           },
-          icon: const Icon(Icons.favorite),
+          icon: const Icon(Icons.favorite,color: Colors.white),
           ),
           const Padding(padding: EdgeInsets.only(right: 15)),
         ],
@@ -62,11 +62,11 @@ class _ProductPageState extends State<ProductPage> {
           const Padding(padding: EdgeInsets.only(top: 50)),
           Row(children:[
             const Padding(padding: EdgeInsets.only(left: 40)),
-            Text(pageData.description)]),
+            Text(pageData.description),]),
           const Padding(padding: EdgeInsets.only(top: 20)),
           Row(children:[
             const Padding(padding: EdgeInsets.only(left: 40)),
-            Text("₽${pageData.price}")]),
+            Text("₽${pageData.price}",)]),
         ],
       ),
     );

@@ -117,9 +117,9 @@ class _HomeCartState extends State<HomeCart> {
                   side: const BorderSide(width: 2, color: Colors.black12),
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                title: Text("${cartData[index].name}"),
+                title: Text("${cartData[index].name}",style: Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 16.5),),
                 subtitle: Text(
-                    "${cartData[index].description} ₽${cartData[index].price}"),
+                    "${cartData[index].description}\n ₽${cartData[index].price}"),
                 trailing: Wrap(spacing: 12, children: [
                   Material(
                       color: Colors.transparent,
