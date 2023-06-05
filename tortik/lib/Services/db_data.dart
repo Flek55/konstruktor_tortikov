@@ -69,7 +69,6 @@ class DataGetter {
   Future<int> getProductAmount() async {
     for (int i = 0; cartData.length > i; i++){
       if (currentProduct["id"] == HomeCartState.cartData[i].id){
-        print( currentProduct["amount"]);
         return currentProduct["amount"];
       }
     }
