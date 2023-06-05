@@ -52,37 +52,74 @@ class DataGetter {
   List<CartProduct> cartData = [];
   final FirebaseAuth _fAuth = FirebaseAuth.instance;
 
+  Future<int> createOrder(cart_list) async {
+    var order = FirebaseFirestore.instance
+        .collection("users")
+        .doc(_fAuth.currentUser?.uid)
+        .collection("orders")
+        .doc()
+        .collection("menu");
+    cartData.clear();
+    cartData = await _getCart(_fAuth.currentUser?.uid);
+    print(cartData);
+    List<Product> temp = getElementsAppearInBothList(cartData, cart_list);
+    for (int i = 0; i < temp.length; i++) {
+      DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore.instance
+          .collection("users").doc(_fAuth.currentUser?.uid)
+          .collection("cart").doc(temp[i].id).get();
+      Map mappedDoc = doc.data()!;
+      order.doc(temp[i].id).set({
+        "product_id": temp[i].id,
+        "amount": mappedDoc["amount"],
+        "product_name": temp[i].name.toString()
+      });
+    }
+    return 0;
+  }
+
+  static List<Product> getElementsAppearInBothList(
+      List<CartProduct> l1, List<Product> l2) {
+    List<Product> ans = [];
+    for (int i = 0; i < l2.length; i++) {
+      for (int j = 0; j < l1.length; j++) {
+        if (l2[i].id.toString() == l1[j].product_id.toString()) {
+          ans.add(l2[i]);
+        }
+      }
+    }
+    return ans;
+  }
+
   Future<int> configureLikedProduct(product_id) async {
     var docRef = FirebaseFirestore.instance
         .collection("users")
         .doc(_fAuth.currentUser?.uid)
         .collection("favorites")
         .doc(product_id);
-    docRef.get().then((doc) async =>
-    {
-      if (doc.exists){
-        await FirebaseFirestore.instance
-            .collection("users")
-            .doc(_fAuth.currentUser?.uid)
-            .collection("favorites")
-            .doc(product_id)
-            .delete()
-      }
-      else
-        {
-          await FirebaseFirestore.instance
-              .collection("users")
-              .doc(_fAuth.currentUser?.uid)
-              .collection("favorites")
-              .doc(product_id)
-              .set({"product_id": product_id})
-        }
-    });
+    docRef.get().then((doc) async => {
+          if (doc.exists)
+            {
+              await FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(_fAuth.currentUser?.uid)
+                  .collection("favorites")
+                  .doc(product_id)
+                  .delete()
+            }
+          else
+            {
+              await FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(_fAuth.currentUser?.uid)
+                  .collection("favorites")
+                  .doc(product_id)
+                  .set({"product_id": product_id})
+            }
+        });
     ProductsData pd = ProductsData();
     await pd.parseLikedProducts(_fAuth.currentUser?.uid);
     return 0;
   }
-
 
   Future<String> _getCartProduct(product_id) async {
     String errorMessage = "";
@@ -92,15 +129,16 @@ class DataGetter {
           .collection("users")
           .doc(_fAuth.currentUser?.uid)
           .collection("cart")
-          .doc(product_id).get();
+          .doc(product_id)
+          .get();
       currentProduct = getter.data()!;
     } catch (error) {
       errorMessage = "ERRORRR";
     }
-      if (errorMessage != "") {
-        return errorMessage;
-      }
-      return "Success";
+    if (errorMessage != "") {
+      return errorMessage;
+    }
+    return "Success";
   }
 
   Future<int> configureCart(product_id, action) async {
@@ -112,43 +150,54 @@ class DataGetter {
         .collection("cart")
         .doc(product_id);
     String res = await _getCartProduct(product_id);
-    if (res == "Success"){
+    if (res == "Success") {
       x = currentProduct["amount"]!;
     }
-    docRef.get().then((doc) async =>
-    {
-      if (doc.exists && res == "Success" && action == "-" && x == 1){
-        await FirebaseFirestore.instance
-            .collection("users")
-            .doc(_fAuth.currentUser?.uid)
-            .collection("cart")
-            .doc(product_id)
-            .delete()
-      }else if (doc.exists && action == "+" && res == "Success" && x != -1000){
-        await FirebaseFirestore.instance
-            .collection("users")
-            .doc(_fAuth.currentUser?.uid)
-            .collection("cart")
-            .doc(product_id)
-            .update({"product_id": product_id, "amount":++x})
-      }
-      else if(doc.exists && action == "-" && res == "Success" && x != -1000 && x != 1)
-        {
-          await FirebaseFirestore.instance
-              .collection("users")
-              .doc(_fAuth.currentUser?.uid)
-              .collection("cart")
-              .doc(product_id)
-              .set({"product_id": product_id, "amount": --x})
-        }else{
-          await FirebaseFirestore.instance
-              .collection("users")
-              .doc(_fAuth.currentUser?.uid)
-              .collection("cart")
-              .doc(product_id)
-              .set({"product_id": product_id, "amount": 1})
-        }
-    });
+    docRef.get().then((doc) async => {
+          if (doc.exists && res == "Success" && action == "-" && x == 1)
+            {
+              await FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(_fAuth.currentUser?.uid)
+                  .collection("cart")
+                  .doc(product_id)
+                  .delete()
+            }
+          else if (doc.exists &&
+              action == "+" &&
+              res == "Success" &&
+              x != -1000)
+            {
+              await FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(_fAuth.currentUser?.uid)
+                  .collection("cart")
+                  .doc(product_id)
+                  .update({"product_id": product_id, "amount": ++x})
+            }
+          else if (doc.exists &&
+              action == "-" &&
+              res == "Success" &&
+              x != -1000 &&
+              x != 1)
+            {
+              await FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(_fAuth.currentUser?.uid)
+                  .collection("cart")
+                  .doc(product_id)
+                  .set({"product_id": product_id, "amount": --x})
+            }
+          else
+            {
+              await FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(_fAuth.currentUser?.uid)
+                  .collection("cart")
+                  .doc(product_id)
+                  .set({"product_id": product_id, "amount": 1})
+            }
+        });
     ProductsData pd = ProductsData();
     await pd.parseCartProducts(_fAuth.currentUser?.uid);
     return 0;
@@ -215,8 +264,7 @@ class DataGetter {
 
   _mapRecords(QuerySnapshot<Map<String, dynamic>> records) {
     var list = records.docs
-        .map((item) =>
-        Product(
+        .map((item) => Product(
             id: item.id,
             name: item["name"],
             price: item["price"],
@@ -227,23 +275,20 @@ class DataGetter {
 
   _mapFavorites(QuerySnapshot<Map<String, dynamic>> records) {
     var list = records.docs
-        .map((item) =>
-        FavoriteProduct(
-          product_id: item["product_id"],
-        ))
+        .map((item) => FavoriteProduct(
+              product_id: item["product_id"],
+            ))
         .toList();
     return list;
   }
 
   _mapCart(QuerySnapshot<Map<String, dynamic>> records) {
     var list = records.docs
-        .map((item) =>
-        CartProduct(
-          product_id: item["product_id"],
-          amount: item["amount"],
-        ))
+        .map((item) => CartProduct(
+              product_id: item["product_id"],
+              amount: item["amount"],
+            ))
         .toList();
     return list;
   }
-
 }
