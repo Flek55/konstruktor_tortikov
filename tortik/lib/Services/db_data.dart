@@ -52,6 +52,30 @@ class DataGetter {
   List<CartProduct> cartData = [];
   final FirebaseAuth _fAuth = FirebaseAuth.instance;
 
+  Future<int> clearCart() async {
+    var cart = FirebaseFirestore.instance
+        .collection("users")
+        .doc(_fAuth.currentUser?.uid)
+        .collection("cart");
+    for (int i = 0; i < cartData.length; i++){
+      if (cartData[i].product_id != "0"){
+        cart.doc(cartData[i].product_id).delete();
+      }
+    }
+    _getCart(_fAuth.currentUser?.uid);
+    return 0;
+  }
+
+  Future<int> getProductAmount() async {
+    for (int i = 0; cartData.length > i; i++){
+      if (currentProduct["id"] == HomeCartState.cartData[i].id){
+        print( currentProduct["amount"]);
+        return currentProduct["amount"];
+      }
+    }
+    return -1;
+  }
+
   Future<int> createOrder(cart_list) async {
     var order = FirebaseFirestore.instance
         .collection("users")
@@ -61,12 +85,15 @@ class DataGetter {
         .collection("menu");
     cartData.clear();
     cartData = await _getCart(_fAuth.currentUser?.uid);
-    print(cartData);
     List<Product> temp = getElementsAppearInBothList(cartData, cart_list);
     for (int i = 0; i < temp.length; i++) {
-      DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore.instance
-          .collection("users").doc(_fAuth.currentUser?.uid)
-          .collection("cart").doc(temp[i].id).get();
+      DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
+          .instance
+          .collection("users")
+          .doc(_fAuth.currentUser?.uid)
+          .collection("cart")
+          .doc(temp[i].id)
+          .get();
       Map mappedDoc = doc.data()!;
       order.doc(temp[i].id).set({
         "product_id": temp[i].id,

@@ -17,6 +17,7 @@ class HomeCartState extends State<HomeCart> {
   static List<Product> cartData = [];
   static List<Product> ans = [];
   DataGetter dg = DataGetter();
+  ProductsData pd = ProductsData();
   static bool inProgress = false;
   static bool orderSwitch = false;
 
@@ -117,6 +118,7 @@ class HomeCartState extends State<HomeCart> {
                             ProductsData pd = ProductsData();
                             await pd.parseCartProducts(
                                 FirebaseAuth.instance.currentUser?.uid);
+                            inProgress = false;
                             refresh;
                           },
                           child: Container(
@@ -125,6 +127,11 @@ class HomeCartState extends State<HomeCart> {
                             ),
                             child: const Icon(Icons.add),
                           ))),
+                  Container(
+                    height: 20,
+                    width: 20,
+                    child: Text(""),
+                  ),
                   Material(
                       color: Colors.transparent,
                       child: InkWell(
@@ -138,10 +145,11 @@ class HomeCartState extends State<HomeCart> {
                               ans.clear();
                               cartData.clear();
                               cartData = HomeCartState.compressCart();
+                              inProgress = false;
                               setState(() {
 
                               });
-                              inProgress = false;
+                              refresh;
                             }
                           },
                           child: Container(
@@ -169,7 +177,9 @@ class HomeCartState extends State<HomeCart> {
     }
   }
 
-
+  _getPushNamed(){
+    return Navigator.pushNamed(context, "/order");
+  }
 
   _getOrderButton(){
     if (cartData.isNotEmpty){
@@ -187,9 +197,8 @@ class HomeCartState extends State<HomeCart> {
                         FirebaseAuth.instance.currentUser?.uid);
                     DataGetter dg = DataGetter();
                     await dg.createOrder(cartData);
-                    Navigator.pushNamed(context, "/order");
+                    _getPushNamed();
                     cartData.clear();
-
                     orderSwitch = false;
                   }
                 },
