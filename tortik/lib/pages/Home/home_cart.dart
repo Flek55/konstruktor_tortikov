@@ -17,7 +17,9 @@ class HomeCartState extends State<HomeCart> {
   static List<Product> cartData = [];
   static List<Product> ans = [];
   DataGetter dg = DataGetter();
+  ProductsData pd = ProductsData();
   static bool inProgress = false;
+  static bool orderSwitch = false;
 
   @override
   void initState() {
@@ -76,32 +78,7 @@ class HomeCartState extends State<HomeCart> {
             const Padding(padding: EdgeInsets.only(top: 20)),
             _getListView(),
             const Padding(padding: EdgeInsets.only(top: 30)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                      onTap: () {},
-                      child: Container(
-                        width: 100,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF5B2C6F),
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text("Сделать заказ",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displaySmall
-                                  ?.copyWith(fontSize: 12)),
-                        ),
-                      )),
-                ),
-              ],
-            )
+            _getOrderButton(),
           ]),
         )));
   }
@@ -141,6 +118,7 @@ class HomeCartState extends State<HomeCart> {
                             ProductsData pd = ProductsData();
                             await pd.parseCartProducts(
                                 FirebaseAuth.instance.currentUser?.uid);
+                            inProgress = false;
                             refresh;
                           },
                           child: Container(
@@ -149,6 +127,11 @@ class HomeCartState extends State<HomeCart> {
                             ),
                             child: const Icon(Icons.add),
                           ))),
+                  Container(
+                    height: 20,
+                    width: 20,
+                    child: Text(""),
+                  ),
                   Material(
                       color: Colors.transparent,
                       child: InkWell(
@@ -162,10 +145,11 @@ class HomeCartState extends State<HomeCart> {
                               ans.clear();
                               cartData.clear();
                               cartData = HomeCartState.compressCart();
+                              inProgress = false;
                               setState(() {
 
                               });
-                              inProgress = false;
+                              refresh;
                             }
                           },
                           child: Container(
@@ -175,18 +159,70 @@ class HomeCartState extends State<HomeCart> {
                             child: const Icon(Icons.remove),
                           )))
                 ]),
-              ));
+              ),
+          );
         },
         separatorBuilder: (BuildContext context, int index) {
           return const Padding(padding: EdgeInsets.only(top: 10));
         },
       );
     } else {
-      return Container(
+      return Column(children:[
+        Container(
         height: 100,
         width: 300,
         child: Text("Корзина пуста"),
+      ),
+      ]);
+    }
+  }
+
+  _getPushNamed(){
+    return Navigator.pushNamed(context, "/order");
+  }
+
+  _getOrderButton(){
+    if (cartData.isNotEmpty){
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+                onTap: () async {
+                  if (!orderSwitch) {
+                    orderSwitch = true;
+                    ProductsData pd = ProductsData();
+                    await pd.parseCartProducts(
+                        FirebaseAuth.instance.currentUser?.uid);
+                    DataGetter dg = DataGetter();
+                    await dg.createOrder(cartData);
+                    _getPushNamed();
+                    cartData.clear();
+                    orderSwitch = false;
+                  }
+                },
+                child: Container(
+                  width: 100,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF5B2C6F),
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text("Сделать заказ",
+                        style: Theme.of(context)
+                            .textTheme
+                            .displaySmall
+                            ?.copyWith(fontSize: 12)),
+                  ),
+                )),
+          ),
+        ],
       );
+    }else{
+      return const Padding(padding: EdgeInsets.only(top: 0));
     }
   }
 }
