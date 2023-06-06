@@ -14,29 +14,57 @@ class HomeCart extends StatefulWidget {
 }
 
 class HomeCartState extends State<HomeCart> {
-  static List<Product> cartData = [];
+  static List<Product> cartProducts = [];
+  static List<Map<String, dynamic>> cartAmount = [];
   static List<Product> ans = [];
+  static List<Map<String, dynamic>> cart = [];
   DataGetter dg = DataGetter();
   ProductsData pd = ProductsData();
   static bool inProgress = false;
   static bool orderSwitch = false;
+  static bool buttonClick = false;
 
   @override
   void initState() {
-    cartData = compressCart();
+    cartProducts = compressCartProducts();
+    cartAmount = compressAmount();
+    cart = compressCart();
     inProgress = false;
     super.initState();
   }
 
-  refresh(){
-    setState(() {
-
-    });
+  refresh() {
+    setState(() {});
   }
 
-  static List<Product> compressCart() {
+  List<Map<String, dynamic>> compressCart() {
+    List<Map<String, dynamic>> ans = [];
+    for (int i = 0; i < cartProducts.length; i++) {
+      for (int j = 0; j < cartAmount.length; j++) {
+        if (cartProducts[i].id == cartAmount[j]["product_id"]) {
+          ans.add({
+            "id": cartProducts[i].id,
+            "amount": cartAmount[j]["amount"],
+            "name": cartProducts[i].name,
+            "price": cartProducts[i].price,
+            "description": cartProducts[i].description,
+          });
+        }
+      }
+    }
+    setState(() {});
+    refresh;
+    return ans;
+  }
+
+  static List<Map<String, dynamic>> compressAmount() {
+    List<Map<String, dynamic>> data = ProductsData.cartAmountsPD;
+    return data;
+  }
+
+  static List<Product> compressCartProducts() {
     List<String> ids = [];
-    cartData.clear();
+    cartProducts.clear();
     for (int i = 0; i < ProductsData.cartData.length; i++) {
       ids.add(ProductsData.cartData[i].product_id.toString());
     }
@@ -84,82 +112,105 @@ class HomeCartState extends State<HomeCart> {
   }
 
   _getListView() {
-    if (cartData.isNotEmpty) {
+    if (cart.isNotEmpty) {
       return ListView.separated(
         shrinkWrap: true,
-        itemCount: cartData.length,
+        itemCount: cart.length,
         physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           return Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-              child: ListTile(
-                onTap: () {
-                  ProductsData.selectedProductId = cartData[index].id;
-                  HomeInteractionState.selectedTab = 2;
-                  Navigator.push(context,
-                      MaterialPageRoute<void>(
-                      builder: (BuildContext context) =>  ProductPage(notifyParent: refresh)));
-                },
-                shape: RoundedRectangleBorder(
-                  side: const BorderSide(width: 2, color: Colors.black12),
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                title: Text("${cartData[index].name}",style: Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 16.5),),
-                subtitle: Text(
-                    "${cartData[index].description}\n ₽${cartData[index].price}"),
-                trailing: Wrap(spacing: 12, children: [
-                  Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                          onTap: () async {
+            padding:
+                const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+            child: ListTile(
+              onTap: () {
+                ProductsData.selectedProductId = cart[index]["id"];
+                HomeInteractionState.selectedTab = 2;
+                Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                        builder: (BuildContext context) =>
+                            ProductPage(notifyParent: refresh)));
+              },
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(width: 2, color: Colors.black12),
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              title: Text(
+                "${cart[index]["name"]}",
+                style: Theme.of(context)
+                    .textTheme
+                    .displayMedium
+                    ?.copyWith(fontSize: 16.5),
+              ),
+              subtitle: Text(
+                  "${cart[index]["description"]}\n ₽${cart[index]["price"]}"),
+              trailing: Wrap(spacing: 12, children: [
+                Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                        onTap: () async {
+                          if (!inProgress) {
+                            inProgress = true;
                             DataGetter dg = DataGetter();
-                            await dg.configureCart(cartData[index].id, "+");
+                            await dg.configureCart(cart[index]["id"], "+");
                             ProductsData pd = ProductsData();
                             await pd.parseCartProducts(
                                 FirebaseAuth.instance.currentUser?.uid);
                             inProgress = false;
+                            cart.clear();
+                            cartProducts.clear();
+                            cartAmount.clear();
+                            cartProducts = compressCartProducts();
+                            cartAmount = compressAmount();
+                            cart = compressCart();
                             refresh;
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            child: const Icon(Icons.add),
-                          ))),
-                  Container(
-                    height: 20,
-                    width: 20,
-                    child: Text(""),
-                  ),
-                  Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                          onTap: () async {
-                            if(inProgress == false) {
-                              DataGetter dg = DataGetter();
-                              await dg.configureCart(cartData[index].id, "-");
-                              ProductsData pd = ProductsData();
-                              await pd.parseCartProducts(
-                                  FirebaseAuth.instance.currentUser?.uid);
-                              ans.clear();
-                              cartData.clear();
-                              cartData = HomeCartState.compressCart();
-                              inProgress = false;
-                              setState(() {
+                            setState(() {
 
-                              });
-                              refresh;
-                            }
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            child: const Icon(Icons.remove),
-                          )))
-                ]),
-              ),
+                            });
+                            inProgress = false;
+                          }
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          child: const Icon(Icons.add),
+                        ))),
+                Container(
+                  height: 20,
+                  width: 20,
+                  child: Text("${cart[index]["amount"]}"),
+                ),
+                Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                        onTap: () async {
+                          if (inProgress == false) {
+                            inProgress = true;
+                            DataGetter dg = DataGetter();
+                            await dg.configureCart(cart[index]["id"], "-");
+                            ProductsData pd = ProductsData();
+                            await pd.parseCartProducts(
+                                FirebaseAuth.instance.currentUser?.uid);
+                            cart.clear();
+                            cartProducts.clear();
+                            cartAmount.clear();
+                            cartProducts = compressCartProducts();
+                            cartAmount = compressAmount();
+                            cart = compressCart();
+                            inProgress = false;
+                            setState(() {});
+                            refresh;
+                          }
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          child: const Icon(Icons.remove),
+                        )))
+              ]),
+            ),
           );
         },
         separatorBuilder: (BuildContext context, int index) {
@@ -167,22 +218,22 @@ class HomeCartState extends State<HomeCart> {
         },
       );
     } else {
-      return Column(children:[
+      return Column(children: [
         Container(
-        height: 100,
-        width: 300,
-        child: Text("Корзина пуста"),
-      ),
+          height: 100,
+          width: 300,
+          child: Text("Корзина пуста"),
+        ),
       ]);
     }
   }
 
-  _getPushNamed(){
+  _getPushNamed() {
     return Navigator.pushNamed(context, "/order");
   }
 
-  _getOrderButton(){
-    if (cartData.isNotEmpty){
+  _getOrderButton() {
+    if (cartProducts.isNotEmpty) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -196,9 +247,16 @@ class HomeCartState extends State<HomeCart> {
                     await pd.parseCartProducts(
                         FirebaseAuth.instance.currentUser?.uid);
                     DataGetter dg = DataGetter();
-                    await dg.createOrder(cartData);
+                    await dg.createOrder(cartProducts);
                     _getPushNamed();
-                    cartData.clear();
+                    cart.clear();
+                    cartAmount.clear();
+                    cartProducts.clear();
+                    await dg.clearCart();
+                    setState(() {
+
+                    });
+                    refresh;
                     orderSwitch = false;
                   }
                 },
@@ -221,7 +279,7 @@ class HomeCartState extends State<HomeCart> {
           ),
         ],
       );
-    }else{
+    } else {
       return const Padding(padding: EdgeInsets.only(top: 0));
     }
   }
