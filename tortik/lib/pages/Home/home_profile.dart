@@ -29,15 +29,12 @@ class _HomeProfileState extends State<HomeProfile> {
           child: Column(
             children: [
               const Padding(padding: EdgeInsets.only(top: 50)),
-              const Row(
+              Row(
                 children: [
-                  Padding(padding: EdgeInsets.only(left: 40)),
+                  const Padding(padding: EdgeInsets.only(left: 40)),
                   Text(
                     "Профиль",
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontFamily: 'Roboto',
-                    ),
+                    style: Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 24)
                   )
                 ],
               ),
@@ -188,6 +185,7 @@ class _HomeProfileState extends State<HomeProfile> {
           borderSide: BorderSide(color:Theme.of(context).colorScheme.onPrimary),
         ),
       ),
+      style: (const TextStyle(color: Colors.black,fontSize: 18)),
     );
   }
 
@@ -281,6 +279,7 @@ class _HomeProfileState extends State<HomeProfile> {
           borderSide: BorderSide(color: Color(0xFF5B2C6F)),
         ),
       ),
+      style: (const TextStyle(color: Colors.black,fontSize: 18)),
     );
   }
 }
