@@ -70,6 +70,7 @@ class HomeMenuState extends State<HomeMenu> {
                     height: 40,
                     width: 360,
                     child: TextField(
+                      style: (const TextStyle(color: Colors.black,fontSize: 18)),
                       decoration: InputDecoration(
                         icon: const Icon(Icons.search),
                         suffixIcon: IconButton(

@@ -177,9 +177,9 @@ class HomeCartState extends State<HomeCart> {
                           child: const Icon(Icons.add),
                         ))),
                 Container(
-                  height: 20,
-                  width: 20,
-                  child: Text("${cart[index]["amount"]}"),
+                  height: 23,
+                  width: 16,
+                  child: Text("${cart[index]["amount"]}",style: const TextStyle(fontSize: 18),),
                 ),
                 Material(
                     color: Colors.transparent,

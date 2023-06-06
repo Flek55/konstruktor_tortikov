@@ -45,6 +45,7 @@ class _ForgetPassState extends State<ForgetPass> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           TextField(
+              cursorColor: Colors.white,
             controller: _emailController,
             decoration: InputDecoration(
               focusedBorder: UnderlineInputBorder(
@@ -55,7 +56,7 @@ class _ForgetPassState extends State<ForgetPass> {
                 ),
                 labelText: 'E-mail',
                 labelStyle: Theme.of(context).textTheme.displaySmall),
-            style: Theme.of(context).textTheme.displaySmall
+            style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 18)
           ),
           const SizedBox(
             height: 15,

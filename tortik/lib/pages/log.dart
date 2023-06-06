@@ -87,6 +87,7 @@ class _LoginPageState extends State<LoginPage> {
         child:
             Column(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
           TextField(
+            cursorColor: Colors.white,
             controller: emailController,
             decoration: InputDecoration(
                 focusedBorder: UnderlineInputBorder(
@@ -97,12 +98,13 @@ class _LoginPageState extends State<LoginPage> {
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Theme.of(context).colorScheme.background),
                 )),
-            style: (const TextStyle(color: Colors.white)),
+            style: (const TextStyle(color: Colors.white,fontSize: 18)),
           ),
           const SizedBox(
             height: 15,
           ),
           TextField(
+            cursorColor: Colors.white,
             controller: passwordController,
             decoration: InputDecoration(
                 labelText: 'Пароль',
@@ -113,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                 enabledBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.white),
                 )),
-            style: (const TextStyle(color: Colors.white)),
+            style: (const TextStyle(color: Colors.white,fontSize: 18)),
             obscureText: true,
             obscuringCharacter: '*',
           ),
