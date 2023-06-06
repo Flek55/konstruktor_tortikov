@@ -58,14 +58,15 @@ class HomeLikedState extends State<HomeLiked> {
             child: SingleChildScrollView(
           child: Column(
             children: [
-              const Padding(padding: EdgeInsets.only(top: 50)),
+              const Padding(padding: EdgeInsets.only(top: 31)),
               Row(children: [
-                Padding(padding: EdgeInsets.only(top: 50, left: 40)),
+                const Padding(padding: EdgeInsets.only(top: 50, left: 40)),
                 Text(
                   'Ваши любимые десерты \nвсегда с вами!',
                   textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.displayMedium
-                  )
+                  style: Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 24)
+                  ),
+                const Padding(padding: EdgeInsets.only(top:92,left:40))
               ]),
               _getListView(),
             ],

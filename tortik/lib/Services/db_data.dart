@@ -80,7 +80,6 @@ class DataGetter {
     for (int i = 0; i < zhopa.length; i++){
       ans.add(zhopa[i].data());
     }
-    print(ans);
     return ans;
   }
 

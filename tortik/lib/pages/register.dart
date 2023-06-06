@@ -97,6 +97,7 @@ class _SignUpPageState extends State<SignUpPage> {
             height: 15,
           ),
           TextField(
+            cursorColor: Colors.white,
             controller: emailController,
             decoration: InputDecoration(
                 focusedBorder: UnderlineInputBorder(
@@ -107,12 +108,13 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 labelText: 'E-mail',
                 labelStyle: const TextStyle(color: Colors.white,fontSize: 16)),
-            style: (const TextStyle(color: Colors.white)),
+            style: (const TextStyle(color: Colors.white,fontSize: 18)),
           ),
           const SizedBox(
             height: 15,
           ),
           TextField(
+            cursorColor: Colors.white,
             controller: passwordController,
             decoration: InputDecoration(
               focusedBorder: UnderlineInputBorder(
@@ -124,7 +126,7 @@ class _SignUpPageState extends State<SignUpPage> {
               labelText: 'Пароль',
               labelStyle: const TextStyle(color: Colors.white,fontSize: 16),
             ),
-            style: (const TextStyle(color: Colors.white)),
+            style: (const TextStyle(color: Colors.white,fontSize: 18)),
             obscureText: true,
             obscuringCharacter: '*',
           ),
