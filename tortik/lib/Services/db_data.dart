@@ -15,6 +15,7 @@ class ProductsData {
   static List<Product> coffeeData = [];
   static List<FavoriteProduct> favoriteDataPD = [];
   static List<CartProduct> cartData = [];
+  static List<Map<String, dynamic>> cartAmountsPD = [];
 
   Future<int> parseData() async {
     final DataGetter dg = DataGetter();
@@ -36,7 +37,8 @@ class ProductsData {
   Future<int> parseCartProducts(user_id) async {
     final DataGetter dg = DataGetter();
     cartData.clear();
-    cartData = await dg._getCart(user_id);
+    cartData = await dg.getCart(user_id);
+    cartAmountsPD = await dg.getProductsAmount();
     return 0;
   }
 }
@@ -50,6 +52,7 @@ class DataGetter {
   List<Product> coffeeData = [];
   List<FavoriteProduct> favoriteData = [];
   List<CartProduct> cartData = [];
+  Map<String, dynamic> cartAmounts = {};
   final FirebaseAuth _fAuth = FirebaseAuth.instance;
 
   Future<int> clearCart() async {
@@ -62,17 +65,23 @@ class DataGetter {
         cart.doc(cartData[i].product_id).delete();
       }
     }
-    _getCart(_fAuth.currentUser?.uid);
+    getCart(_fAuth.currentUser?.uid);
     return 0;
   }
 
-  Future<int> getProductAmount() async {
-    for (int i = 0; cartData.length > i; i++){
-      if (currentProduct["id"] == HomeCartState.cartData[i].id){
-        return currentProduct["amount"];
-      }
+  Future<List<Map<String, dynamic>>> getProductsAmount() async {
+    var records = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(_fAuth.currentUser?.uid)
+        .collection("cart")
+        .get();
+    List zhopa = records.docs;
+    List<Map<String,dynamic>> ans = [];
+    for (int i = 0; i < zhopa.length; i++){
+      ans.add(zhopa[i].data());
     }
-    return -1;
+    print(ans);
+    return ans;
   }
 
   Future<int> createOrder(cart_list) async {
@@ -83,7 +92,7 @@ class DataGetter {
         .doc()
         .collection("menu");
     cartData.clear();
-    cartData = await _getCart(_fAuth.currentUser?.uid);
+    cartData = await getCart(_fAuth.currentUser?.uid);
     List<Product> temp = getElementsAppearInBothList(cartData, cart_list);
     for (int i = 0; i < temp.length; i++) {
       DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
@@ -275,7 +284,7 @@ class DataGetter {
     return favoriteData = _mapFavorites(records);
   }
 
-  Future<List<CartProduct>> _getCart(user_id) async {
+  Future<List<CartProduct>> getCart(user_id) async {
     var records = await FirebaseFirestore.instance
         .collection("users")
         .doc(user_id)
