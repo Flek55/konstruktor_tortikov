@@ -90,18 +90,14 @@ class HomeCartState extends State<HomeCart> {
         body: SafeArea(
             child: SingleChildScrollView(
           child: Column(children: [
-            const Padding(padding: EdgeInsets.only(top: 50)),
-            const Row(children: [
+            const Padding(padding: EdgeInsets.only(top: 49)),
+            Row(children: [
               Padding(padding: EdgeInsets.only(top: 50, left: 40)),
               Text(
                 'Ваш заказ \nвсегда под рукой!',
                 textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontFamily: 'Roboto',
-                  fontSize: 25,
-                  color: Colors.black,
+                style: Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 24)
                 ),
-              )
             ]),
             const Padding(padding: EdgeInsets.only(top: 20)),
             _getListView(),
@@ -143,7 +139,7 @@ class HomeCartState extends State<HomeCart> {
                     ?.copyWith(fontSize: 16.5),
               ),
               subtitle: Text(
-                  "${cart[index]["description"]}\n ₽${cart[index]["price"]}"),
+                  "${cart[index]["description"]}\n₽${cart[index]["price"]}"),
               trailing: Wrap(spacing: 12, children: [
                 Material(
                     color: Colors.transparent,
@@ -222,7 +218,7 @@ class HomeCartState extends State<HomeCart> {
         Container(
           height: 100,
           width: 300,
-          child: Text("Корзина пуста"),
+          child: const Text("Корзина пуста"),
         ),
       ]);
     }

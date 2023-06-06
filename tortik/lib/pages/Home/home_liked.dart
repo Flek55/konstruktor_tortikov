@@ -58,7 +58,7 @@ class HomeLikedState extends State<HomeLiked> {
             child: SingleChildScrollView(
           child: Column(
             children: [
-              const Padding(padding: EdgeInsets.only(top: 31)),
+              const Padding(padding: EdgeInsets.only(top: 32)),
               Row(children: [
                 const Padding(padding: EdgeInsets.only(top: 50, left: 40)),
                 Text(
@@ -99,7 +99,7 @@ class HomeLikedState extends State<HomeLiked> {
                 ),
                 title: Text(likedData[index].name,style:Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 16.5)),
                 subtitle: Text(
-                    "${likedData[index].description}\n ₽${likedData[index].price}"),
+                    "${likedData[index].description}\n₽${likedData[index].price}"),
                 trailing: Material(
                     color: Colors.transparent,
                     child: InkWell(

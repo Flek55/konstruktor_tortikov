@@ -57,10 +57,7 @@ class HomeMenuState extends State<HomeMenu> {
                     const Padding(padding: EdgeInsets.only(top: 50, left: 40)),
                     Text(
                       'Отличный кофе\nВсегда и везде!',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .displayLarge,
+                      style: Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 24)
                     )
                   ]),
                   const SizedBox(
@@ -155,7 +152,7 @@ class HomeMenuState extends State<HomeMenu> {
                 ),
                 subtitle: Text(
                     "${HomeMenuState.currentData[index]
-                        .description}\n ₽${HomeMenuState.currentData[index]
+                        .description}\n₽${HomeMenuState.currentData[index]
                         .price}"),
                 trailing: Wrap(children: [
                   Material(
