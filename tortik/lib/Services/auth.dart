@@ -55,7 +55,7 @@ class AuthService {
           .doc()
           .collection("menu")
           .doc("delete")
-          .set({"product_id": "0"});
+          .set({"product_id": "0", "amount": "0"});
     } on FirebaseAuthException catch (error) {
       switch (error.code) {
         case "ERROR_INVALID_EMAIL":

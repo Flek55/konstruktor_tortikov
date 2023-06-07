@@ -9,7 +9,6 @@ import 'package:tortik/pages/forgetpass.dart';
 import 'package:tortik/pages/log.dart';
 import 'package:tortik/pages/logreg.dart';
 import 'package:tortik/pages/map.dart';
-import 'package:tortik/pages/order_page.dart';
 import 'package:tortik/pages/register.dart';
 import 'package:tortik/pages/start.dart';
 
@@ -32,7 +31,6 @@ void main() async {
       '/forpass': (context) => const ForgetPass(),
       '/login': (context) => const LoginPage(),
       '/map': (context) => const CafeMap(),
-      '/order': (context) => const OrderPage(),
     },
     builder: EasyLoading.init(),
   ));
