@@ -60,12 +60,12 @@ class DataGetter {
         .collection("users")
         .doc(_fAuth.currentUser?.uid)
         .collection("cart");
-    for (int i = 0; i < cartData.length; i++){
-      if (cartData[i].product_id != "0"){
+    await getCart(_fAuth.currentUser?.uid);
+    for (int i = 0; i < cartData.length; i++) {
+      if (cartData[i].product_id != "0") {
         cart.doc(cartData[i].product_id).delete();
       }
     }
-    getCart(_fAuth.currentUser?.uid);
     return 0;
   }
 
@@ -76,19 +76,47 @@ class DataGetter {
         .collection("cart")
         .get();
     List zhopa = records.docs;
-    List<Map<String,dynamic>> ans = [];
-    for (int i = 0; i < zhopa.length; i++){
+    List<Map<String, dynamic>> ans = [];
+    for (int i = 0; i < zhopa.length; i++) {
       ans.add(zhopa[i].data());
     }
     return ans;
   }
 
+  Future<List<Map<String, dynamic>>> getOrders() async {
+    List<Map<String, dynamic>> ans = [];
+    QuerySnapshot<Map<String,dynamic>> doc = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(_fAuth.currentUser?.uid)
+        .collection("orders").get();
+    print(doc.docs);
+    print(doc.docs.length);
+    for (int i = 0; i < 0; i++) {
+      QuerySnapshot<Map<String, dynamic>> ds = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(_fAuth.currentUser?.uid)
+          .collection("orders")
+          .doc(doc.docs[i].id)
+          .collection("menu")
+          .get();
+      Map<String, dynamic> temp = ds.docs[i].data();
+      print(temp);
+      ans.add(temp);
+    }
+    return ans;
+  }
+
   Future<int> createOrder(cart_list) async {
+    String ids = FirebaseFirestore.instance
+        .collection("users")
+        .doc(_fAuth.currentUser?.uid)
+        .collection("orders")
+        .doc().id;
     var order = FirebaseFirestore.instance
         .collection("users")
         .doc(_fAuth.currentUser?.uid)
         .collection("orders")
-        .doc()
+        .doc(ids)
         .collection("menu");
     cartData.clear();
     cartData = await getCart(_fAuth.currentUser?.uid);
@@ -102,12 +130,19 @@ class DataGetter {
           .doc(temp[i].id)
           .get();
       Map mappedDoc = doc.data()!;
-      order.doc(temp[i].id).set({
+      await order.doc(temp[i].id).set({
         "product_id": temp[i].id,
         "amount": mappedDoc["amount"],
         "product_name": temp[i].name.toString()
       });
     }
+    await FirebaseFirestore
+        .instance
+        .collection("users")
+        .doc(_fAuth.currentUser?.uid)
+        .collection("orders")
+        .doc(ids)
+        .update({"filler": "abc"});
     return 0;
   }
 

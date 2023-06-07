@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tortik/pages/Home/product_page.dart';
+import 'package:tortik/pages/order_page.dart';
 
 import '../../Services/db_data.dart';
 import '../../Services/server_data.dart';
@@ -224,8 +225,27 @@ class HomeCartState extends State<HomeCart> {
     }
   }
 
+  refreshOrder() async{
+    DataGetter dg = DataGetter();
+    ProductsData pd = ProductsData();
+    HomeInteractionState.selectedTab = 2;
+    await dg.clearCart();
+    await pd.parseCartProducts(FirebaseAuth.instance.currentUser?.uid);
+    cartProducts = compressCartProducts();
+    cartAmount = compressAmount();
+    cart = compressCart();
+    setState(() {
+
+    });
+  }
+
   _getPushNamed() {
-    return Navigator.pushNamed(context, "/order");
+    List<Map<String, dynamic>> input = cart;
+    return Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+            builder: (BuildContext context) =>
+                OrderPage(notifyParent: refreshOrder, input: input,)));
   }
 
   _getOrderButton() {
@@ -245,10 +265,6 @@ class HomeCartState extends State<HomeCart> {
                     DataGetter dg = DataGetter();
                     await dg.createOrder(cartProducts);
                     _getPushNamed();
-                    cart.clear();
-                    cartAmount.clear();
-                    cartProducts.clear();
-                    await dg.clearCart();
                     setState(() {
 
                     });

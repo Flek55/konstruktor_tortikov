@@ -3,6 +3,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tortik/Services/auth.dart';
 import 'package:tortik/Services/cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tortik/Services/db_data.dart';
+import 'package:tortik/Services/myOrders_page.dart';
 import 'package:tortik/main.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -132,6 +134,16 @@ class _HomeProfileState extends State<HomeProfile> {
                   const Padding(padding: EdgeInsets.only(left: 33)),
                   SizedBox(
                     height: 40,
+                    child: _getOrdersButton(context),
+                  )
+                ],
+              ),
+              const Padding(padding: EdgeInsets.only(top: 50)),
+              Row(
+                children: [
+                  const Padding(padding: EdgeInsets.only(left: 33)),
+                  SizedBox(
+                    height: 40,
                     child: _getChangePasswordButton(context),
                   )
                 ],
@@ -204,6 +216,26 @@ class _HomeProfileState extends State<HomeProfile> {
         style: Theme.of(context).textTheme.displaySmall?.copyWith(color:Colors.red,fontSize: 17)
       ),
     );
+  }
+
+  _getOrdersButton(context){
+    return TextButton(
+      onPressed: () async {
+        DataGetter dg = DataGetter();
+        _getPushNamed(await dg.getOrders());
+      },
+      child: Text(
+          "Мои заказы",
+          style: Theme.of(context).textTheme.displaySmall?.copyWith(color:Colors.black45,fontSize: 15)
+      ),
+    );
+  }
+  _getPushNamed(temp) {
+    return Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+            builder: (BuildContext context) =>
+                MyOrdersPage(ordersData: temp,)));
   }
 
   _getChangePasswordButton(context) {
