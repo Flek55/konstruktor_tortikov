@@ -122,10 +122,10 @@ class HomeLikedState extends State<HomeLiked> {
         },
       );
     } else {
-      return Container(
+      return const SizedBox(
         height: 100,
         width: 300,
-        child: const Text("Нет избранного"),
+        child: Text("Нет избранного"),
       );
     }
   }
