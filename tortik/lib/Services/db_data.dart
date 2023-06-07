@@ -83,25 +83,46 @@ class DataGetter {
     return ans;
   }
 
-  Future<List<Map<String, dynamic>>> getOrders() async {
+  Future<List<Map<String, dynamic>>> getOrder(orderId) async {
     List<Map<String, dynamic>> ans = [];
-    QuerySnapshot<Map<String,dynamic>> doc = await FirebaseFirestore.instance
+    QuerySnapshot<Map<String, dynamic>> ds = await FirebaseFirestore.instance
         .collection("users")
         .doc(_fAuth.currentUser?.uid)
-        .collection("orders").get();
-    print(doc.docs);
-    print(doc.docs.length);
-    for (int i = 0; i < 0; i++) {
-      QuerySnapshot<Map<String, dynamic>> ds = await FirebaseFirestore.instance
-          .collection("users")
-          .doc(_fAuth.currentUser?.uid)
-          .collection("orders")
-          .doc(doc.docs[i].id)
-          .collection("menu")
-          .get();
-      Map<String, dynamic> temp = ds.docs[i].data();
-      print(temp);
+        .collection("orders")
+        .doc(orderId)
+        .collection("menu")
+        .get();
+    for (int j = 0; j < ds.docs.length; j++) {
+      Map<String, dynamic> temp = ds.docs[j].data();
       ans.add(temp);
+    }
+    return ans;
+  }
+
+  Future<List<List<Map<String, dynamic>>>> orderList() async {
+    List<List<Map<String, dynamic>>> ans = [];
+    QuerySnapshot<Map<String, dynamic>> docRef = await FirebaseFirestore
+        .instance
+        .collection("users")
+        .doc(_fAuth.currentUser?.uid)
+        .collection("orders")
+        .get();
+    for (int i = 0; i < docRef.docs.length; i++) {
+      ans.add(await getOrder(docRef.docs[i].id));
+    }
+    return ans;
+  }
+
+  Future<List<String>> getOrderIds() async{
+    List<String> ans = [];
+    QuerySnapshot<Map<String, dynamic>> docRef = await FirebaseFirestore
+        .instance
+        .collection("users")
+        .doc(_fAuth.currentUser?.uid)
+        .collection("orders")
+        .get();
+    for (int i = 0; i < docRef.docs.length; i++){
+      ans.add(docRef.docs[i].id);
     }
     return ans;
   }
@@ -111,7 +132,14 @@ class DataGetter {
         .collection("users")
         .doc(_fAuth.currentUser?.uid)
         .collection("orders")
-        .doc().id;
+        .doc()
+        .id;
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(_fAuth.currentUser?.uid)
+        .collection("orders")
+        .doc(ids)
+        .set({"filler": "abc"});
     var order = FirebaseFirestore.instance
         .collection("users")
         .doc(_fAuth.currentUser?.uid)
@@ -136,13 +164,6 @@ class DataGetter {
         "product_name": temp[i].name.toString()
       });
     }
-    await FirebaseFirestore
-        .instance
-        .collection("users")
-        .doc(_fAuth.currentUser?.uid)
-        .collection("orders")
-        .doc(ids)
-        .update({"filler": "abc"});
     return 0;
   }
 

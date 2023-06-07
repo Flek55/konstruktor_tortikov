@@ -222,7 +222,7 @@ class _HomeProfileState extends State<HomeProfile> {
     return TextButton(
       onPressed: () async {
         DataGetter dg = DataGetter();
-        _getPushNamed(await dg.getOrders());
+        _getPushNamed(await dg.orderList(), await dg.getOrderIds());
       },
       child: Text(
           "Мои заказы",
@@ -230,12 +230,12 @@ class _HomeProfileState extends State<HomeProfile> {
       ),
     );
   }
-  _getPushNamed(temp) {
+  _getPushNamed(temp, orderIds) {
     return Navigator.push(
         context,
         MaterialPageRoute<void>(
             builder: (BuildContext context) =>
-                MyOrdersPage(ordersData: temp,)));
+                MyOrdersPage(ordersData: temp, orderIds: orderIds,)));
   }
 
   _getChangePasswordButton(context) {

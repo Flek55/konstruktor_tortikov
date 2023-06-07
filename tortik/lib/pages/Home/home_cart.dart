@@ -93,7 +93,7 @@ class HomeCartState extends State<HomeCart> {
           child: Column(children: [
             const Padding(padding: EdgeInsets.only(top: 49)),
             Row(children: [
-              Padding(padding: EdgeInsets.only(top: 50, left: 40)),
+              const Padding(padding: EdgeInsets.only(top: 50, left: 40)),
               Text(
                 'Ваш заказ \nвсегда под рукой!',
                 textAlign: TextAlign.left,
@@ -173,7 +173,7 @@ class HomeCartState extends State<HomeCart> {
                           ),
                           child: const Icon(Icons.add),
                         ))),
-                Container(
+                SizedBox(
                   height: 23,
                   width: 16,
                   child: Text("${cart[index]["amount"]}",style: const TextStyle(fontSize: 18),),
@@ -215,11 +215,11 @@ class HomeCartState extends State<HomeCart> {
         },
       );
     } else {
-      return Column(children: [
-        Container(
+      return const Column(children: [
+        SizedBox(
           height: 100,
           width: 300,
-          child: const Text("Корзина пуста"),
+          child: Text("Корзина пуста"),
         ),
       ]);
     }
