@@ -71,26 +71,30 @@ class HomeMenuState extends State<HomeMenu> {
                     icon: const Icon(Icons.search),
                     suffixIcon: IconButton(
                         onPressed: () async {
+                          String input = _searchController.text.trim();
+                          input = input.replaceFirst(input[0], input[0].toUpperCase());
+                          print(input);
                           QuerySnapshot ansBakery  = await FirebaseFirestore.instance
                               .collection("products").doc("bakery").collection("menu")
                               .where("name",
                                   isGreaterThanOrEqualTo:
-                                      _searchController.text.trim()).get();
+                                      input.trim()).where("name",isLessThan: '${input.trim()}я')
+                              .get();
                           QuerySnapshot ansDesserts  = await FirebaseFirestore.instance
                               .collection("products").doc("desserts").collection("menu")
                               .where("name",
                               isGreaterThanOrEqualTo:
-                              _searchController.text.trim()).get();
+                              input.trim()).where("name",isLessThan: '${input.trim()}я').get();
                           QuerySnapshot ansCakes  = await FirebaseFirestore.instance
                               .collection("products").doc("cakes").collection("menu")
                               .where("name",
                               isGreaterThanOrEqualTo:
-                              _searchController.text.trim()).get();
+                              input.trim()).where("name",isLessThan: '${input.trim()}я').get();
                           QuerySnapshot ansCoffee  = await FirebaseFirestore.instance
                               .collection("products").doc("coffee").collection("menu")
                               .where("name",
                               isGreaterThanOrEqualTo:
-                              _searchController.text.trim()).get();
+                              input.trim()).where("name",isLessThan: '${input.trim()}я').get();
                           List list = ansBakery.docs + ansDesserts.docs + ansCoffee.docs + ansCakes.docs;
                           var ans = list.map((item) => Product(
                               id: item.id,
@@ -98,9 +102,6 @@ class HomeMenuState extends State<HomeMenu> {
                               price: item["price"],
                               description: item["description"]))
                               .toList();
-                          for(int i = 0; i < list.length; i++){
-                            print(ans[i].name);
-                          }
                           _getPushNamed(ans);
                         },
                         icon: const Icon(Icons.arrow_forward)),
