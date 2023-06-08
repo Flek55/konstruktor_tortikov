@@ -65,8 +65,9 @@ class HomeMenuState extends State<HomeMenu> {
                 height: 40,
                 width: 360,
                 child: TextField(
+                  textAlignVertical: TextAlignVertical.top,
                   controller: _searchController,
-                  style: (const TextStyle(color: Colors.black, fontSize: 18)),
+                  style: (const TextStyle(color: Colors.black, fontSize: 20)),
                   decoration: InputDecoration(
                     icon: const Icon(Icons.search),
                     suffixIcon: IconButton(
