@@ -24,6 +24,8 @@ class HomeCartState extends State<HomeCart> {
   static bool inProgress = false;
   static bool orderSwitch = false;
   static bool buttonClick = false;
+  static bool showAddressField = false;
+  final _addressController = TextEditingController();
 
   @override
   void initState() {
@@ -94,16 +96,19 @@ class HomeCartState extends State<HomeCart> {
             const Padding(padding: EdgeInsets.only(top: 50)),
             Row(children: [
               const Padding(padding: EdgeInsets.only(top: 50, left: 40)),
-              Text(
-                'Ваш заказ \nвсегда под рукой!',
-                textAlign: TextAlign.left,
-                style: Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 24)
-                ),
+              Text('Ваш заказ \nвсегда под рукой!',
+                  textAlign: TextAlign.left,
+                  style: Theme.of(context)
+                      .textTheme
+                      .displayMedium
+                      ?.copyWith(fontSize: 24)),
             ]),
             const Padding(padding: EdgeInsets.only(top: 20)),
             _getListView(),
             const Padding(padding: EdgeInsets.only(top: 30)),
             _getOrderButton(),
+            const Padding(padding: EdgeInsets.only(top: 30)),
+            _getAddressField(context, _addressController),
           ]),
         )));
   }
@@ -161,9 +166,7 @@ class HomeCartState extends State<HomeCart> {
                             cartAmount = compressAmount();
                             cart = compressCart();
                             refresh;
-                            setState(() {
-
-                            });
+                            setState(() {});
                             inProgress = false;
                           }
                         },
@@ -176,7 +179,10 @@ class HomeCartState extends State<HomeCart> {
                 SizedBox(
                   height: 23,
                   width: 16,
-                  child: Text("${cart[index]["amount"]}",style: const TextStyle(fontSize: 18),),
+                  child: Text(
+                    "${cart[index]["amount"]}",
+                    style: const TextStyle(fontSize: 18),
+                  ),
                 ),
                 Material(
                     color: Colors.transparent,
@@ -225,7 +231,7 @@ class HomeCartState extends State<HomeCart> {
     }
   }
 
-  refreshOrder() async{
+  refreshOrder() async {
     DataGetter dg = DataGetter();
     ProductsData pd = ProductsData();
     HomeInteractionState.selectedTab = 2;
@@ -234,18 +240,67 @@ class HomeCartState extends State<HomeCart> {
     cartProducts = compressCartProducts();
     cartAmount = compressAmount();
     cart = compressCart();
-    setState(() {
-
-    });
+    setState(() {});
   }
 
-  _getPushNamed() {
-    List<Map<String, dynamic>> input = cart;
+  _getPushNamed(String address) {
     return Navigator.push(
         context,
         MaterialPageRoute<void>(
-            builder: (BuildContext context) =>
-                OrderPage(notifyParent: refreshOrder, input: input,)));
+            builder: (BuildContext context) => OrderPage(
+                  notifyParent: refreshOrder,
+                  input: cart,
+              address: address,
+                )));
+  }
+
+  _getAddressField(context, displayNameController) {
+    return Visibility(
+      visible: showAddressField,
+        child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: TextFormField(
+              controller: displayNameController,
+              decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  onPressed: () async {
+                    if (_addressController.text.trim() != "" &&
+                        _addressController.text.length >= 2 && !orderSwitch) {
+                      orderSwitch = true;
+                      ProductsData pd = ProductsData();
+                      await pd.parseCartProducts(
+                          FirebaseAuth.instance.currentUser?.uid);
+                      DataGetter dg = DataGetter();
+                      await dg.createOrder(cartProducts, _addressController.text.trim());
+                      _getPushNamed(_addressController.text.trim());
+                      setState(() {
+                        showAddressField = false;
+                      });
+                      await refreshOrder();
+                      _addressController.clear();
+                      orderSwitch = true;
+                    }
+                  },
+                  icon: const Icon(Icons.arrow_forward),
+                  style: IconButton.styleFrom(
+                      hoverColor: Theme.of(context).colorScheme.onPrimary),
+                  splashRadius: 1,
+                ),
+                border: const OutlineInputBorder(),
+                hintText: "Адрес доставки",
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                  borderSide:
+                      BorderSide(color: Theme.of(context).colorScheme.tertiary),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                  borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.onPrimary),
+                ),
+              ),
+              style: (const TextStyle(color: Colors.black, fontSize: 18)),
+            )));
   }
 
   _getOrderButton() {
@@ -256,21 +311,10 @@ class HomeCartState extends State<HomeCart> {
           Material(
             color: Colors.transparent,
             child: InkWell(
-                onTap: () async {
-                  if (!orderSwitch) {
-                    orderSwitch = true;
-                    ProductsData pd = ProductsData();
-                    await pd.parseCartProducts(
-                        FirebaseAuth.instance.currentUser?.uid);
-                    DataGetter dg = DataGetter();
-                    await dg.createOrder(cartProducts);
-                    _getPushNamed();
+                onTap: (){
                     setState(() {
-
+                      showAddressField = !showAddressField;
                     });
-                    refresh;
-                    orderSwitch = false;
-                  }
                 },
                 child: Container(
                   width: 100,

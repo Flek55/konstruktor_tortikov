@@ -127,7 +127,7 @@ class DataGetter {
     return ans;
   }
 
-  Future<int> createOrder(cart_list) async {
+  Future<int> createOrder(cart_list, String address) async {
     String ids = FirebaseFirestore.instance
         .collection("users")
         .doc(_fAuth.currentUser?.uid)
@@ -139,7 +139,7 @@ class DataGetter {
         .doc(_fAuth.currentUser?.uid)
         .collection("orders")
         .doc(ids)
-        .set({"filler": "abc"});
+        .set({"address": address});
     var order = FirebaseFirestore.instance
         .collection("users")
         .doc(_fAuth.currentUser?.uid)
