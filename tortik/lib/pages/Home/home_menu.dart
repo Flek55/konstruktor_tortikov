@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tortik/Services/category_model.dart';
 import 'package:tortik/Services/db_data.dart';
 import 'package:tortik/pages/Home/product_page.dart';
+import 'package:tortik/pages/search_result.dart';
 
 import '../../Services/server_data.dart';
 
@@ -15,6 +17,7 @@ class HomeMenu extends StatefulWidget {
 
 class HomeMenuState extends State<HomeMenu> {
   static List<Product> currentData = [];
+  final _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -29,95 +32,123 @@ class HomeMenuState extends State<HomeMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme
-            .of(context)
-            .colorScheme
-            .background,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  const Padding(padding: EdgeInsets.only(top: 30)),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    const Icon(Icons.place),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/map');
-                      },
-                      child: Text("Как нас найти?",
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .displayMedium),
-                    )
-                  ]),
-                  const Padding(padding: EdgeInsets.only(top: 30)),
-                  Row(children: [
-                    const Padding(padding: EdgeInsets.only(top: 50, left: 40)),
-                    Text(
-                      'Отличный кофе\nВсегда и везде!',
-                      style: Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 24)
-                    )
-                  ]),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  SizedBox(
-                    height: 40,
-                    width: 360,
-                    child: TextField(
-                      style: (const TextStyle(color: Colors.black,fontSize: 18)),
-                      decoration: InputDecoration(
-                        icon: const Icon(Icons.search),
-                        suffixIcon: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.arrow_forward)),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius:
-                          const BorderRadius.all(Radius.circular(20.0)),
-                          borderSide: BorderSide(
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .tertiary),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                          const BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .onPrimary),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Padding(padding: EdgeInsets.only(top: 30)),
-                  Container(
-                    height: 60,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: ListView.builder(
-                      itemCount: 4,
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return CategoryBox(
-                            category: CategoryModel.categories[index],
-                            notifyParent: refresh);
-                      },
-                    ),
-                  ),
-                  const Padding(padding: EdgeInsets.only(top: 10)),
-                  _getListView(),
-                ],
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              const Padding(padding: EdgeInsets.only(top: 30)),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                const Icon(Icons.place),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/map');
+                  },
+                  child: Text("Как нас найти?",
+                      style: Theme.of(context).textTheme.displayMedium),
+                )
+              ]),
+              const Padding(padding: EdgeInsets.only(top: 30)),
+              Row(children: [
+                const Padding(padding: EdgeInsets.only(top: 50, left: 40)),
+                Text('Отличный кофе\nВсегда и везде!',
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium
+                        ?.copyWith(fontSize: 24))
+              ]),
+              const SizedBox(
+                height: 30,
               ),
-            )));
+              SizedBox(
+                height: 40,
+                width: 360,
+                child: TextField(
+                  controller: _searchController,
+                  style: (const TextStyle(color: Colors.black, fontSize: 18)),
+                  decoration: InputDecoration(
+                    icon: const Icon(Icons.search),
+                    suffixIcon: IconButton(
+                        onPressed: () async {
+                          QuerySnapshot ansBakery  = await FirebaseFirestore.instance
+                              .collection("products").doc("bakery").collection("menu")
+                              .where("name",
+                                  isGreaterThanOrEqualTo:
+                                      _searchController.text.trim()).get();
+                          QuerySnapshot ansDesserts  = await FirebaseFirestore.instance
+                              .collection("products").doc("desserts").collection("menu")
+                              .where("name",
+                              isGreaterThanOrEqualTo:
+                              _searchController.text.trim()).get();
+                          QuerySnapshot ansCakes  = await FirebaseFirestore.instance
+                              .collection("products").doc("cakes").collection("menu")
+                              .where("name",
+                              isGreaterThanOrEqualTo:
+                              _searchController.text.trim()).get();
+                          QuerySnapshot ansCoffee  = await FirebaseFirestore.instance
+                              .collection("products").doc("coffee").collection("menu")
+                              .where("name",
+                              isGreaterThanOrEqualTo:
+                              _searchController.text.trim()).get();
+                          List list = ansBakery.docs + ansDesserts.docs + ansCoffee.docs + ansCakes.docs;
+                          var ans = list.map((item) => Product(
+                              id: item.id,
+                              name: item["name"],
+                              price: item["price"],
+                              description: item["description"]))
+                              .toList();
+                          for(int i = 0; i < list.length; i++){
+                            print(ans[i].name);
+                          }
+                          _getPushNamed(ans);
+                        },
+                        icon: const Icon(Icons.arrow_forward)),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20.0)),
+                      borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.tertiary),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10.0)),
+                      borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.onPrimary),
+                    ),
+                  ),
+                ),
+              ),
+              const Padding(padding: EdgeInsets.only(top: 30)),
+              Container(
+                height: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                child: ListView.builder(
+                  itemCount: 4,
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return CategoryBox(
+                        category: CategoryModel.categories[index],
+                        notifyParent: refresh);
+                  },
+                ),
+              ),
+              const Padding(padding: EdgeInsets.only(top: 10)),
+              _getListView(),
+            ],
+          ),
+        )));
   }
 
+  _getPushNamed(data) {
+    return Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+            builder: (BuildContext context) => SearchResultPage(data: data,)));
+  }
 
   _getListView() {
     return ListView.separated(
@@ -126,13 +157,14 @@ class HomeMenuState extends State<HomeMenu> {
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         return Padding(
-            padding: const EdgeInsets.symmetric(
-                vertical: 0.0, horizontal: 10.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
             child: ListTile(
                 onTap: () {
                   ProductsData.selectedProductId =
                       HomeMenuState.currentData[index].id;
-                  Navigator.push(context,
+                  Navigator.push(
+                      context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) =>
                             ProductPage(notifyParent: refresh),
@@ -144,16 +176,13 @@ class HomeMenuState extends State<HomeMenu> {
                 ),
                 title: Text(
                   HomeMenuState.currentData[index].name,
-                  style: Theme
-                      .of(context)
+                  style: Theme.of(context)
                       .textTheme
                       .displayMedium
                       ?.copyWith(fontSize: 16.5),
                 ),
                 subtitle: Text(
-                    "${HomeMenuState.currentData[index]
-                        .description}\n₽${HomeMenuState.currentData[index]
-                        .price}"),
+                    "${HomeMenuState.currentData[index].description}\n₽${HomeMenuState.currentData[index].price}"),
                 trailing: Wrap(children: [
                   Material(
                       color: Colors.transparent,
