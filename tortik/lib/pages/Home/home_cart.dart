@@ -91,7 +91,7 @@ class HomeCartState extends State<HomeCart> {
         body: SafeArea(
             child: SingleChildScrollView(
           child: Column(children: [
-            const Padding(padding: EdgeInsets.only(top: 49)),
+            const Padding(padding: EdgeInsets.only(top: 50)),
             Row(children: [
               const Padding(padding: EdgeInsets.only(top: 50, left: 40)),
               Text(

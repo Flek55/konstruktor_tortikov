@@ -16,7 +16,8 @@ class _OrderProductsPageState extends State<OrderProductsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(iconTheme: const IconThemeData(color:Colors.white),
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,),
       body: SafeArea(
         child: SingleChildScrollView(
             child: Column(children: [
