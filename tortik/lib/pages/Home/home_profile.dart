@@ -25,22 +25,24 @@ class _HomeProfileState extends State<HomeProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text(
+          "Профиль",
+          style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 24,color: Colors.white)),centerTitle:true ,
+          backgroundColor:Theme.of(context).colorScheme.onPrimary),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(
             child: SingleChildScrollView(
           child: Column(
             children: [
               const Padding(padding: EdgeInsets.only(top: 50)),
-              Row(
+              const Row(
                 children: [
-                  const Padding(padding: EdgeInsets.only(left: 40)),
-                  Text(
-                    "Профиль",
-                    style: Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 24)
-                  )
+                  Padding(padding: EdgeInsets.only(left: 150)),
+                  Icon(Icons.account_circle_rounded,size:90,),
+                  Padding(padding: EdgeInsets.only(left: 40)),
                 ],
               ),
-              const Padding(padding: EdgeInsets.only(top: 60)),
+              const Padding(padding: EdgeInsets.only(top: 40)),
               const Row(
                 children: [
                   Padding(padding: EdgeInsets.only(left: 40)),
@@ -128,7 +130,7 @@ class _HomeProfileState extends State<HomeProfile> {
                   )
                 ],
               ),
-              const Padding(padding: EdgeInsets.only(top: 50)),
+              const Padding(padding: EdgeInsets.only(top: 30)),
               Row(
                 children: [
                   const Padding(padding: EdgeInsets.only(left: 33)),
@@ -138,7 +140,7 @@ class _HomeProfileState extends State<HomeProfile> {
                   )
                 ],
               ),
-              const Padding(padding: EdgeInsets.only(top: 50)),
+              const Padding(padding: EdgeInsets.only(top: 30)),
               Row(
                 children: [
                   const Padding(padding: EdgeInsets.only(left: 33)),

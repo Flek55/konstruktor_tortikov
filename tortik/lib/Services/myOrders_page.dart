@@ -17,7 +17,7 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
     return Scaffold(
       appBar: AppBar(iconTheme: const IconThemeData(color:Colors.white),
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
-        title: Text("Мои заказы",style: Theme.of(context).textTheme.displaySmall),
+        title: Text("Мои заказы",style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 20)),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -46,7 +46,7 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>  OrderProductsPage(data: widget.ordersData[index],),
+                        builder: (BuildContext context) =>  OrderProductsPage(data: widget.ordersData[index],id: widget.orderIds[index]),
                       ));
                 },
                 shape: RoundedRectangleBorder(

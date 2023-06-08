@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-
 import '../Services/db_data.dart';
 import 'Home/product_page.dart';
 
 class OrderProductsPage extends StatefulWidget {
   final List<Map<String, dynamic>> data;
+  final String id;
 
-  const OrderProductsPage({super.key, required this.data});
+  const OrderProductsPage({super.key, required this.data, required this.id});
 
   @override
   State<OrderProductsPage> createState() => _OrderProductsPageState();
@@ -16,12 +16,21 @@ class _OrderProductsPageState extends State<OrderProductsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(iconTheme: const IconThemeData(color:Colors.white),
-        backgroundColor: Theme.of(context).colorScheme.onPrimary,),
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
+        title: Text("Заказ №${widget.id}",
+            style: Theme.of(context)
+                .textTheme
+                .displayMedium
+                ?.copyWith(fontSize: 16.5, color: Colors.white)),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
             child: Column(children: [
-          const Padding(padding: EdgeInsets.only(top: 50)),
+          const Padding(padding: EdgeInsets.only(top: 30)),
+          Text("Продукты",style: Theme.of(context).textTheme.displayMedium),
+          const Padding(padding: EdgeInsets.only(top: 20)),
           _getListView(),
         ])),
       ),
@@ -63,7 +72,8 @@ class _OrderProductsPageState extends State<OrderProductsPage> {
                 trailing: SizedBox(
                   height: 23,
                   width: 16,
-                  child: Text("${widget.data[index]["amount"]}"),
+                  child: Text("${widget.data[index]["amount"]}",
+                      style: const TextStyle(fontSize: 18)),
                 ),
               ));
         },
