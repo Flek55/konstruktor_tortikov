@@ -7,8 +7,9 @@ import 'Home/product_page.dart';
 class OrderPage extends StatefulWidget {
   final Function() notifyParent;
   final List<Map<String, dynamic>> input;
+  final String address;
 
-  const OrderPage({super.key, required this.notifyParent, required this.input});
+  const OrderPage({super.key, required this.notifyParent, required this.input, required this.address});
 
   @override
   State<OrderPage> createState() => _OrderPageState();
@@ -20,7 +21,7 @@ class _OrderPageState extends State<OrderPage> {
   @override
   void initState() {
     pageData = widget.input;
-    widget.notifyParent();
+    widget.notifyParent;
     super.initState();
   }
 
@@ -39,6 +40,11 @@ class _OrderPageState extends State<OrderPage> {
           child: Column(
             children: [
               const Padding(padding: EdgeInsets.only(top: 30)),
+              Row(children:[
+              const Padding(padding: EdgeInsets.only(left: 20)),
+                Text(widget.address),
+              ]
+              ),
               _getListView(),
             ],
           ),
