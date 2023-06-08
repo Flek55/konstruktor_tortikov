@@ -15,8 +15,9 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Мои заказы"),
+      appBar: AppBar(iconTheme: const IconThemeData(color:Colors.white),
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
+        title: Text("Мои заказы",style: Theme.of(context).textTheme.displaySmall),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -60,10 +61,15 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
         },
       );
     } else {
-      return const SizedBox(
+      return SizedBox(
         height: 100,
         width: 300,
-        child: Text("Нет избранного"),
+        child: Column(
+          children: [
+            const Padding(padding: EdgeInsets.only(left:40)),
+            Text("\tВы пока что не сделали\n\tни одного заказа=(",style: Theme.of(context).textTheme.displayMedium,)
+          ],
+        )
       );
     }
   }

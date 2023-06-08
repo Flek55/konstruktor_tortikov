@@ -32,7 +32,7 @@ void main() async {
       '/login': (context) => const LoginPage(),
       '/map': (context) => const CafeMap(),
     },
-    builder: EasyLoading.init(),
+    builder: EasyLoading.init()
   ));
 }
 

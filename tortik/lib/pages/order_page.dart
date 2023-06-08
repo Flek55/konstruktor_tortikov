@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../Services/db_data.dart';
 import 'Home/home_interaction.dart';
@@ -28,17 +27,18 @@ class _OrderPageState extends State<OrderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(iconTheme: const IconThemeData(color:Colors.white),
+          backgroundColor: Theme.of(context).colorScheme.onPrimary,
+          title: Text(
+            "Ваш заказ",
+            style:Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 18)
+          ),
+        ),
         body: SafeArea(
             child: SingleChildScrollView(
           child: Column(
             children: [
               const Padding(padding: EdgeInsets.only(top: 30)),
-              Text(
-                "Заказ создан!",
-                style: GoogleFonts.akayaKanadaka(),
-              ),
-              const Padding(padding: EdgeInsets.only(top: 20)),
               _getListView(),
             ],
           ),
@@ -87,11 +87,11 @@ class _OrderPageState extends State<OrderPage> {
         },
       );
     } else {
-      return Column(children: [
-        Container(
+      return const Column(children: [
+        SizedBox(
           height: 100,
           width: 300,
-          child: const Text("Корзина пуста"),
+          child: Text("Корзина пуста"),
         ),
       ]);
     }

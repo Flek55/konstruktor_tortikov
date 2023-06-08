@@ -37,7 +37,7 @@ class _ProductPageState extends State<ProductPage> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color:Colors.white),
-        title: Text(pageData.name),
+        title: Text(pageData.name,style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 20)),
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
         actions: [
           IconButton(onPressed: () async {
@@ -57,16 +57,14 @@ class _ProductPageState extends State<ProductPage> {
       ),
       body: Column(
         children: [
-          const Padding(padding: EdgeInsets.only(top: 50)),
+          const Padding(padding: EdgeInsets.all(20)),
+          SizedBox(child: Image.asset('assets/image/Pechene.jpg',scale: 6)),
           Row(children:[
-            const Padding(padding: EdgeInsets.only(left: 40)),
-            Text(pageData.description,style: Theme.of(context).textTheme.displayMedium)]),
-          const Padding(padding: EdgeInsets.only(top: 20)),
-          Row(children:[
-            const Padding(padding: EdgeInsets.only(left: 40)),
-            Text("₽${pageData.price}",style: Theme.of(context).textTheme.displayMedium)]),
-        ],
-      ),
-    );
+            const Padding(padding: EdgeInsets.only(left: 30)),
+            Text("\nОписание: ",style: Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 16)),
+            Text("\n\n${pageData.description}\n",style: Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 16))]),
+          Row(children:[const Padding(padding: EdgeInsets.only(left: 30,top: 20)),
+            Text("Цена:\t",style: Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 16)),
+            Text("₽${pageData.price}",style: Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 16))])]));
   }
 }
