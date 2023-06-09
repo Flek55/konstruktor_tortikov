@@ -37,6 +37,15 @@ class _OrderProductsPageState extends State<OrderProductsPage> {
     );
   }
 
+  _getProductPush(url){
+    return Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) =>
+              ProductPage(notifyParent: (){}, imageURL: url,),
+        ));
+  }
+
   _getListView() {
     if (widget.data.isNotEmpty) {
       return ListView.separated(
@@ -48,17 +57,12 @@ class _OrderProductsPageState extends State<OrderProductsPage> {
               padding:
                   const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
               child: ListTile(
-                onTap: () {
+                onTap: () async {
                   ProductsData.selectedProductId =
                       widget.data[index]["product_id"];
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>
-                            ProductPage(notifyParent: () {
-                          setState(() {});
-                        }),
-                      ));
+                  DataGetter dg = DataGetter();
+                  String url = await dg.getProductImageURL(ProductsData.selectedProductId);
+                  _getProductPush(url);
                 },
                 shape: RoundedRectangleBorder(
                   side: const BorderSide(width: 2, color: Colors.black12),

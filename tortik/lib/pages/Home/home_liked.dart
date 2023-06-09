@@ -74,6 +74,15 @@ class HomeLikedState extends State<HomeLiked> {
         )));
   }
 
+  _getProductPush(url){
+    return Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) =>
+              ProductPage(notifyParent: refresh, imageURL: url,),
+        ));
+  }
+
   _getListView() {
     if (likedData.isNotEmpty) {
       return ListView.separated(
@@ -85,13 +94,12 @@ class HomeLikedState extends State<HomeLiked> {
               padding:
                   const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
               child: ListTile(
-                onTap: () {
+                onTap: () async {
                   ProductsData.selectedProductId = likedData[index].id;
                   HomeInteractionState.selectedTab = 1;
-                  Navigator.push(context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>  ProductPage(notifyParent: refresh),
-                  ));
+                  DataGetter dg = DataGetter();
+                  String url = await dg.getProductImageURL(ProductsData.selectedProductId);
+                  _getProductPush(url);
                 },
                 shape: RoundedRectangleBorder(
                   side: const BorderSide(width: 2, color: Colors.black12),

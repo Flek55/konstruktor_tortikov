@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:tortik/Services/favorite_product.dart';
 import 'package:tortik/Services/server_data.dart';
 import 'package:tortik/pages/Home/home_cart.dart';
@@ -54,6 +55,13 @@ class DataGetter {
   List<CartProduct> cartData = [];
   Map<String, dynamic> cartAmounts = {};
   final FirebaseAuth _fAuth = FirebaseAuth.instance;
+
+  Future<String> getProductImageURL(id) async {
+    print("products/${id}.jpg");
+    final url =
+        await FirebaseStorage.instance.ref("products/${id}.jpg").getDownloadURL();
+    return url;
+  }
 
   Future<int> clearCart() async {
     var cart = FirebaseFirestore.instance
@@ -113,7 +121,7 @@ class DataGetter {
     return ans;
   }
 
-  Future<List<String>> getOrderIds() async{
+  Future<List<String>> getOrderIds() async {
     List<String> ans = [];
     QuerySnapshot<Map<String, dynamic>> docRef = await FirebaseFirestore
         .instance
@@ -121,7 +129,7 @@ class DataGetter {
         .doc(_fAuth.currentUser?.uid)
         .collection("orders")
         .get();
-    for (int i = 0; i < docRef.docs.length; i++){
+    for (int i = 0; i < docRef.docs.length; i++) {
       ans.add(docRef.docs[i].id);
     }
     return ans;
