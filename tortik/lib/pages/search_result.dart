@@ -17,7 +17,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.onPrimary,iconTheme:const IconThemeData(color:Colors.white),),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -96,7 +96,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
       return const SizedBox(
         height: 100,
         width: 300,
-        child: Text("Нет Результата!"),
+        child: Row(children: [Padding(padding: EdgeInsets.only(left:20)),Text("Нет Результата!"),],)
       );
     }
   }
