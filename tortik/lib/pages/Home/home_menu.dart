@@ -74,7 +74,6 @@ class HomeMenuState extends State<HomeMenu> {
                         onPressed: () async {
                           String input = _searchController.text.trim();
                           input = input.replaceFirst(input[0], input[0].toUpperCase());
-                          print(input);
                           QuerySnapshot ansBakery  = await FirebaseFirestore.instance
                               .collection("products").doc("bakery").collection("menu")
                               .where("name",

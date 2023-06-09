@@ -60,7 +60,7 @@ class _ProductPageState extends State<ProductPage> {
       body: Column(
         children: [
           const Padding(padding: EdgeInsets.all(20)),
-          SizedBox(child: Image.network(widget.imageURL, scale: 6,)),
+          FittedBox(child: Image.network(widget.imageURL, scale: 6,fit: BoxFit.fill,height: 240,width: 350,)),
           Row(children:[
             const Padding(padding: EdgeInsets.only(left: 30)),
             Text("\nОписание: ",style: Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 16)),
