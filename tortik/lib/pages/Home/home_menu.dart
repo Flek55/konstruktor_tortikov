@@ -152,6 +152,15 @@ class HomeMenuState extends State<HomeMenu> {
             builder: (BuildContext context) => SearchResultPage(data: data,)));
   }
 
+  _getProductPush(url){
+    return Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) =>
+              ProductPage(notifyParent: refresh, imageURL: url,),
+        ));
+  }
+
   _getListView() {
     return ListView.separated(
       shrinkWrap: true,
@@ -162,15 +171,12 @@ class HomeMenuState extends State<HomeMenu> {
             padding:
                 const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
             child: ListTile(
-                onTap: () {
+                onTap: () async{
                   ProductsData.selectedProductId =
                       HomeMenuState.currentData[index].id;
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>
-                            ProductPage(notifyParent: refresh),
-                      ));
+                  DataGetter dg = DataGetter();
+                  String url = await dg.getProductImageURL(ProductsData.selectedProductId);
+                  _getProductPush(url);
                 },
                 shape: RoundedRectangleBorder(
                   side: const BorderSide(width: 2, color: Colors.black12),

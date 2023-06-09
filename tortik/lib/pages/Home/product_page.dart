@@ -8,7 +8,8 @@ import 'home_liked.dart';
 
 class ProductPage extends StatefulWidget {
   final Function() notifyParent;
-  const ProductPage({Key? key, required this.notifyParent}) : super(key: key);
+  final String imageURL;
+  const ProductPage({Key? key, required this.notifyParent, required this.imageURL}) : super(key: key);
 
   @override
   State<ProductPage> createState() => _ProductPageState();
@@ -26,6 +27,7 @@ class _ProductPageState extends State<ProductPage> {
     }
     return null;
   }
+
   @override
   void initState() {
     pageData = findIndex(productIndex)!;
@@ -58,7 +60,7 @@ class _ProductPageState extends State<ProductPage> {
       body: Column(
         children: [
           const Padding(padding: EdgeInsets.all(20)),
-          SizedBox(child: Image.asset('assets/image/Pechene.jpg',scale: 6)),
+          SizedBox(child: Image.network(widget.imageURL, scale: 6,)),
           Row(children:[
             const Padding(padding: EdgeInsets.only(left: 30)),
             Text("\nОписание: ",style: Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 16)),

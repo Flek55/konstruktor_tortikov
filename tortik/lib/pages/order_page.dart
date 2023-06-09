@@ -51,6 +51,17 @@ class _OrderPageState extends State<OrderPage> {
         )));
   }
 
+  _getProductPush(url){
+    return Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) =>
+              ProductPage(notifyParent: (){setState(() {
+
+              });}, imageURL: url,),
+        ));
+  }
+
   _getListView() {
     if (widget.input.isNotEmpty) {
       return ListView.separated(
@@ -62,16 +73,12 @@ class _OrderPageState extends State<OrderPage> {
             padding:
             const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
             child: ListTile(
-              onTap: () {
+              onTap: () async {
                 ProductsData.selectedProductId = pageData[index]["id"];
                 HomeInteractionState.selectedTab = 2;
-                Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>
-                            ProductPage(notifyParent: (){setState(() {
-
-                            });})));
+                DataGetter dg = DataGetter();
+                String url = await dg.getProductImageURL(ProductsData.selectedProductId);
+                _getProductPush(url);
               },
               shape: RoundedRectangleBorder(
                 side: const BorderSide(width: 2, color: Colors.black12),
