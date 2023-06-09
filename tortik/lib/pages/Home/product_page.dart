@@ -19,6 +19,7 @@ class _ProductPageState extends State<ProductPage> {
   final String productIndex = ProductsData.selectedProductId;
   late final Product pageData;
 
+
   Product? findIndex(index){
     for (int i = 0; i < ProductsData.dataset.length; i++){
       if (ProductsData.dataset[i].id.toString() == index){
@@ -27,7 +28,6 @@ class _ProductPageState extends State<ProductPage> {
     }
     return null;
   }
-
   @override
   void initState() {
     pageData = findIndex(productIndex)!;

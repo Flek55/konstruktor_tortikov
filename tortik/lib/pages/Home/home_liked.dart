@@ -79,7 +79,7 @@ class HomeLikedState extends State<HomeLiked> {
         context,
         MaterialPageRoute<void>(
           builder: (BuildContext context) =>
-              ProductPage(notifyParent: refresh, imageURL: url,),
+              ProductPage(notifyParent: refresh,imageURL: url,),
         ));
   }
 

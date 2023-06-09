@@ -118,7 +118,7 @@ class HomeCartState extends State<HomeCart> {
         context,
         MaterialPageRoute<void>(
           builder: (BuildContext context) =>
-              ProductPage(notifyParent: refresh, imageURL: url,),
+              ProductPage(notifyParent: refresh,imageURL: url,),
         ));
   }
 
