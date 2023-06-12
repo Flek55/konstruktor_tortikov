@@ -57,7 +57,6 @@ class DataGetter {
   final FirebaseAuth _fAuth = FirebaseAuth.instance;
 
   Future<String> getProductImageURL(id) async {
-    print("products/${id}.jpg");
     final url =
         await FirebaseStorage.instance.ref("products/${id}.jpg").getDownloadURL();
     return url;
@@ -83,10 +82,10 @@ class DataGetter {
         .doc(_fAuth.currentUser?.uid)
         .collection("cart")
         .get();
-    List zhopa = records.docs;
+    List temp = records.docs;
     List<Map<String, dynamic>> ans = [];
-    for (int i = 0; i < zhopa.length; i++) {
-      ans.add(zhopa[i].data());
+    for (int i = 0; i < temp.length; i++) {
+      ans.add(temp[i].data());
     }
     return ans;
   }
@@ -307,7 +306,6 @@ class DataGetter {
         .doc("bakery")
         .collection("menu")
         .get();
-    //_referenceCakes.snapshots();
     return bakeryData = _mapRecords(records);
   }
 
