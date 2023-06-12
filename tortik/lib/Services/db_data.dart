@@ -306,7 +306,6 @@ class DataGetter {
         .doc("bakery")
         .collection("menu")
         .get();
-    //_referenceCakes.snapshots();
     return bakeryData = _mapRecords(records);
   }
 
