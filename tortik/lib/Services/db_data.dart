@@ -37,7 +37,6 @@ class ProductsData {
 
   Future<int> parseCartProducts(user_id) async {
     final DataGetter dg = DataGetter();
-    cartData.clear();
     cartData = await dg.getCart(user_id);
     cartAmountsPD = await dg.getProductsAmount();
     return 0;
@@ -153,7 +152,6 @@ class DataGetter {
         .collection("orders")
         .doc(ids)
         .collection("menu");
-    cartData.clear();
     cartData = await getCart(_fAuth.currentUser?.uid);
     List<Product> temp = getElementsAppearInBothList(cartData, cart_list);
     for (int i = 0; i < temp.length; i++) {

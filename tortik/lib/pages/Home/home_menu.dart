@@ -23,6 +23,7 @@ class HomeMenuState extends State<HomeMenu> {
   void initState() {
     currentData = ProductsData.bakeryData;
     super.initState();
+
   }
 
   refresh() {
