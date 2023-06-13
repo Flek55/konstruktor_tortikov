@@ -166,9 +166,6 @@ class HomeCartState extends State<HomeCart> {
                             await pd.parseCartProducts(
                                 FirebaseAuth.instance.currentUser?.uid);
                             inProgress = false;
-                            cart.clear();
-                            cartProducts.clear();
-                            cartAmount.clear();
                             cartProducts = compressCartProducts();
                             cartAmount = compressAmount();
                             cart = compressCart();
@@ -202,9 +199,6 @@ class HomeCartState extends State<HomeCart> {
                             ProductsData pd = ProductsData();
                             await pd.parseCartProducts(
                                 FirebaseAuth.instance.currentUser?.uid);
-                            cart.clear();
-                            cartProducts.clear();
-                            cartAmount.clear();
                             cartProducts = compressCartProducts();
                             cartAmount = compressAmount();
                             cart = compressCart();
