@@ -249,8 +249,8 @@ class _HomeProfileState extends State<HomeProfile> {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,
-            backgroundColor: Theme.of(context).colorScheme.background,
-            textColor: Colors.black,
+            backgroundColor: Theme.of(context).colorScheme.onPrimary,
+            textColor: Colors.white,
             fontSize: 16.0);
       },
       child: Text(
