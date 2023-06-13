@@ -99,7 +99,6 @@ class _ForgetPassState extends State<ForgetPass> {
             ),
           ),
           Container(
-              color: Colors.grey,
               child: IconButton(onPressed: () {
                 try {
                   if(_emailController.text.trim() != "") {
@@ -137,7 +136,7 @@ class _ForgetPassState extends State<ForgetPass> {
                 }
               },
                   iconSize: 40,
-                  icon: const Icon(Icons.arrow_forward_ios))
+                  icon: const Icon(Icons.arrow_forward,color: Color(0xFFF4D5BC)))
           ),
         ],
       ),

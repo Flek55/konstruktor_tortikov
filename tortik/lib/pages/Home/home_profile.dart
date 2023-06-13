@@ -250,7 +250,7 @@ class _HomeProfileState extends State<HomeProfile> {
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,
             backgroundColor: Theme.of(context).colorScheme.background,
-            textColor: Colors.white,
+            textColor: Colors.black,
             fontSize: 16.0);
       },
       child: Text(
