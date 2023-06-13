@@ -147,10 +147,9 @@ class _SignUpPageState extends State<SignUpPage> {
           const Text(
             'Регистрация',
             style: TextStyle(
-                fontSize: 25, fontWeight: FontWeight.w500, color: Colors.white),
+                fontSize: 25, fontWeight: FontWeight.w500, color: Color(0xFFF4D5BC)),
           ),
           Container(
-              color: Colors.grey,
               child: IconButton(
                   onPressed: isButtonPressed == false
                       ? () async {
@@ -204,7 +203,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         }
                       : null,
                   iconSize: 40,
-                  icon: const Icon(Icons.arrow_forward_ios))),
+                  icon: const Icon(Icons.arrow_forward,color: Color(0xFFF4D5BC)))),
         ],
       ),
     );
