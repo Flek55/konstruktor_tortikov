@@ -56,18 +56,12 @@ class HomeCartState extends State<HomeCart> {
       }
     }
     setState(() {});
-    refresh;
     return ans;
   }
 
-  static List<Map<String, dynamic>> compressAmount() {
-    List<Map<String, dynamic>> data = ProductsData.cartAmountsPD;
-    return data;
-  }
-
-  static List<Product> compressCartProducts() {
+  static List<Product> compressCartData2() {
     List<String> ids = [];
-    cartProducts.clear();
+    cart.clear();
     for (int i = 0; i < ProductsData.cartData.length; i++) {
       ids.add(ProductsData.cartData[i].product_id.toString());
     }
@@ -84,6 +78,21 @@ class HomeCartState extends State<HomeCart> {
         }
       }
     }
+  }
+
+  static List<Map<String, dynamic>> compressAmount() {
+    List<Map<String, dynamic>> data = ProductsData.cartAmountsPD;
+    return data;
+  }
+
+  static List<Product> compressCartProducts() {
+    List<String> ids = [];
+    cartProducts.clear();
+    for (int i = 0; i < ProductsData.cartData.length; i++) {
+      ids.add(ProductsData.cartData[i].product_id.toString());
+    }
+    getElementsAppearInBothList(ids, ProductsData.dataset, ans);
+    return ans;
   }
 
   @override
@@ -123,10 +132,10 @@ class HomeCartState extends State<HomeCart> {
   }
 
   _getListView() {
-    if (cart.isNotEmpty) {
+    if (cartProducts.isNotEmpty) {
       return ListView.separated(
         shrinkWrap: true,
-        itemCount: cart.length,
+        itemCount: cartProducts.length,
         physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           return Padding(
@@ -134,7 +143,7 @@ class HomeCartState extends State<HomeCart> {
                 const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
             child: ListTile(
               onTap: () async {
-                ProductsData.selectedProductId = cart[index]["id"];
+                ProductsData.selectedProductId = cartProducts[index].id;
                 HomeInteractionState.selectedTab = 2;
                 DataGetter dg = DataGetter();
                 String url = await dg.getProductImageURL(ProductsData.selectedProductId);
@@ -145,14 +154,14 @@ class HomeCartState extends State<HomeCart> {
                 borderRadius: BorderRadius.circular(20.0),
               ),
               title: Text(
-                "${cart[index]["name"]}",
+                "${cartProducts[index].name}",
                 style: Theme.of(context)
                     .textTheme
                     .displayMedium
                     ?.copyWith(fontSize: 16.5),
               ),
               subtitle: Text(
-                  "${cart[index]["description"]}\n₽${cart[index]["price"]}"),
+                  "${cartProducts[index].description}\n₽${cartProducts[index].price}"),
               trailing: Wrap(spacing: 12, children: [
                 Material(
                     color: Colors.transparent,
@@ -161,7 +170,7 @@ class HomeCartState extends State<HomeCart> {
                           if (!inProgress) {
                             inProgress = true;
                             DataGetter dg = DataGetter();
-                            await dg.configureCart(cart[index]["id"], "+");
+                            await dg.configureCart(cartProducts[index].id, "+");
                             ProductsData pd = ProductsData();
                             await pd.parseCartProducts(
                                 FirebaseAuth.instance.currentUser?.uid);
