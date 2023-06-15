@@ -1,2 +1,2 @@
 # Konstruktor_tortikov
-Пиу пиу пум пум
+A flutter app for a bakery
