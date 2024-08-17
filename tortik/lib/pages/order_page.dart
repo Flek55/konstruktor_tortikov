@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../Services/db_data.dart';
@@ -9,7 +10,11 @@ class OrderPage extends StatefulWidget {
   final List<Map<String, dynamic>> input;
   final String address;
 
-  const OrderPage({super.key, required this.notifyParent, required this.input, required this.address});
+  const OrderPage(
+      {super.key,
+      required this.notifyParent,
+      required this.input,
+      required this.address});
 
   @override
   State<OrderPage> createState() => _OrderPageState();
@@ -28,37 +33,44 @@ class _OrderPageState extends State<OrderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(iconTheme: const IconThemeData(color:Colors.white),
+        appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: Theme.of(context).colorScheme.onPrimary,
-          title: Text(
-            "Ваш заказ",
-            style:Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 18)
-          ),
+          title: Text("Ваш заказ",
+              style: Theme.of(context)
+                  .textTheme
+                  .displaySmall
+                  ?.copyWith(fontSize: 18)),
         ),
         body: SafeArea(
             child: SingleChildScrollView(
           child: Column(
             children: [
               const Padding(padding: EdgeInsets.only(top: 30)),
-              Row(children:[
-              const Padding(padding: EdgeInsets.only(left: 20)),
-                Text(widget.address),
-              ]
-              ),
+              Row(children: [
+                const Padding(padding: EdgeInsets.only(left: 20)),
+                Text(widget.address, style: Theme.of(context)
+                    .textTheme
+                    .displayMedium
+                    ?.copyWith(fontSize: 18),),
+              ]),
+              const Padding(padding: EdgeInsets.only(top: 10)),
               _getListView(),
             ],
           ),
         )));
   }
 
-  _getProductPush(url){
+  _getProductPush(url) {
     return Navigator.push(
         context,
         MaterialPageRoute<void>(
-          builder: (BuildContext context) =>
-              ProductPage(notifyParent: (){setState(() {
-
-              });}, imageURL: url,),
+          builder: (BuildContext context) => ProductPage(
+            notifyParent: () {
+              setState(() {});
+            },
+            imageURL: url,
+          ),
         ));
   }
 
@@ -70,30 +82,50 @@ class _OrderPageState extends State<OrderPage> {
         physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           return Padding(
-            padding:
-            const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-            child: ListTile(
-              onTap: () async {
-                ProductsData.selectedProductId = pageData[index]["id"];
-                HomeInteractionState.selectedTab = 2;
-                DataGetter dg = DataGetter();
-                String url = await dg.getProductImageURL(ProductsData.selectedProductId);
-                _getProductPush(url);
-              },
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(width: 2, color: Colors.black12),
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              title: Text(
-                "${pageData[index]["name"]}",
-                style: Theme.of(context)
-                    .textTheme
-                    .displayMedium
-                    ?.copyWith(fontSize: 16.5),
-              ),
-              subtitle: Text(
-                  "${pageData[index]["description"]}\n₽${pageData[index]["price"]}"),
-          ));
+              padding:
+                  const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+              child: ListTile(
+                onTap: () async {
+                  ProductsData.selectedProductId = pageData[index]["id"];
+                  HomeInteractionState.selectedTab = 2;
+                  DataGetter dg = DataGetter();
+                  String url = await dg
+                      .getProductImageURL(ProductsData.selectedProductId);
+                  _getProductPush(url);
+                },
+                shape: RoundedRectangleBorder(
+                  side: const BorderSide(width: 2, color: Colors.black12),
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                title: Text(
+                  "${pageData[index]["name"]}",
+                  style: Theme.of(context)
+                      .textTheme
+                      .displayMedium
+                      ?.copyWith(fontSize: 16.5),
+                ),
+                subtitle: Text(
+                  "${pageData[index]["description"]}\n₽${pageData[index]["price"]}",
+                  style: Theme.of(context)
+                      .textTheme
+                      .displayMedium
+                      ?.copyWith(fontSize: 12),
+                ),
+                trailing: Wrap(spacing: 12, children: [
+                  SizedBox(
+                    height: 23,
+                    width: 16,
+                    child: Text(
+                      "${pageData[index]["amount"]}",
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .displayMedium
+                          ?.copyWith(fontSize: 18),
+                    ),
+                  ),
+                ],),
+              ));
         },
         separatorBuilder: (BuildContext context, int index) {
           return const Padding(padding: EdgeInsets.only(top: 10));

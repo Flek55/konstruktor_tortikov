@@ -41,8 +41,8 @@ dependencies:
   provider: ^6.0.5
   fluttertoast: ^8.2.1
   shared_preferences: ^2.0.18
-  geolocator: ^8.2.1
-  yandex_mapkit: ^3.2.0
+  geolocator: ^13.0.1
+  yandex_mapkit: ^4.1.0
   loading_animation_widget: ^1.2.0+4
   flutter_easyloading: ^3.0.5
   equatable: ^2.0.5

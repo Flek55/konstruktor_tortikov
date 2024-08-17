@@ -10,8 +10,6 @@ ThemeData theme(){
             tertiary: Colors.grey,
             error: Colors.red,
             onError: Colors.red,
-            background: Colors.white,
-            onBackground:  Colors.white ,
             surface: Colors.white,
             onSurface: Colors.white
         ),

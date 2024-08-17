@@ -69,8 +69,8 @@ class HomeCartState extends State<HomeCart> {
     return ans;
   }
 
-  static void getElementsAppearInBothList(
-      List<String> l1, List<Product> l2, List<Product> ans) {
+  static void getElementsAppearInBothList(List<String> l1, List<Product> l2,
+      List<Product> ans) {
     for (int i = 0; i < l2.length; i++) {
       for (int j = 0; j < l1.length; j++) {
         if (l2[i].id.toString() == l1[j]) {
@@ -101,33 +101,37 @@ class HomeCartState extends State<HomeCart> {
         backgroundColor: Colors.white,
         body: SafeArea(
             child: SingleChildScrollView(
-          child: Column(children: [
-            const Padding(padding: EdgeInsets.only(top: 50)),
-            Row(children: [
-              const Padding(padding: EdgeInsets.only(top: 50, left: 40)),
-              Text('Ваш заказ \nвсегда под рукой!',
-                  textAlign: TextAlign.left,
-                  style: Theme.of(context)
-                      .textTheme
-                      .displayMedium
-                      ?.copyWith(fontSize: 24)),
-            ]),
-            const Padding(padding: EdgeInsets.only(top: 20)),
-            _getListView(),
-            const Padding(padding: EdgeInsets.only(top: 30)),
-            _getOrderButton(),
-            const Padding(padding: EdgeInsets.only(top: 30)),
-            _getAddressField(context, _addressController),
-          ]),
-        )));
+              child: Column(children: [
+                const Padding(padding: EdgeInsets.only(top: 50)),
+                Row(children: [
+                  const Padding(padding: EdgeInsets.only(top: 50, left: 40)),
+                  Text('Ваш заказ \nвсегда под рукой!',
+                      textAlign: TextAlign.left,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .displayMedium
+                          ?.copyWith(fontSize: 24)),
+                ]),
+                const Padding(padding: EdgeInsets.only(top: 20)),
+                _getListView(),
+                const Padding(padding: EdgeInsets.only(top: 30)),
+                _getOrderButton(),
+                const Padding(padding: EdgeInsets.only(top: 30)),
+                _getAddressField(context, _addressController),
+              ]),
+            )));
   }
 
-  _getProductPush(url){
+  _getProductPush(url) {
     return Navigator.push(
         context,
         MaterialPageRoute<void>(
           builder: (BuildContext context) =>
-              ProductPage(notifyParent: refresh,imageURL: url,),
+              ProductPage(
+                notifyParent: refresh,
+                imageURL: url,
+              ),
         ));
   }
 
@@ -140,13 +144,14 @@ class HomeCartState extends State<HomeCart> {
         itemBuilder: (context, index) {
           return Padding(
             padding:
-                const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+            const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
             child: ListTile(
               onTap: () async {
                 ProductsData.selectedProductId = cartProducts[index].id;
                 HomeInteractionState.selectedTab = 2;
                 DataGetter dg = DataGetter();
-                String url = await dg.getProductImageURL(ProductsData.selectedProductId);
+                String url =
+                await dg.getProductImageURL(ProductsData.selectedProductId);
                 _getProductPush(url);
               },
               shape: RoundedRectangleBorder(
@@ -155,13 +160,19 @@ class HomeCartState extends State<HomeCart> {
               ),
               title: Text(
                 "${cartProducts[index].name}",
-                style: Theme.of(context)
+                style: Theme
+                    .of(context)
                     .textTheme
                     .displayMedium
                     ?.copyWith(fontSize: 16.5),
               ),
               subtitle: Text(
-                  "${cartProducts[index].description}\n₽${cartProducts[index].price}"),
+                "${cartProducts[index].description}\n₽${cartProducts[index]
+                    .price}", style: Theme
+                  .of(context)
+                  .textTheme
+                  .displayMedium
+                  ?.copyWith(fontSize: 12),),
               trailing: Wrap(spacing: 12, children: [
                 Material(
                     color: Colors.transparent,
@@ -187,14 +198,18 @@ class HomeCartState extends State<HomeCart> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30.0),
                           ),
-                          child: const Icon(Icons.add),
+                          child: const Icon(Icons.add, color: Colors.black,),
                         ))),
                 SizedBox(
                   height: 23,
                   width: 16,
                   child: Text(
-                    "${cart[index]["amount"]}",
-                    style: const TextStyle(fontSize: 18),
+                      "${cart[index]["amount"]}",
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .displayMedium
+                          ?.copyWith(fontSize: 18),
                   ),
                 ),
                 Material(
@@ -220,7 +235,7 @@ class HomeCartState extends State<HomeCart> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30.0),
                           ),
-                          child: const Icon(Icons.remove),
+                          child: const Icon(Icons.remove, color: Colors.black,),
                         )))
               ]),
             ),
@@ -257,16 +272,17 @@ class HomeCartState extends State<HomeCart> {
     return Navigator.push(
         context,
         MaterialPageRoute<void>(
-            builder: (BuildContext context) => OrderPage(
+            builder: (BuildContext context) =>
+                OrderPage(
                   notifyParent: refreshOrder,
                   input: cart,
-              address: address,
+                  address: address,
                 )));
   }
 
   _getAddressField(context, displayNameController) {
     return Visibility(
-      visible: showAddressField,
+        visible: showAddressField,
         child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: TextFormField(
@@ -275,13 +291,15 @@ class HomeCartState extends State<HomeCart> {
                 suffixIcon: IconButton(
                   onPressed: () async {
                     if (_addressController.text.trim() != "" &&
-                        _addressController.text.length >= 2 && !orderSwitch) {
+                        _addressController.text.length >= 2 &&
+                        !orderSwitch) {
                       orderSwitch = true;
                       ProductsData pd = ProductsData();
                       await pd.parseCartProducts(
                           FirebaseAuth.instance.currentUser?.uid);
                       DataGetter dg = DataGetter();
-                      await dg.createOrder(cartProducts, _addressController.text.trim());
+                      await dg.createOrder(
+                          cartProducts, _addressController.text.trim());
                       _getPushNamed(_addressController.text.trim());
                       setState(() {
                         showAddressField = false;
@@ -291,22 +309,28 @@ class HomeCartState extends State<HomeCart> {
                       orderSwitch = true;
                     }
                   },
-                  icon: const Icon(Icons.arrow_forward),
-                  style: IconButton.styleFrom(
-                      hoverColor: Theme.of(context).colorScheme.onPrimary),
-                  splashRadius: 1,
+                  icon: const Icon(
+                    Icons.arrow_forward,
+                    color: Colors.black,
+                  ),
                 ),
                 border: const OutlineInputBorder(),
                 hintText: "Адрес доставки",
                 enabledBorder: OutlineInputBorder(
                   borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                   borderSide:
-                      BorderSide(color: Theme.of(context).colorScheme.tertiary),
+                  BorderSide(color: Theme
+                      .of(context)
+                      .colorScheme
+                      .tertiary),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                   borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.onPrimary),
+                      color: Theme
+                          .of(context)
+                          .colorScheme
+                          .onPrimary),
                 ),
               ),
               style: (const TextStyle(color: Colors.black, fontSize: 18)),
@@ -321,10 +345,10 @@ class HomeCartState extends State<HomeCart> {
           Material(
             color: Colors.transparent,
             child: InkWell(
-                onTap: (){
-                    setState(() {
-                      showAddressField = !showAddressField;
-                    });
+                onTap: () {
+                  setState(() {
+                    showAddressField = !showAddressField;
+                  });
                 },
                 child: Container(
                   width: 100,
@@ -336,7 +360,8 @@ class HomeCartState extends State<HomeCart> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text("Сделать заказ",
-                        style: Theme.of(context)
+                        style: Theme
+                            .of(context)
                             .textTheme
                             .displaySmall
                             ?.copyWith(fontSize: 12)),

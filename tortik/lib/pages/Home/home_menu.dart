@@ -23,7 +23,6 @@ class HomeMenuState extends State<HomeMenu> {
   void initState() {
     currentData = ProductsData.bakeryData;
     super.initState();
-
   }
 
   refresh() {
@@ -33,7 +32,7 @@ class HomeMenuState extends State<HomeMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         body: SafeArea(
             child: SingleChildScrollView(
           child: Column(
@@ -70,42 +69,71 @@ class HomeMenuState extends State<HomeMenu> {
                   controller: _searchController,
                   style: (const TextStyle(color: Colors.black, fontSize: 20)),
                   decoration: InputDecoration(
-                    icon: const Icon(Icons.search),
+                    icon: const Icon(
+                      Icons.search,
+                      color: Colors.black,
+                    ),
                     suffixIcon: IconButton(
                         onPressed: () async {
                           String input = _searchController.text.trim();
-                          input = input.replaceFirst(input[0], input[0].toUpperCase());
-                          QuerySnapshot ansBakery  = await FirebaseFirestore.instance
-                              .collection("products").doc("bakery").collection("menu")
-                              .where("name",
-                                  isGreaterThanOrEqualTo:
-                                      input.trim()).where("name",isLessThan: '${input.trim()}я')
-                              .get();
-                          QuerySnapshot ansDesserts  = await FirebaseFirestore.instance
-                              .collection("products").doc("desserts").collection("menu")
-                              .where("name",
-                              isGreaterThanOrEqualTo:
-                              input.trim()).where("name",isLessThan: '${input.trim()}я').get();
-                          QuerySnapshot ansCakes  = await FirebaseFirestore.instance
-                              .collection("products").doc("cakes").collection("menu")
-                              .where("name",
-                              isGreaterThanOrEqualTo:
-                              input.trim()).where("name",isLessThan: '${input.trim()}я').get();
-                          QuerySnapshot ansCoffee  = await FirebaseFirestore.instance
-                              .collection("products").doc("coffee").collection("menu")
-                              .where("name",
-                              isGreaterThanOrEqualTo:
-                              input.trim()).where("name",isLessThan: '${input.trim()}я').get();
-                          List list = ansBakery.docs + ansDesserts.docs + ansCoffee.docs + ansCakes.docs;
-                          var ans = list.map((item) => Product(
-                              id: item.id,
-                              name: item["name"],
-                              price: item["price"],
-                              description: item["description"]))
-                              .toList();
-                          _getPushNamed(ans);
+                          if (input.isNotEmpty) {
+                            input = input.replaceFirst(
+                                input[0], input[0].toUpperCase());
+                            QuerySnapshot ansBakery = await FirebaseFirestore
+                                .instance
+                                .collection("products")
+                                .doc("bakery")
+                                .collection("menu")
+                                .where("name",
+                                    isGreaterThanOrEqualTo: input.trim())
+                                .where("name", isLessThan: '${input.trim()}я')
+                                .get();
+                            QuerySnapshot ansDesserts = await FirebaseFirestore
+                                .instance
+                                .collection("products")
+                                .doc("desserts")
+                                .collection("menu")
+                                .where("name",
+                                    isGreaterThanOrEqualTo: input.trim())
+                                .where("name", isLessThan: '${input.trim()}я')
+                                .get();
+                            QuerySnapshot ansCakes = await FirebaseFirestore
+                                .instance
+                                .collection("products")
+                                .doc("cakes")
+                                .collection("menu")
+                                .where("name",
+                                    isGreaterThanOrEqualTo: input.trim())
+                                .where("name", isLessThan: '${input.trim()}я')
+                                .get();
+                            QuerySnapshot ansCoffee = await FirebaseFirestore
+                                .instance
+                                .collection("products")
+                                .doc("coffee")
+                                .collection("menu")
+                                .where("name",
+                                    isGreaterThanOrEqualTo: input.trim())
+                                .where("name", isLessThan: '${input.trim()}я')
+                                .get();
+                            List list = ansBakery.docs +
+                                ansDesserts.docs +
+                                ansCoffee.docs +
+                                ansCakes.docs;
+                            var ans = list
+                                .map((item) => Product(
+                                    id: item.id,
+                                    name: item["name"],
+                                    price: item["price"],
+                                    description: item["description"]))
+                                .toList();
+                            _getPushNamed(ans);
+                          }
+                          ;
                         },
-                        icon: const Icon(Icons.arrow_forward)),
+                        icon: const Icon(
+                          Icons.arrow_forward,
+                          color: Colors.black,
+                        )),
                     enabledBorder: OutlineInputBorder(
                       borderRadius:
                           const BorderRadius.all(Radius.circular(20.0)),
@@ -149,15 +177,19 @@ class HomeMenuState extends State<HomeMenu> {
     return Navigator.push(
         context,
         MaterialPageRoute<void>(
-            builder: (BuildContext context) => SearchResultPage(data: data,)));
+            builder: (BuildContext context) => SearchResultPage(
+                  data: data,
+                )));
   }
 
-  _getProductPush(url){
+  _getProductPush(url) {
     return Navigator.push(
         context,
         MaterialPageRoute<void>(
-          builder: (BuildContext context) =>
-              ProductPage(notifyParent: refresh, imageURL: url,),
+          builder: (BuildContext context) => ProductPage(
+            notifyParent: refresh,
+            imageURL: url,
+          ),
         ));
   }
 
@@ -171,11 +203,12 @@ class HomeMenuState extends State<HomeMenu> {
             padding:
                 const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
             child: ListTile(
-                onTap: () async{
+                onTap: () async {
                   ProductsData.selectedProductId =
                       HomeMenuState.currentData[index].id;
                   DataGetter dg = DataGetter();
-                  String url = await dg.getProductImageURL(ProductsData.selectedProductId);
+                  String url = await dg
+                      .getProductImageURL(ProductsData.selectedProductId);
                   _getProductPush(url);
                 },
                 shape: RoundedRectangleBorder(
@@ -190,7 +223,12 @@ class HomeMenuState extends State<HomeMenu> {
                       ?.copyWith(fontSize: 16.5),
                 ),
                 subtitle: Text(
-                    "${HomeMenuState.currentData[index].description}\n₽${HomeMenuState.currentData[index].price}"),
+                  "${HomeMenuState.currentData[index].description}\n₽${HomeMenuState.currentData[index].price}",
+                  style: Theme.of(context)
+                      .textTheme
+                      .displayMedium
+                      ?.copyWith(fontSize: 12),
+                ),
                 trailing: Wrap(children: [
                   Material(
                       color: Colors.transparent,
@@ -207,7 +245,10 @@ class HomeMenuState extends State<HomeMenu> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30.0),
                             ),
-                            child: const Icon(Icons.add),
+                            child: const Icon(
+                              Icons.add,
+                              color: Colors.black,
+                            ),
                           ))),
                 ])));
       },
