@@ -56,8 +56,9 @@ class DataGetter {
   final FirebaseAuth _fAuth = FirebaseAuth.instance;
 
   Future<String> getProductImageURL(id) async {
-    final url =
-        await FirebaseStorage.instance.ref("products/${id}.jpg").getDownloadURL();
+    final url = await FirebaseStorage.instance
+        .ref("products/${id}.jpg")
+        .getDownloadURL();
     return url;
   }
 
@@ -103,6 +104,17 @@ class DataGetter {
       ans.add(temp);
     }
     return ans;
+  }
+
+  Future<String> getOrderAddress(orderId) async{
+    DocumentSnapshot<Map<String, dynamic>> dc = await FirebaseFirestore
+        .instance
+        .collection("users")
+        .doc(_fAuth.currentUser?.uid)
+        .collection("orders")
+        .doc(orderId)
+        .get();
+    return dc.data()?["address"];
   }
 
   Future<List<List<Map<String, dynamic>>>> orderList() async {

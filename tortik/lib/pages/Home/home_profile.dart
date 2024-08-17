@@ -25,10 +25,14 @@ class _HomeProfileState extends State<HomeProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(
-          "Профиль",
-          style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 24,color: Colors.white)),centerTitle:true ,
-          backgroundColor:Theme.of(context).colorScheme.onPrimary),
+        appBar: AppBar(
+            title: Text("Профиль",
+                style: Theme.of(context)
+                    .textTheme
+                    .displaySmall
+                    ?.copyWith(fontSize: 24, color: Colors.white)),
+            centerTitle: true,
+            backgroundColor: Theme.of(context).colorScheme.onPrimary),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(
             child: SingleChildScrollView(
@@ -38,7 +42,10 @@ class _HomeProfileState extends State<HomeProfile> {
               const Row(
                 children: [
                   Padding(padding: EdgeInsets.only(left: 150)),
-                  Icon(Icons.account_circle_rounded,size:90,),
+                  Icon(
+                    Icons.account_circle_rounded,
+                    size: 90,
+                  ),
                   Padding(padding: EdgeInsets.only(left: 40)),
                 ],
               ),
@@ -48,9 +55,7 @@ class _HomeProfileState extends State<HomeProfile> {
                   Padding(padding: EdgeInsets.only(left: 40)),
                   Text(
                     "Имя",
-                    style: TextStyle(
-                      fontSize: 25,
-                    ),
+                    style: TextStyle(fontSize: 25, color: Colors.black),
                   )
                 ],
               ),
@@ -61,6 +66,7 @@ class _HomeProfileState extends State<HomeProfile> {
                     CurrentUserData.name,
                     style: const TextStyle(
                       fontSize: 25,
+                      color: Colors.black,
                     ),
                   ),
                   IconButton(
@@ -69,7 +75,10 @@ class _HomeProfileState extends State<HomeProfile> {
                         showNameField = !showNameField;
                       });
                     },
-                    icon: const Icon(Icons.edit),
+                    icon: const Icon(
+                      Icons.edit,
+                      color: Colors.black,
+                    ),
                     splashRadius: 22,
                   ),
                 ],
@@ -94,6 +103,7 @@ class _HomeProfileState extends State<HomeProfile> {
                     "Email",
                     style: TextStyle(
                       fontSize: 25,
+                      color: Colors.black,
                     ),
                   )
                 ],
@@ -105,6 +115,7 @@ class _HomeProfileState extends State<HomeProfile> {
                     CurrentUserData.email,
                     style: const TextStyle(
                       fontSize: 18,
+                      color: Colors.black,
                     ),
                   ),
                   IconButton(
@@ -113,7 +124,10 @@ class _HomeProfileState extends State<HomeProfile> {
                         showEmailField = !showEmailField;
                       });
                     },
-                    icon: const Icon(Icons.edit),
+                    icon: const Icon(
+                      Icons.edit,
+                      color: Colors.black,
+                    ),
                     splashRadius: 22,
                   ),
                 ],
@@ -180,26 +194,27 @@ class _HomeProfileState extends State<HomeProfile> {
               _nameController.clear();
             }
           },
-          icon: const Icon(Icons.arrow_forward),
-          style: IconButton.styleFrom(
-            hoverColor: Theme.of(context).colorScheme.onPrimary
+          icon: const Icon(
+            Icons.arrow_forward,
+            color: Colors.black,
           ),
+          style: IconButton.styleFrom(
+              hoverColor: Theme.of(context).colorScheme.onPrimary),
           splashRadius: 1,
         ),
         border: const OutlineInputBorder(),
         hintText: "Ваше имя",
         enabledBorder: OutlineInputBorder(
           borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-          borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.tertiary
-          ),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-          borderSide: BorderSide(color:Theme.of(context).colorScheme.onPrimary),
+          borderSide:
+              BorderSide(color: Theme.of(context).colorScheme.onPrimary),
         ),
       ),
-      style: (const TextStyle(color: Colors.black,fontSize: 18)),
+      style: (const TextStyle(color: Colors.black, fontSize: 18)),
     );
   }
 
@@ -213,31 +228,36 @@ class _HomeProfileState extends State<HomeProfile> {
         CurrentUserData.name = "Введите имя";
         Navigator.pushNamedAndRemoveUntil(context, "/logger", (r) => false);
       },
-      child: Text(
-        "Выйти из профиля",
-        style: Theme.of(context).textTheme.displaySmall?.copyWith(color:Colors.red,fontSize: 17)
-      ),
+      child: Text("Выйти из профиля",
+          style: Theme.of(context)
+              .textTheme
+              .displaySmall
+              ?.copyWith(color: Colors.red, fontSize: 17)),
     );
   }
 
-  _getOrdersButton(context){
+  _getOrdersButton(context) {
     return TextButton(
       onPressed: () async {
         DataGetter dg = DataGetter();
         _getPushNamed(await dg.orderList(), await dg.getOrderIds());
       },
-      child: Text(
-          "Мои заказы",
-          style: Theme.of(context).textTheme.displaySmall?.copyWith(color:Colors.black45,fontSize: 15)
-      ),
+      child: Text("Мои заказы",
+          style: Theme.of(context)
+              .textTheme
+              .displaySmall
+              ?.copyWith(color: Colors.black45, fontSize: 15)),
     );
   }
+
   _getPushNamed(temp, orderIds) {
     return Navigator.push(
         context,
         MaterialPageRoute<void>(
-            builder: (BuildContext context) =>
-                MyOrdersPage(ordersData: temp, orderIds: orderIds,)));
+            builder: (BuildContext context) => MyOrdersPage(
+                  ordersData: temp,
+                  orderIds: orderIds,
+                )));
   }
 
   _getChangePasswordButton(context) {
@@ -253,10 +273,11 @@ class _HomeProfileState extends State<HomeProfile> {
             textColor: Colors.white,
             fontSize: 16.0);
       },
-      child: Text(
-        "Сменить пароль",
-        style: Theme.of(context).textTheme.displaySmall?.copyWith(color:Colors.black45,fontSize: 15)
-      ),
+      child: Text("Сменить пароль",
+          style: Theme.of(context)
+              .textTheme
+              .displaySmall
+              ?.copyWith(color: Colors.black45, fontSize: 15)),
     );
   }
 
@@ -294,7 +315,10 @@ class _HomeProfileState extends State<HomeProfile> {
               EasyLoading.removeAllCallbacks();
             }
           },
-          icon: const Icon(Icons.arrow_forward),
+          icon: const Icon(
+            Icons.arrow_forward,
+            color: Colors.black,
+          ),
           style: IconButton.styleFrom(
             hoverColor: const Color(0xFF5B2C6F),
           ),
@@ -313,7 +337,7 @@ class _HomeProfileState extends State<HomeProfile> {
           borderSide: BorderSide(color: Color(0xFF5B2C6F)),
         ),
       ),
-      style: (const TextStyle(color: Colors.black,fontSize: 18)),
+      style: (const TextStyle(color: Colors.black, fontSize: 18)),
     );
   }
 }

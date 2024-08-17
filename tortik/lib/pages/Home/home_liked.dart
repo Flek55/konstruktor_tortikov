@@ -23,10 +23,8 @@ class HomeLikedState extends State<HomeLiked> {
     super.initState();
   }
 
-  refresh(){
-    setState(() {
-
-    });
+  refresh() {
+    setState(() {});
   }
 
   static List<Product> compressLiked() {
@@ -61,12 +59,13 @@ class HomeLikedState extends State<HomeLiked> {
               const Padding(padding: EdgeInsets.only(top: 32)),
               Row(children: [
                 const Padding(padding: EdgeInsets.only(top: 50, left: 40)),
-                Text(
-                  'Ваши любимые десерты \nвсегда с вами!',
-                  textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 24)
-                  ),
-                const Padding(padding: EdgeInsets.only(top:92,left:40))
+                Text('Ваши любимые десерты \nвсегда с вами!',
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium
+                        ?.copyWith(fontSize: 24)),
+                const Padding(padding: EdgeInsets.only(top: 92, left: 40))
               ]),
               _getListView(),
             ],
@@ -74,12 +73,14 @@ class HomeLikedState extends State<HomeLiked> {
         )));
   }
 
-  _getProductPush(url){
+  _getProductPush(url) {
     return Navigator.push(
         context,
         MaterialPageRoute<void>(
-          builder: (BuildContext context) =>
-              ProductPage(notifyParent: refresh,imageURL: url,),
+          builder: (BuildContext context) => ProductPage(
+            notifyParent: refresh,
+            imageURL: url,
+          ),
         ));
   }
 
@@ -98,30 +99,44 @@ class HomeLikedState extends State<HomeLiked> {
                   ProductsData.selectedProductId = likedData[index].id;
                   HomeInteractionState.selectedTab = 1;
                   DataGetter dg = DataGetter();
-                  String url = await dg.getProductImageURL(ProductsData.selectedProductId);
+                  String url = await dg
+                      .getProductImageURL(ProductsData.selectedProductId);
                   _getProductPush(url);
                 },
                 shape: RoundedRectangleBorder(
                   side: const BorderSide(width: 2, color: Colors.black12),
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                title: Text(likedData[index].name,style:Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 16.5)),
+                title: Text(likedData[index].name,
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium
+                        ?.copyWith(fontSize: 16.5)),
                 subtitle: Text(
-                    "${likedData[index].description}\n₽${likedData[index].price}"),
+                  "${likedData[index].description}\n₽${likedData[index].price}",
+                  style: Theme.of(context)
+                      .textTheme
+                      .displayMedium
+                      ?.copyWith(fontSize: 12),
+                ),
                 trailing: Material(
                     color: Colors.transparent,
                     child: InkWell(
                         onTap: () async {
                           DataGetter dg = DataGetter();
-                          await dg.configureCart(likedData[index].id,"+");
+                          await dg.configureCart(likedData[index].id, "+");
                           ProductsData pd = ProductsData();
-                          await pd.parseCartProducts(FirebaseAuth.instance.currentUser?.uid);
+                          await pd.parseCartProducts(
+                              FirebaseAuth.instance.currentUser?.uid);
                         },
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30.0),
                           ),
-                          child: const Icon(Icons.add),
+                          child: const Icon(
+                            Icons.add,
+                            color: Colors.black,
+                          ),
                         ))),
               ));
         },

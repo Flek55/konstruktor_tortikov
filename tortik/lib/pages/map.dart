@@ -29,7 +29,7 @@ class _CafeMapState extends State<CafeMap> {
           await _initPermission();
         },
         backgroundColor: const Color(0xFF5B2C6F),
-        child: const Icon(Icons.my_location),
+        child: const Icon(Icons.my_location, color: Colors.white,),
       ),
       appBar: AppBar(
         iconTheme: const IconThemeData(color:Colors.white),

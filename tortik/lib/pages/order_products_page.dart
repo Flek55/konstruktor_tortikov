@@ -13,6 +13,17 @@ class OrderProductsPage extends StatefulWidget {
 }
 
 class _OrderProductsPageState extends State<OrderProductsPage> {
+  DataGetter dg = DataGetter();
+  String adr = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _getAddress().then((_) {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +40,9 @@ class _OrderProductsPageState extends State<OrderProductsPage> {
         child: SingleChildScrollView(
             child: Column(children: [
           const Padding(padding: EdgeInsets.only(top: 30)),
-          Text("Продукты",style: Theme.of(context).textTheme.displayMedium),
+          Text("Продукты", style: Theme.of(context).textTheme.displayMedium),
+          const Padding(padding: EdgeInsets.only(top: 20)),
+          Text(adr, style: Theme.of(context).textTheme.displayMedium),
           const Padding(padding: EdgeInsets.only(top: 20)),
           _getListView(),
         ])),
@@ -37,13 +50,19 @@ class _OrderProductsPageState extends State<OrderProductsPage> {
     );
   }
 
-  _getProductPush(url){
+  _getProductPush(url) {
     return Navigator.push(
         context,
         MaterialPageRoute<void>(
-          builder: (BuildContext context) =>
-              ProductPage(notifyParent: (){}, imageURL: url,),
+          builder: (BuildContext context) => ProductPage(
+            notifyParent: () {},
+            imageURL: url,
+          ),
         ));
+  }
+
+  _getAddress() async {
+    adr = await dg.getOrderAddress(widget.id);
   }
 
   _getListView() {
@@ -61,7 +80,8 @@ class _OrderProductsPageState extends State<OrderProductsPage> {
                   ProductsData.selectedProductId =
                       widget.data[index]["product_id"];
                   DataGetter dg = DataGetter();
-                  String url = await dg.getProductImageURL(ProductsData.selectedProductId);
+                  String url = await dg
+                      .getProductImageURL(ProductsData.selectedProductId);
                   _getProductPush(url);
                 },
                 shape: RoundedRectangleBorder(
@@ -77,7 +97,8 @@ class _OrderProductsPageState extends State<OrderProductsPage> {
                   height: 23,
                   width: 16,
                   child: Text("${widget.data[index]["amount"]}",
-                      style: const TextStyle(fontSize: 18)),
+                      style:
+                          const TextStyle(fontSize: 18, color: Colors.black)),
                 ),
               ));
         },
