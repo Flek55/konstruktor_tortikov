@@ -17,8 +17,7 @@ class _ForgetPassState extends State<ForgetPass> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-      CustomPaint(
+      body: CustomPaint(
         painter: Background(),
         child: Stack(
           children: <Widget>[
@@ -46,18 +45,22 @@ class _ForgetPassState extends State<ForgetPass> {
         children: <Widget>[
           TextField(
               cursorColor: Colors.white,
-            controller: _emailController,
-            decoration: InputDecoration(
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.background),
-              ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Theme.of(context).colorScheme.background),
-                ),
-                labelText: 'E-mail',
-                labelStyle: Theme.of(context).textTheme.displaySmall),
-            style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 18)
-          ),
+              controller: _emailController,
+              decoration: InputDecoration(
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.surface),
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.surface),
+                  ),
+                  labelText: 'E-mail',
+                  labelStyle: Theme.of(context).textTheme.displaySmall),
+              style: Theme.of(context)
+                  .textTheme
+                  .displaySmall
+                  ?.copyWith(fontSize: 18)),
           const SizedBox(
             height: 15,
           ),
@@ -71,10 +74,11 @@ class _ForgetPassState extends State<ForgetPass> {
       flex: 3,
       child: Container(
         alignment: Alignment.centerLeft,
-        child: Text(
-          'Сбросить пароль',
-          style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 37)
-        ),
+        child: Text('Сбросить пароль',
+            style: Theme.of(context)
+                .textTheme
+                .displaySmall
+                ?.copyWith(fontSize: 37)),
       ),
     );
   }
@@ -90,7 +94,8 @@ class _ForgetPassState extends State<ForgetPass> {
               Navigator.pushNamed(context, '/login');
               _emailController.clear();
             },
-            child: const Text("Вспомнили?",
+            child: const Text(
+              "Вспомнили?",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 15,
@@ -99,11 +104,13 @@ class _ForgetPassState extends State<ForgetPass> {
             ),
           ),
           Container(
-              child: IconButton(onPressed: () {
-                try {
-                  if(_emailController.text.trim() != "") {
-                    _authService.resetPassword(_emailController.text.trim());
-                    Fluttertoast.showToast(
+              child: IconButton(
+                  onPressed: () {
+                    try {
+                      if (_emailController.text.trim() != "") {
+                        _authService
+                            .resetPassword(_emailController.text.trim());
+                        Fluttertoast.showToast(
                             msg: "Письмо на эл.почту отправлено!",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.CENTER,
@@ -112,37 +119,38 @@ class _ForgetPassState extends State<ForgetPass> {
                             textColor: Colors.white,
                             fontSize: 16.0);
                         Navigator.pushNamed(context, '/login');
-                    _emailController.clear();
-                  }else{
-                    Fluttertoast.showToast(
-                        msg: "Введите E-mail!",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.CENTER,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.deepOrange,
-                        textColor: Colors.white,
-                        fontSize: 16.0);
-                    _emailController.clear();
-                  }
-                }on FirebaseAuthException catch(e){
-                  Fluttertoast.showToast(
-                      msg: e.message.toString(),
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.CENTER,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.deepOrange,
-                      textColor: Colors.white,
-                      fontSize: 16.0);
-                }
-              },
+                        _emailController.clear();
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: "Введите E-mail!",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.deepOrange,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        _emailController.clear();
+                      }
+                    } on FirebaseAuthException catch (e) {
+                      Fluttertoast.showToast(
+                          msg: e.message.toString(),
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.deepOrange,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                    }
+                  },
                   iconSize: 40,
-                  icon: const Icon(Icons.arrow_forward,color: Color(0xFFF4D5BC)))
-          ),
+                  icon: const Icon(Icons.arrow_forward,
+                      color: Color(0xFFF4D5BC)))),
         ],
       ),
     );
   }
 }
+
 class Background extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {

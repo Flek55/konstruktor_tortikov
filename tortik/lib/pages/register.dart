@@ -57,7 +57,8 @@ class _SignUpPageState extends State<SignUpPage> {
     _email = _emailController.text;
     _password = _passwordController.text;
 
-    if (_email.isEmpty || _password.isEmpty) return [false,"Введите email и пароль"];
+    if (_email.isEmpty || _password.isEmpty)
+      return [false, "Введите email и пароль"];
 
     String result = await _authService.registerWithEmailAndPassword(
         _email.trim(), _password.trim());
@@ -65,10 +66,10 @@ class _SignUpPageState extends State<SignUpPage> {
     if (CurrentUserData.email == "") {
       inProgress = true;
       return [false, result];
-    } else if(result == "Success") {
+    } else if (result == "Success") {
       inProgress = true;
       return [true, result];
-    }else{
+    } else {
       inProgress = true;
       return [false, result];
     }
@@ -101,14 +102,15 @@ class _SignUpPageState extends State<SignUpPage> {
             controller: emailController,
             decoration: InputDecoration(
                 focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Theme.of(context).colorScheme.background),
+                  borderSide:
+                      BorderSide(color: Theme.of(context).colorScheme.surface),
                 ),
                 enabledBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.white),
                 ),
                 labelText: 'E-mail',
-                labelStyle: const TextStyle(color: Colors.white,fontSize: 16)),
-            style: (const TextStyle(color: Colors.white,fontSize: 18)),
+                labelStyle: const TextStyle(color: Colors.white, fontSize: 16)),
+            style: (const TextStyle(color: Colors.white, fontSize: 18)),
           ),
           const SizedBox(
             height: 15,
@@ -118,15 +120,16 @@ class _SignUpPageState extends State<SignUpPage> {
             controller: passwordController,
             decoration: InputDecoration(
               focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.background),
+                borderSide:
+                    BorderSide(color: Theme.of(context).colorScheme.surface),
               ),
               enabledBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.white),
               ),
               labelText: 'Пароль',
-              labelStyle: const TextStyle(color: Colors.white,fontSize: 16),
+              labelStyle: const TextStyle(color: Colors.white, fontSize: 16),
             ),
-            style: (const TextStyle(color: Colors.white,fontSize: 18)),
+            style: (const TextStyle(color: Colors.white, fontSize: 18)),
             obscureText: true,
             obscuringCharacter: '*',
           ),
@@ -147,7 +150,9 @@ class _SignUpPageState extends State<SignUpPage> {
           const Text(
             'Регистрация',
             style: TextStyle(
-                fontSize: 25, fontWeight: FontWeight.w500, color: Color(0xFFF4D5BC)),
+                fontSize: 25,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFFF4D5BC)),
           ),
           Container(
               child: IconButton(
@@ -203,7 +208,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         }
                       : null,
                   iconSize: 40,
-                  icon: const Icon(Icons.arrow_forward,color: Color(0xFFF4D5BC)))),
+                  icon: const Icon(Icons.arrow_forward,
+                      color: Color(0xFFF4D5BC)))),
         ],
       ),
     );

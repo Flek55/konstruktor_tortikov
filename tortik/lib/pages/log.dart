@@ -91,12 +91,12 @@ class _LoginPageState extends State<LoginPage> {
             controller: emailController,
             decoration: InputDecoration(
                 focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Theme.of(context).colorScheme.background),
+                  borderSide: BorderSide(color: Theme.of(context).colorScheme.surface),
                 ),
                 labelText: 'E-Mail',
-                labelStyle: TextStyle(color: Theme.of(context).colorScheme.background),
+                labelStyle: TextStyle(color: Theme.of(context).colorScheme.surface),
                 enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Theme.of(context).colorScheme.background),
+                  borderSide: BorderSide(color: Theme.of(context).colorScheme.surface),
                 )),
             style: (const TextStyle(color: Colors.white,fontSize: 18)),
           ),
@@ -110,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                 labelText: 'Пароль',
                 labelStyle: const TextStyle(color: Colors.white),
                 focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Theme.of(context).colorScheme.background),
+                  borderSide: BorderSide(color: Theme.of(context).colorScheme.surface),
                 ),
                 enabledBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.white),

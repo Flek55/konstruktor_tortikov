@@ -33,7 +33,7 @@ class _HomeProfileState extends State<HomeProfile> {
                     ?.copyWith(fontSize: 24, color: Colors.white)),
             centerTitle: true,
             backgroundColor: Theme.of(context).colorScheme.onPrimary),
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         body: SafeArea(
             child: SingleChildScrollView(
           child: Column(
