@@ -39,7 +39,7 @@ class _LogRegState extends State<LogReg> {
               },
               style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF5B2C6F))),
+                      WidgetStateProperty.all(const Color(0xFF5B2C6F))),
               child: const Text(
                 'Регистрация',
                 textAlign: TextAlign.center,
@@ -60,7 +60,7 @@ class _LogRegState extends State<LogReg> {
               },
               style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF5B2C6F))),
+                      WidgetStateProperty.all(const Color(0xFF5B2C6F))),
               child: const Text(
                 'Вход',
                 textAlign: TextAlign.center,
